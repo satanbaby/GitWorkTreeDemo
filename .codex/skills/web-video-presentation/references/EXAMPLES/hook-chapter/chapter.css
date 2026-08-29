@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────
- * hook-chapter · 完整章节示例样式
- * 示例写于一个报刊型浅色主题下。所有视觉属性走语义 token，零硬编码，
- * 换任何主题都不破。
+ * hook-chapter · 完整章節範例樣式
+ * 範例寫於一個報刊型淺色主題下。所有視覺屬性走語意 token，零寫死值，
+ * 換任何主題都不破。
  * ───────────────────────────────────────────────────────────────── */
 
 .hk-scene {
@@ -29,7 +29,7 @@
   background: var(--accent);
 }
 
-/* ── step 1 三 ghost ── */
+/* ── step 1 三個 ghost ── */
 .hk-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -62,7 +62,7 @@
   align-self: end;
 }
 
-/* ── step 2-4 单图独占 ── */
+/* ── step 2-4 單圖獨佔 ── */
 .hk-solo-frame {
   width: 78%;
   margin: 0 auto;

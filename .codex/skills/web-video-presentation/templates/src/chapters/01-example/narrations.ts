@@ -20,9 +20,9 @@ import type { Narration } from "../../registry/types";
  */
 export const narrations: Narration[] = [
   // step 0 — magazine cover
-  "这是示例章节的第一步。把这一行换成你这一步的口播文案。",
+  "這是範例章節的第一步。把這一行換成你這一步的旁白文案。",
   // step 1 — split layout
-  "第二步。每个数组元素对应章节里 step === N 的那一屏。长度必须严格相等。",
+  "第二步。每個陣列元素對應章節裡 step === N 的那一個畫面。長度必須嚴格相等。",
   // step 2 — pull-quote close
-  "第三步。这个数组就是音频合成 + 自动播放的唯一真相源——再也不会和章节代码漂移。",
+  "第三步。這個陣列就是音檔合成 + 自動播放的唯一真相來源——再也不會和章節程式碼漂移。",
 ];

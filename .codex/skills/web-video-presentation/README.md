@@ -2,7 +2,7 @@
 
 **A method-driven agent skill for turning scripts and articles into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos.**
 
-[中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
+[正體中文](./README.zh-TW.md) · [Back to collection root](../../README.md)
 
 ![Web Video Presentation Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp)
 
@@ -75,7 +75,7 @@ The checkpoints are part of the skill contract: the agent should not silently ru
 ```text
 skills/web-video-presentation/
 ├── SKILL.md
-├── README.md / README.zh-CN.md
+├── README.md / README.zh-TW.md
 ├── references/
 │   ├── CHAPTER-CRAFT.md       # single required read per chapter
 │   ├── OUTLINE-FORMAT.md      # progress board + outline spec
