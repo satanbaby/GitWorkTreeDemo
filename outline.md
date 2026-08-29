@@ -1,8 +1,8 @@
 # Video Outline
 
 > **主題**：`待選`（Checkpoint Plan 決定）—— 技術分享、CLI 與 VS Code 實機畫面並重
-> **總時長**：約 8 分 36 秒（61 個口播節拍，依中文約 4 字／秒逐步校準）
-> **章節數**：12 章 / 61 步
+> **總時長**：約 7 分 33 秒（53 個口播節拍，依中文約 4 字／秒逐步校準）
+> **章節數**：11 章 / 53 步
 
 ---
 
@@ -181,29 +181,7 @@
 
 ---
 
-## 9. coding-agents — 每個 Agent Task 一棵 Worktree（5 steps · ~41s）
-
-**信息池**（chapter agent 按需掛角標 / 副標 / pull-quote / mono cue）：
-- Agent 行為：修改檔案、格式化、測試、build，甚至建立 commit —— 來源 article §Coding Agent 為何使用 worktree
-- 共享目錄風險：多 agent 會互改檔案、切 branch 與污染測試輸出 —— 來源 article §Coding Agent 為何使用 worktree
-- Task 隔離：每個 task 擁有獨立 checkout 與檔案現場 —— 來源 article §Coding Agent 為何使用 worktree
-- 成果審查：最後用 diff、commit 與 merge 決定採用或回收 —— 來源 article §Coding Agent 為何使用 worktree
-- 隔離邊界：資料庫、port、container、cloud credential 與 cache 仍需額外管理 —— 來源 article §Coding Agent 為何使用 worktree
-
-**開發計畫**：
-
-- step 1 (~8s) — Coding Agent 對檔案系統執行修改、格式化、測試與 build
-- step 2 (~8s) — 兩個 agent 共用同一目錄時，修改與測試輸出互相碰撞
-- step 3 (~10s) — 每個 task 對應一棵 worktree，形成多條並行工作線
-- step 4 (~8s) — Agent 成果以 diff 與 merge 決定採用或回收
-- step 5 (~7s) — 檔案隔離之外，資料庫、port 與 container 仍落在共享外部環境
-
-口播節選：
-> 每個 task 一棵 worktree。各有獨立 checkout。多個任務能同時進行。
-
----
-
-## 10. shared-git-limits — 共用 Git，也共用狀態（4 steps · ~35s）
+## 9. shared-git-limits — 共用 Git，也共用狀態（4 steps · ~35s）
 
 **信息池**（chapter agent 按需掛角標 / 副標 / pull-quote / mono cue）：
 - Branch 限制：同一 local branch 預設不能同時 checkout 到兩棵 worktree —— 來源 article §限制與注意事項
@@ -223,46 +201,41 @@
 
 ---
 
-## 11. maintenance-limits — 移動、清理與工具相容性（4 steps · ~35s）
+## 10. maintenance-limits — 移動、清理與放心刪除（3 steps · ~26s）
 
 **信息池**（chapter agent 按需掛角標 / 副標 / pull-quote / mono cue）：
-- 正常移動：linked worktree 應使用 `git worktree move` —— 來源 article §限制與注意事項
-- 修復命令：手動刪除後用 `prune`，手動移動後用 `repair` —— 來源 article §限制與注意事項
-- 離線目錄：隨身碟或網路磁碟可用 `lock --reason` 防止管理資訊被清理 —— 來源 article §限制與注意事項
-- 相容性：submodule 與特殊工具鏈導入前要用真實專案驗證 —— 來源 article §限制與注意事項
+- 正常移動：linked worktree 應使用 `git worktree move`，不要直接拖曳或刪除資料夾 —— 來源 article §限制與注意事項
+- 修復命令：手動刪除後用 `prune`，手動移動後用 `repair` —— 來源 article §基本操作
+- 移除的方便性：移除 worktree 不等於刪除 branch，branch 與歷史仍完整保留，可以隨時重新建立 worktree 接續 —— 來源 article §基本操作
 
 **開發計畫**：
 
 - step 1 (~8s) — 檔案管理器直接拖曳與刪除 linked worktree 被列為錯誤操作
 - step 2 (~9s) — `move`、`prune`、`repair` 三個命令對應各自的維護情境
-- step 3 (~8s) — 隨身碟與網路磁碟情境配對 `lock --reason`
-- step 4 (~10s) — submodule 與特殊工具鏈進入團隊前先通過真實專案驗證
+- step 3 (~9s) — 移除 worktree 後 branch 與 commit 仍在，隨時能重新開一棵接續進度
 
 口播節選：
-> 導入團隊前，先拿真專案跑一次。
+> Worktree 拿掉，不可惜。Branch 和 commit 都留著。想接著做，再開一棵就好。
 
 ---
 
-## 12. team-workflow — 把 Worktree 變成團隊習慣（6 steps · ~48s）
+## 11. coding-agents — 給每個 Agent Task 一個房間（4 steps · ~35s）
 
 **信息池**（chapter agent 按需掛角標 / 副標 / pull-quote / mono cue）：
-- 目錄規則：worktree 集中放在 repository 同層的 `<repo>.worktrees/` —— 來源 article §團隊工作流建議
-- 命名規則：資料夾名稱與 branch 或 ticket 對齊，例如 `PROJ-123-hotfix` —— 來源 article §團隊工作流建議
-- 建立清單：配置 `.env`、專用 port、依賴與本機資源名稱 —— 來源 article §團隊工作流建議
-- 收尾清單：確認 commit、push、PR 與合併狀態，再移除 worktree —— 來源 article §團隊工作流建議
-- 選用原則：普通小修改使用 branch；上下文切換、並行環境與 Agent task 才優先使用 worktree —— 來源 article §團隊工作流建議
+- Agent 行為：修改檔案、格式化、測試、build，甚至建立 commit —— 來源 article §Coding Agent 為何使用 worktree
+- 共享目錄風險：多 agent 會互改檔案、切 branch 與污染測試輸出 —— 來源 article §Coding Agent 為何使用 worktree
+- Task 隔離：每個 task 擁有獨立 checkout 與檔案現場 —— 來源 article §Coding Agent 為何使用 worktree
+- 房間隱喻收束：worktree 給每個分支一個房間，也給每個 agent task 一個房間 —— 來源 article §Worktree 的心智模型、§Coding Agent 為何使用 worktree
 
 **開發計畫**：
 
-- step 1 (~10s) — 團隊目錄樹展示集中式 worktrees 位置與 ticket／branch 命名規則
-- step 2 (~5s) — 新 worktree 的環境、port 與依賴準備清單
-- step 3 (~8s) — commit、push、PR 合併與移除 worktree 的收尾清單
-- step 4 (~9s) — Branch 與 Worktree 的關係收束為「不是替代，而是同時在桌面」
-- step 5 (~9s) — 普通 branch 與 worktree 的選用門檻做成二選一判斷
-- step 6 (~7s) — 結尾定格：「給那個 branch 一個自己的房間」與「保留你的上下文」
+- step 1 (~8s) — Coding Agent 對檔案系統執行修改、格式化、測試與 build
+- step 2 (~8s) — 兩個 agent 共用同一目錄時，修改與測試輸出互相碰撞
+- step 3 (~10s) — 每個 task 對應一棵 worktree，形成多條並行工作線
+- step 4 (~9s) — 全片收尾定格：不只 branch 有自己的房間，agent 的每個 task 也是
 
 口播節選：
-> 下次 hotfix 插隊時，別急著 stash。給那個 branch 一個自己的房間。
+> 每個 task，也有自己的房間。不只是 branch，agent 也是。你的上下文，都留得住。
 
 ---
 
@@ -306,18 +279,14 @@
 ### 8. real-world-cases
 - ⚠️ Hotfix、code review、spike 三種實務情境圖（待製作）
 
-### 9. coding-agents
-- ⚠️ Coding Agent 多 task / 多 worktree 關係圖（待製作）
-- ⚠️ 資料庫、port、container 外部資源衝突示意（待製作）
-
-### 10. shared-git-limits
+### 9. shared-git-limits
 - ⚠️ 同一 branch 重複 checkout 的錯誤訊息（待以模擬終端呈現）
 - ⚠️ 共用的大部分 refs、Git objects 與 stash 關係圖（待製作）
 
-### 11. maintenance-limits
-- ⚠️ `move` / `prune` / `repair` / `lock` 的維護情境圖（待製作）
-- ⚠️ submodule 與工具鏈相容性驗證提示（待製作）
+### 10. maintenance-limits
+- ⚠️ `move` / `prune` / `repair` 的維護情境圖（待製作）
+- ⚠️ worktree 移除後 branch／commit 保留、可重新建立的示意（待製作）
 
-### 12. team-workflow
-- ⚠️ 團隊 worktrees 目錄範例（待以模擬目錄樹呈現）
-- ⚠️ 建立與回收 checklist（待製作）
+### 11. coding-agents
+- ⚠️ Coding Agent 多 task / 多 worktree 關係圖（待製作）
+- ⚠️ 呼應「工作房間」隱喻的全片收尾畫面（待製作）
