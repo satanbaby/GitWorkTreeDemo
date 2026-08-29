@@ -10,6 +10,10 @@
 
 另一個情境是同時開發兩個分支，例如前端 feature 與後端 API，或主功能和 spike 實驗。單一 working directory 一次只能呈現一個 checkout。頻繁切換分支會改動整批檔案，也容易讓 build cache、generated files、node_modules 或執行中的服務和目前分支不一致。
 
+團隊日常還有兩種常見切換。一種是 PR 已送審，但 review 尚未結束，開發者不能停在原地，必須先開始下一個工項。另一種是同一專案長期並存兩個版本，例如第一階段已上線、持續維護，第二階段則依新合約開發。這些情境不是偶發例外，而是同一位開發者同時背著多個工作現場。
+
+既有做法各有代價。暫時 commit 會把尚未整理好的狀態寫進 branch history，之後還要切回、整理或重寫歷史。stash 能保持 working tree 乾淨，但套回時可能衝突，也容易在多筆 stash 中取錯。額外 clone 能提供完整隔離，卻會重複占用 repository 與工作檔案空間；兩份 clone 起初擁有相同歷史，但各自新產生的 commit 與 `git log` 不會自動同步，仍要透過 fetch、push 或其他 Git 操作交換。
+
 ## Worktree 的心智模型
 
 Git 官方把 worktree 定義為同一個 repository 所管理的多個 working trees。一般 clone 建立的是 main worktree；`git worktree add` 建立的是 linked worktree。每個 linked worktree 有自己的目錄、HEAD 與 index，因此能同時 checkout 不同分支；它們共享同一套 Git object database 與大部分 refs。
