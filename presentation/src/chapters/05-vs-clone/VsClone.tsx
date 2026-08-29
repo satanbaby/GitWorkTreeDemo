@@ -1,0 +1,17 @@
+import type { ChapterStepProps } from "../../registry/types";
+import "./VsClone.css";
+
+const Repo = ({ label, className = "" }: { label: string; className?: string }) => (
+  <div className={`vc-repo card ${className}`}><strong>{label}</strong><div className="vc-commit"><i/><i/><i/></div></div>
+);
+
+export default function VsClone({ step }: ChapterStepProps) {
+  if (step === 0) return <div className="vc-scene vc-question scene-pad"><div className="vc-old"><Repo label="clone A"/><Repo label="clone B"/></div><div className="vc-cut">VS</div><div className="vc-new"><div className="vc-shared-disc"/><Repo label="worktree A"/><Repo label="worktree B"/></div><h1>多 clone 一份，<br/><span>差在哪？</span></h1></div>;
+  if (step === 1) return <div className="vc-scene vc-islands scene-pad"><p>multiple clones</p><h1>好幾個彼此獨立的 repository</h1><div className="vc-island-row">{["repo A","repo B","repo C"].map((x,i)=><div className="vc-island" key={x}><Repo label={x}/><span>no shared history</span><i style={{animationDelay:`${i*120}ms`}}/></div>)}</div></div>;
+  if (step === 2) return <div className="vc-scene vc-baggage scene-pad"><div className="vc-bag-title"><p>每一份 clone 都自帶</p><h1>三套 Git 行李。</h1></div><div className="vc-bag-row">{[["OBJECT DATABASE","commits · trees · blobs"],["REMOTE","origin · fetch state"],["REFS","branches · tags"]].map(([a,b],i)=><article className="vc-bag card" key={a} style={{animationDelay:`${i*130}ms`}}><b>{String(i+1).padStart(2,"0")}</b><strong>{a}</strong><span>{b}</span><div className="vc-handle"/></article>)}</div><div className="vc-duplicate">下載 × N　·　保存 × N　·　同步 × N</div></div>;
+  if (step === 3) return <div className="vc-scene vc-onebase scene-pad"><p>worktree</p><h1>工作現場分開，<span>歷史與 refs 共用。</span></h1><div className="vc-tree-row"><Repo label="feature"/><Repo label="hotfix"/><Repo label="release"/></div><svg className="vc-lines" viewBox="0 0 1500 470"><path pathLength="1" d="M250 60 V210 H750 M750 60 V350 M1250 60 V210 H750"/></svg><div className="vc-base card"><strong>ONE REPOSITORY</strong><span>object database ＋ refs</span></div></div>;
+  if (step === 4) return <div className="vc-scene vc-speed scene-pad"><div className="vc-speed-copy"><p>create another workspace</p><h1>不必再抓一次<br/><span>完整歷史。</span></h1></div><div className="vc-race"><div className="vc-track"><b>git clone</b><div className="vc-bar vc-slow"><i/></div><span>download history again</span></div><div className="vc-track"><b>git worktree add</b><div className="vc-bar vc-fast"><i/></div><span>reuse local objects</span></div></div></div>;
+  if (step === 5) return <div className="vc-scene vc-instant scene-pad"><p>shared object database</p><h1>這邊 commit，<span>那邊立刻看見。</span></h1><div className="vc-live"><div className="vc-window card"><b>feature/</b><div className="vc-file">app.ts　＋12</div><div className="vc-terminal">$ git commit -m "finish"<br/><strong>[feature a31f9c2]</strong></div></div><div className="vc-pulse"><i/><b>a31f9c2</b></div><div className="vc-window card"><b>main / graph</b><div className="vc-graph"><i/><i/><i/><strong>a31f9c2</strong></div></div></div></div>;
+  if (step === 6) return <div className="vc-scene vc-verdict scene-pad"><div className="vc-half vc-clone-half"><p>MULTIPLE CLONES</p><h2>各過各的</h2><div className="vc-mini-islands"><i/><i/><i/></div><span>獨立 repo · 各自同步</span></div><div className="vc-half vc-worktree-half"><p>WORKTREES</p><h2>同一份歷史，<br/>多個現場</h2><div className="vc-mini-hub"><i/><i/><i/><b/></div><span>共享 objects / refs · checkout 分開</span></div><div className="vc-divider"/></div>;
+  return null;
+}

@@ -1,0 +1,17 @@
+import type { ChapterStepProps } from "../../registry/types";
+import "./Vscode.css";
+
+const asset=(name:string)=>`${import.meta.env.BASE_URL}screenshots/vscode/${name}`;
+const Shot=({name,alt,className=""}:{name:string;alt:string;className?:string})=><div className={`vs-shot card ${className}`}><img src={asset(name)} alt={alt}/></div>;
+
+export default function Vscode({step}:ChapterStepProps){
+ if(step===0)return <div className="vs-scene vs-no-memory scene-pad"><div className="vs-command-cloud">{["list","add -b","remove","move","repair","prune","lock"].map((x,i)=><span key={x} style={{animationDelay:`${i*70}ms`}}>{x}</span>)}</div><div className="vs-editor-shape"><i/><i/><i/><b>VS CODE</b></div><h1><del>背指令</del><br/><span>交給擴充套件。</span></h1></div>;
+ if(step===1)return <div className="vs-scene vs-market scene-pad"><div className="vs-market-copy"><p>EXTENSION</p><h1>Git Worktree<br/><span>Manager</span></h1><div className="vs-id">jackiotyu.git-worktree-manager</div><div className="vs-meta"><b>v3.25.0</b><b>MIT</b><b>44k downloads</b></div></div><Shot name="extension.png" alt="Git Worktree Manager 的 Visual Studio Marketplace 頁面"/><div className="vs-focus vs-focus-market"/></div>;
+ if(step===2)return <div className="vs-scene vs-create scene-pad"><p>CREATE A WORKTREE</p><h1>新增 → 新分支 → <span>基準分支</span></h1><div className="vs-two-shots"><Shot name="step1.png" alt="在 Git Worktree Manager 選擇建立新分支"/><div className="vs-flow-arrow">→</div><Shot name="step2.png" alt="選擇建立新分支的基準分支"/></div><div className="vs-step-tags"><b>01 建立新分支</b><b>02 選 main / feature 基準</b></div></div>;
+ if(step===3)return <div className="vs-scene vs-directory scene-pad"><div className="vs-directory-copy"><p>CHOOSE DIRECTORY</p><h1>放在專案同一層，<br/><span>&lt;repo&gt;.worktrees/</span></h1><div className="vs-path-parts"><b>Test</b><i>→</i><b>Test.worktrees</b><i>→</i><b>第一階段hotfix</b></div></div><Shot name="step3.png" alt="輸入 linked worktree 目錄的 VS Code 畫面"/><div className="vs-path-highlight"/></div>;
+ if(step===4)return <div className="vs-scene vs-new-window scene-pad"><p>OPEN IT</p><h1>不是切過去，<br/><span>是另開一個視窗。</span></h1><Shot name="step4.png" alt="Git Worktree Manager 提示在新視窗開啟 worktree"/><div className="vs-window-pop"><div/><strong>NEW WINDOW</strong><span>feature stays · hotfix opens</span></div></div>;
+ if(step===5)return <div className="vs-scene vs-two-windows scene-pad"><p>PARALLEL WORKSPACES</p><h1>兩個視窗，<span>各自編輯、各自提交。</span></h1><Shot name="step5.png" alt="兩個 VS Code 視窗同時開啟 feature 與 hotfix worktree"/><div className="vs-window-label vs-original">feature</div><div className="vs-window-label vs-hotfix">hotfix</div><div className="vs-split-line"/></div>;
+ if(step===6)return <div className="vs-scene vs-history scene-pad"><p>SHARED HISTORY · PROOF</p><h1>hotfix 一提交，<br/><span>主視窗立刻看見。</span></h1><Shot name="step7.png" alt="hotfix 提交後主視窗 Git graph 立即出現 commit"/><svg viewBox="0 0 1920 1080"><path pathLength="1" d="M1350 770 C1200 650 1020 540 790 430"/></svg><div className="vs-commit-chip">第一階段緊急調整</div><div className="vs-history-note">same commit · same repository</div></div>;
+ if(step===7)return <div className="vs-scene vs-cleanup scene-pad"><p>CLEAN UP</p><h1>工作目錄移除，<span>commit 還在。</span></h1><div className="vs-clean-pair"><Shot name="step8.png" alt="Git Worktree Manager 的移除 Worktree 操作選單"/><div className="vs-clean-arrow">→</div><Shot name="step9.png" alt="移除 linked worktree 後 commit 仍留在 Git 歷史"/></div><div className="vs-clean-captions"><b>REMOVE WORKTREE</b><b>HISTORY PRESERVED</b></div></div>;
+ return null;
+}

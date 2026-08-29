@@ -1,6 +1,6 @@
 # Video Outline — Git Worktree 團隊分享
 
-> **主題**：`we-bare-bears`（熊熊遇見你）—— 奶油紙張 + 天空藍強調色 + 圓潤手繪輪廓的親切協作感（提案中，待 CP-1 確認）
+> **主題**：`we-bare-bears`（熊熊遇見你）—— 奶油紙張 + 天空藍強調色 + 圓潤手繪輪廓的親切協作感（CP-1 已確認）
 > **總時長**：約 11 分 25 秒（口播 2868 字 ÷ 4.2 字/秒 = 685 秒）
 > **章節數**：封面 + 13 章 / 85 步
 
@@ -13,28 +13,28 @@
 | # | Checkpoint | 狀態 | 備註 |
 |---|---|---|---|
 | CP-0 | 內容自檢（script.md / outline.md） | ✅ | 依用戶指定流程重排後重跑自檢並修復 |
-| CP-1 | Checkpoint Plan（稿子 / outline / 主題 / 素材 / 模式） | ⬜ | 主題：— ／ 開發模式：— |
-| CP-2 | 封面 + 第 1 章驗收（硬節點） | ⬜ | |
-| CP-3 | 第 2~N 章驗收 | ⬜ | 見下方章節狀態 |
+| CP-1 | Checkpoint Plan（稿子 / outline / 主題 / 素材 / 模式） | ✅ | 主題：we-bare-bears ／ 講者：莊詠翔 ／ 開發模式：B |
+| CP-2 | 封面 + 第 1 章驗收（硬節點） | ✅ | 用戶已回覆「繼續」 |
+| CP-3 | 第 2~N 章驗收 | 🔵 | 模式 B：第 2～13 章全數完成，等待用戶統一驗收 |
 | CP-4 | Checkpoint Audio（是否合成音訊） | ⬜ | |
 | CP-5 | Phase 4 錄屏路徑確認 | ⬜ | |
 
 | 章節 | 狀態 | 備註 |
 |---|---|---|
-| 00-cover | ⬜ | |
-| 01-scenes | ⬜ | 有插圖，開發前需先生成 |
-| 02-switch-cost | ⬜ | |
-| 03-old-ways | ⬜ | |
-| 04-concept | ⬜ | |
-| 05-vs-clone | ⬜ | |
-| 06-esim | ⬜ | |
-| 07-cmd-create | ⬜ | 一個指令一步 |
-| 08-cmd-manage | ⬜ | 一個指令一步 |
-| 09-traps | ⬜ | |
-| 10-vscode | ⬜ | 截圖素材已備齊 |
-| 11-agent-risk | ⬜ | |
-| 12-agent-isolation | ⬜ | |
-| 13-closing | ⬜ | |
+| 00-cover | ✅ | 講者：莊詠翔 ／ 日期：2026.08.29 |
+| 01-scenes | ✅ | 插圖已生成接入，7 steps 已通過 |
+| 02-switch-cost | 🔵 | 4 steps 完成，待 CP-3 統一驗收 |
+| 03-old-ways | 🔵 | 9 steps 完成，stash 衝突與 ×2 空間視覺已修正 |
+| 04-concept | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 05-vs-clone | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 06-esim | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 07-cmd-create | 🔵 | 5 steps 完成；型別與逐畫面驗收通過 |
+| 08-cmd-manage | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 09-traps | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 10-vscode | 🔵 | 8 steps 完成；9 張實拍素材已接入並逐畫面驗收 |
+| 11-agent-risk | 🔵 | 4 steps 完成；角色素材、衝突動畫與逐畫面驗收通過 |
+| 12-agent-isolation | 🔵 | 7 steps 完成；Claude Code 實拍與逐畫面驗收通過 |
+| 13-closing | 🔵 | 5 steps 完成；型別與逐畫面驗收通過 |
 
 狀態詞彙（固定，不得自創）：⬜ 未開始 ／ 🟡 進行中 ／ 🔵 待用戶驗收 ／ ✅ 已通過 ／ ⏭️ 已跳過
 
@@ -389,10 +389,10 @@
 
 ### 0. 00-cover
 - ✓ 主題封面版式參考圖（脚手架自動複製到 `public/theme-assets/title-page-style-reference.png`）
-- ⚠️ 講者姓名 + 分享日期（待提供）
+- ✓ 講者：莊詠翔／分享日期：2026.08.29
 
 ### 1. 01-scenes
-- 🎨 主角被多個工作壓住、手忙腳亂的場景（待生成 → `illustrations/scenes/overloaded-dev.png`）
+- ✓ 主角被多個工作壓住、手忙腳亂的場景（`illustrations/scenes/overloaded-dev.png`）
 - ✓ 情境切換的視覺演示由章節自己用 CSS / SVG 畫
 
 ### 2. 02-switch-cost
