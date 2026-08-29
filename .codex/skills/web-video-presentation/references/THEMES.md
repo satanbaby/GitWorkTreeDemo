@@ -4,7 +4,8 @@
 打断视频的视觉连贯性，录屏时看起来像很硬的剪辑。如果想要"暗一点的氛围"
 段落，请在**同一调色板内**降对比、收聚光，而不是翻转表面色。
 
-主题 = 一组 CSS 设计 token + 一个 `theme.json` 元数据。
+主题 = 一组 CSS 设计 token + 一个 `theme.json` 元数据；需要情境角色或
+品牌插图时，可再附一个可选的 `assets/` 素材包。
 
 **章节对 token 的消费分两层**：
 
@@ -39,7 +40,7 @@
 
 ## 内置主题
 
-23 套主题，每个都有**独立的设计 DNA** —— 不是简单的换色版。挑一个
+24 套主题，每个都有**独立的设计 DNA** —— 不是简单的换色版。挑一个
 匹配你主题情绪的，或者作为你自己主题的起点。
 
 ### 深色主题
@@ -74,6 +75,7 @@
 | `kraft-paper`        | 牛皮纸 —— **深棕当墨** + 牛皮米。Fraunces + Source Serif + 紫铜 accent。老笔记本 / 老信封感。**粗暖纸纹**是签名。慢速 tactile（1.55s）。                                                                       |
 | `dune`               | 沙丘 —— **炭褐当墨** + 沙底 + 几乎无 accent（muted clay）。Inter display + Source Serif 正文。**无装饰 + 极宽 padding（140×100）**是签名。建筑手册 / 画廊感。最慢节奏（1.75s）。                                |
 | `swiss-ikb`          | 瑞士国际主义。**极细 200 weight Inter / Helvetica** + 净暖白底 + IKB 克莱因蓝 + **1px 发丝网格 (64px)**。`r-card: 0` 直角。Massimo Vignelli / Helvetica Forever 能量。punchy + linear（400/650ms）。           |
+| `we-bare-bears`      | 熊熊遇見你式溫暖日常。奶油紙張 + 天空藍單一 accent + 蜂蜜木色中性色 + Nunito 圓體。**圓角紙卡 + 2px 炭黑手繪輪廓與淡藍錯位影**是簽名。適合協作、Git、入門教學與輕鬆知識內容。                          |
 
 
 随时列出可用主题：
@@ -96,12 +98,14 @@ bash scripts/scaffold.sh ./talk --theme=newsroom
 
 脚手架会把所选主题的 `tokens.css` 拷到 `<project>/src/styles/tokens.css`，
 并把主题 id 写到 `<project>/.theme`，方便以后看是从哪个主题开始的。
+若主题含 `assets/`，也会自动复制到 `<project>/public/theme-assets/`，并
+附上 `theme.json` 供章节按 `illustrations` 的情境标签挑图。
 
 ---
 
 ## 之后切换主题
 
-切换 = 一次文件覆盖：
+没有素材包的主题，切换 = 一次文件覆盖：
 
 ```bash
 cp <path-to-web-video-presentation>/themes/newsroom/tokens.css \
@@ -109,6 +113,14 @@ cp <path-to-web-video-presentation>/themes/newsroom/tokens.css \
 ```
 
 刷新 dev server。完成。章节代码一行没动。
+
+新主题若含 `assets/`，再同步素材包：
+
+```bash
+mkdir -p presentation/public/theme-assets
+cp -R <path-to-web-video-presentation>/themes/<id>/assets/. \
+  presentation/public/theme-assets/
+```
 
 如果切换后某章节看起来有问题，那是该章节在某处硬编码了颜色 / 字体 /
 尺寸，而不是用语义 token。去找出来 —— bug 在章节里，不在主题里。
@@ -242,6 +254,7 @@ CSS"领域 —— 在那里解决，别扩主题契约。
 | 文学 / 怀旧 / 书评 / 手工艺             | `kraft-paper`         |
 | 建筑 / 艺术展览 / 高端画廊              | `dune`                |
 | 瑞士国际主义 / Helvetica / 信息驱动设计 | `swiss-ikb`           |
+| 溫暖卡通 / 團隊協作 / 友善技術教學      | `we-bare-bears`       |
 
 ```bash
 cd <path-to-web-video-presentation>/themes
@@ -300,6 +313,8 @@ cp -r monochrome-print my-theme
 | `mood` | ✓ | 标签数组 | 模糊匹配用 |
 | `bestFor` | ✓ | 场景数组 | Checkpoint Plan 智能推荐时的命中点 |
 | `preview` | ✓ | 4 色对象 | Checkpoint Plan 列清单时的视觉预览 |
+| `illustrationGuidance` | 可选 | 字符串 | 主题素材的节制使用原则 |
+| `illustrations` | 可选 | 对象数组 | `path` / `character` / `bestFor` / `altZh` 素材索引 |
 
 > **主题不再约束动画选型 / 时长 / 字号 / emoji**。视觉风格由 `tokens.css`
 > 的颜色 / 字体 / 字号 token 决定，动画 / 节奏 / 视觉演示完全交给 chapter
@@ -307,6 +322,14 @@ cp -r monochrome-print my-theme
 >
 > 风格审美约束（不要紫粉渐变、不要 emoji 装饰、不要假数据等）由
 > [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md) 统一规定，与具体主题无关。
+
+### 可选主题素材包
+
+把可重复使用的位图放在 `themes/<id>/assets/`，并在 `theme.json` 的
+`illustrations` 里登记 `/theme-assets/<filename>`、适用情境和 alt。角色
+素材必须服务具体叙事：只有 step 在讲人物行动、分工、情绪或协作时才用；
+每个 scene 最多一张，避免把角色变成每页固定贴纸。脚手架会自动复制素材，
+章节不应直接引用 Skill 仓库的绝对路径。
 
 ### 4. 用所有 demo 章节测试一遍
 

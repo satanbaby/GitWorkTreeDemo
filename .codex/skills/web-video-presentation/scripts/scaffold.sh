@@ -67,6 +67,7 @@ done
 TARGET="${TARGET:-presentation}"
 THEME_DIR="$THEMES_DIR/$THEME"
 THEME_TOKENS="$THEME_DIR/tokens.css"
+THEME_ASSETS="$THEME_DIR/assets"
 
 if [[ ! -d "$THEME_DIR" || ! -f "$THEME_TOKENS" ]]; then
   echo "✗ 找不到主题 '${THEME}'。可用主题：" >&2
@@ -127,6 +128,14 @@ cp "$THEME_TOKENS"                          src/styles/tokens.css
 cp "$TEMPLATES/src/styles/base.css"         src/styles/base.css
 cp "$TEMPLATES/src/styles/animations.css"   src/styles/animations.css
 cp "$TEMPLATES/src/styles/fonts.css"        src/styles/fonts.css
+
+# 主题可选素材包。统一落到 public/theme-assets，theme.json 可直接声明
+# /theme-assets/<filename> 给章节使用。
+if [[ -d "$THEME_ASSETS" && -n "$(ls -A "$THEME_ASSETS" 2>/dev/null || true)" ]]; then
+  mkdir -p public/theme-assets
+  cp -R "$THEME_ASSETS"/. public/theme-assets/
+  cp "$THEME_DIR/theme.json" public/theme-assets/theme.json
+fi
 
 cp "$TEMPLATES/src/hooks/useStageScale.ts"   src/hooks/useStageScale.ts
 cp "$TEMPLATES/src/hooks/useStepper.ts"      src/hooks/useStepper.ts
@@ -194,6 +203,7 @@ cat <<EOF
   2. npm run dev      # 默认 http://localhost:5174（被占会自动换端口）
 
 当前主题：${THEME}（见 .theme）
+主题素材（若有）：public/theme-assets/（用途与 alt 见 theme.json 的 illustrations）
 
 然后：
 
@@ -229,7 +239,8 @@ cat <<EOF
       Part 3 视觉工具箱 / Part 4 时长 / Part 5 反 AI 味反模式 /
       Part 6 代码硬规则 / Part 7 完工自检 / Part 8 反馈速查
   • $SKILL_DIR/themes/$THEME/theme.json
-      看 descriptionZh / mood / bestFor —— 参考主题气质
+      看 descriptionZh / mood / bestFor —— 参考主题气质；若有 illustrations，
+      只在内容情境吻合时从 public/theme-assets/ 选图穿插
       （动画 / 时长 / 字号 / emoji 由 chapter agent 在每章自由决定）
 
 卡壳时可翻：
@@ -237,8 +248,9 @@ cat <<EOF
   • $SKILL_DIR/references/EXAMPLES/
       完整章节 anchor（钩子型 / 列举型）—— 看"形"，不要照搬
 
-要换一个主题，覆盖 tokens.css 即可：
+要换一个主题，覆盖 tokens.css；若新主题有 assets，也同步素材：
   cp $SKILL_DIR/themes/<id>/tokens.css src/styles/tokens.css
+  cp -R $SKILL_DIR/themes/<id>/assets/. public/theme-assets/   # 可选
 
 想自创主题，看 $SKILL_DIR/references/THEMES.md。
 
