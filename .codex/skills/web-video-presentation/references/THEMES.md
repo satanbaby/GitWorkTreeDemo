@@ -332,7 +332,8 @@ pnpm run dev              # 或 npm run dev
 - 標題襯線在舞台上很清晰。
 - accent 圓點在發光但不爆。
 - 斜體強調有可讀的背景。
-- 進度條（滑鼠停留在底邊時）能看到，是 accent 色。
+- 章節導覽（滑鼠停留在底邊時）能看到，橫向章節列和左側全部章節總覽
+  都像這套主題的控制項；active 狀態使用 accent，但不能像通用播放器。
 - masthead 列（`.masthead`）讀起來像編輯 chrome，不像 navbar。
 - hero 數字（`.hero-num`）感覺**和整體字體同源**，不像貼上去的。
 - 卡片（`.card`）感覺是合適的材質（紙 / 玻璃 / cell）。

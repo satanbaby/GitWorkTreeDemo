@@ -1,6 +1,6 @@
 ---
 name: web-video-presentation
-description: 把一篇文章或旁白稿，做成「看起來像影片」的點擊驅動 16:9 網頁簡報，可選擇合成旁白音檔。流程：原始文章 → **一次產出**旁白稿 + outline 開發計畫（含**跨 agent 進度看板**）→ 使用者**一次對齊** 5 件事（稿子 / outline / 主題 / 素材 / 開發模式）→ 網頁開發（**封面 00-cover + 第 1 章主執行緒強制驗收**，其餘逐章 / 循序 / 平行）→ 選擇性音檔合成（provider-agnostic：內建 MiniMax mmx-cli + OpenAI TTS，可換 ElevenLabs / edge-tts / Azure / 自備 TTS）。技術線 Vite + React + TS，套件管理器 pnpm 優先 npm 備援。**outline 只規劃節奏與資訊密度，不規劃動畫** —— 動畫由章節開發時依 PRINCIPLES + ANTI-AI 法則即時設計；outline 可選填**插圖描述**，寫了就在開發該章前呼叫圖片生成工具（ImageGen）依主題畫風產出插圖素材。每次點擊推進旁白稿的一個節拍，每一步獨佔整個畫面，進度條平時隱藏、只在滑鼠停留時出現。適用情境：用網頁做影片（動態簡報但不像簡報）、把旁白稿 / 文章變成可互動的解說、為 YouTube / Instagram Reels / TikTok 錄製教學、做有電影感的產品 / talk demo。本 Skill 沉澱的是設計方法論 + 協作流程 —— 不綁定任何特定樣式 / 字體 / 顏色 —— 因此能重用到任意主題與美學。
+description: 把一篇文章或旁白稿，做成「看起來像影片」的點擊驅動 16:9 網頁簡報，可選擇合成旁白音檔。流程：原始文章 → **一次產出**旁白稿 + outline 開發計畫（含**跨 agent 進度看板**）→ 使用者**一次對齊** 5 件事（稿子 / outline / 主題 / 素材 / 開發模式）→ 網頁開發（**封面 00-cover + 第 1 章主執行緒強制驗收**，其餘逐章 / 循序 / 平行）→ 選擇性音檔合成（provider-agnostic：內建 MiniMax mmx-cli + OpenAI TTS，可換 ElevenLabs / edge-tts / Azure / 自備 TTS）。技術線 Vite + React + TS，套件管理器 pnpm 優先 npm 備援。**outline 只規劃節奏與資訊密度，不規劃動畫** —— 動畫由章節開發時依 PRINCIPLES + ANTI-AI 法則即時設計；outline 可選填**插圖描述**，寫了就在開發該章前呼叫圖片生成工具（ImageGen）依主題畫風產出插圖素材。每次點擊推進旁白稿的一個節拍，每一步獨佔整個畫面；進度控制平時隱藏、滑到畫面底邊時顯示橫向章節列，最左側清單 icon 可展開全部章節總覽。適用情境：用網頁做影片（動態簡報但不像簡報）、把旁白稿 / 文章變成可互動的解說、為 YouTube / Instagram Reels / TikTok 錄製教學、做有電影感的產品 / talk demo。本 Skill 沉澱的是設計方法論 + 協作流程 —— 不綁定任何特定樣式 / 字體 / 顏色 —— 因此能重用到任意主題與美學。
 ---
 
 # Web Video Presentation
@@ -333,6 +333,12 @@ rm -rf presentation/src/chapters/01-example
 並把 `presentation/src/registry/chapters.ts` 裡 `EXAMPLE_CHAPTER`
 的 import 和陣列項移除。
 
+scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 hover
+才出現橫向章節列；最左側固定清單 icon，hover / focus 後向上展開全部章節
+總覽（章節名稱、段落數、目前位置、已走過狀態），可直接跳章。它是框架
+控制項，但**顏色、字體、表面、邊框與陰影仍必須全部走當前主題 token**；
+選定或衍生主題後要把這個控制項一併納入視覺驗收，不能保留通用播放器風格。
+
 ### 2.2 封面 + 第 1 章 —— 主執行緒 + 強制驗收（CP-2）
 
 **交付範圍 = 兩個章節**：
@@ -545,7 +551,7 @@ Part 0 —— **寫章節時回那裡查**，下面只是索引。
 | 2 | 全域 step 計數器 | 章節是 step 的純函式，無計時器 |
 | 3 | 每步獨佔整個畫面 | `if (step === N) return <FullScene />` |
 | 4 | 旁白節拍 = step | 一節拍 = 一 step = 一個聚焦的想法 |
-| 5 | 隱藏的邊角控制項 | 進度條 / 翻頁器預設 opacity 0 |
+| 5 | 隱藏的邊角控制項 | 進度列預設 opacity 0；底邊 hover 顯示橫向章節列，左側清單 icon 展開全部章節總覽 |
 | 6 | 舞台無 chrome | 沒有 header / footer / 頁碼 / 品牌條 |
 | 7 | **內容驅動動畫** | 先找內在動作，找不到才用進場動畫保底；持續微動慎用 |
 | 8 | 多點逐個揭示 | 1 項 = 1 step，禁止同步 stagger 上 N 項 |

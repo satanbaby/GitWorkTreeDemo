@@ -18,12 +18,12 @@ const DEFAULT_GITHUB_URL =
 
 /**
  * Hidden-on-hover progress bar, fixed to the bottom of the viewport.
- * Click chapter pill or pip to jump.
+ * Click a story marker or footprint to jump.
  *
- * Width is content-adaptive and capped at `100vw - 32px`; if total chapters
- * (or an active chapter's step pips) overflow, the bar scrolls horizontally
- * instead of squeezing items. The active chapter is auto-scrolled into view
- * on chapter change so it's visible the moment hover reveals the bar.
+ * Width is content-adaptive and leaves room for the source link; if total
+ * chapters (or an active chapter's step pips) overflow, the chapter track
+ * scrolls horizontally instead of squeezing items. The active chapter is
+ * auto-scrolled into view on chapter change.
  *
  * A GitHub link sits to the right of the viewport, sharing the same hover
  * trigger so it appears/disappears in sync with the bar.
@@ -46,48 +46,132 @@ export function ProgressBar({
 
   return (
     <div className="pb-hover" data-no-advance>
-      <div className="pb">
-        {chapters.map((c, i) => {
-          const isActive = i === cursor.chapter;
-          return (
-            <button
-              key={c.id}
-              ref={isActive ? activeRef : undefined}
-              className={`pb-chapter ${isActive ? "pb-active" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                onJumpChapter(i, 0);
-              }}
-            >
-              <span className="pb-num">{String(i + 1).padStart(2, "0")}</span>
-              <span className="pb-title">{c.title}</span>
-              {isActive && (
-                <div className="pb-pips">
-                  {Array.from({ length: c.narrations.length }, (_, s) => (
-                    <span
-                      key={s}
-                      className={`pb-pip ${
-                        s <= cursor.step ? "pb-pip-on" : ""
-                      }`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onJumpChapter(i, s);
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      <nav className="pb" aria-label="簡報章節與段落進度">
+        <div className="pb-overview">
+          <button
+            className="pb-overview-trigger"
+            type="button"
+            aria-label="預覽全部章節"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="5" cy="6" r="1.6" />
+              <circle cx="5" cy="12" r="1.6" />
+              <circle cx="5" cy="18" r="1.6" />
+              <path d="M9 6h10M9 12h10M9 18h10" />
+            </svg>
+          </button>
+
+          <section className="pb-overview-panel" aria-label="全部章節">
+            <div className="pb-overview-head">
+              <span>全部章節</span>
+              <span>
+                {String(cursor.chapter + 1).padStart(2, "0")} /{" "}
+                {String(chapters.length).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="pb-overview-grid">
+              {chapters.map((c, i) => {
+                const isActive = i === cursor.chapter;
+                const isPast = i < cursor.chapter;
+                const stepTotal = c.narrations.length;
+                return (
+                  <button
+                    key={c.id}
+                    className={`pb-overview-item ${
+                      isActive ? "is-active" : ""
+                    } ${isPast ? "is-past" : ""}`}
+                    type="button"
+                    aria-current={isActive ? "step" : undefined}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onJumpChapter(i, 0);
+                      e.currentTarget.blur();
+                    }}
+                  >
+                    <span className="pb-overview-num">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="pb-overview-copy">
+                      <strong>{c.title}</strong>
+                      <small>
+                        {isActive
+                          ? `目前在第 ${cursor.step + 1} 段`
+                          : isPast
+                            ? "已走過"
+                            : "尚未開始"}
+                      </small>
+                    </span>
+                    <span className="pb-overview-status">
+                      {isPast
+                        ? "✓"
+                        : isActive
+                          ? `${cursor.step + 1}/${stepTotal}`
+                          : `${stepTotal} 段`}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+
+        <div className="pb-track">
+          {chapters.map((c, i) => {
+            const isActive = i === cursor.chapter;
+            return (
+              <div
+                key={c.id}
+                className={`pb-chapter ${isActive ? "pb-active" : ""}`}
+              >
+                <button
+                  ref={isActive ? activeRef : undefined}
+                  className="pb-chapter-main"
+                  type="button"
+                  aria-current={isActive ? "step" : undefined}
+                  aria-label={`前往第 ${i + 1} 章：${c.title}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onJumpChapter(i, 0);
+                    e.currentTarget.blur();
+                  }}
+                >
+                  <span className="pb-num" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="pb-title">{c.title}</span>
+                </button>
+                {isActive && c.narrations.length > 1 && (
+                  <div className="pb-pips">
+                    {Array.from({ length: c.narrations.length }, (_, s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        className={`pb-pip ${
+                          s <= cursor.step ? "pb-pip-on" : ""
+                        }`}
+                        aria-label={`前往「${c.title}」第 ${s + 1} 段`}
+                        aria-current={s === cursor.step ? "step" : undefined}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onJumpChapter(i, s);
+                          e.currentTarget.blur();
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </nav>
       {githubUrl && (
         <a
           className="pb-github"
           href={githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="View source on GitHub"
+          aria-label="在 GitHub 查看原始碼"
           onClick={(e) => e.stopPropagation()}
         >
           <svg
