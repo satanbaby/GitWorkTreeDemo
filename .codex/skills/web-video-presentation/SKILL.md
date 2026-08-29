@@ -1,106 +1,106 @@
 ---
 name: web-video-presentation
-description: 把一篇文章或口播稿，做成"看起来像视频"的点击驱动 16:9 网页演示，可选合成口播音频。流程：原始文章 → **一次产出**口播稿 + outline 开发计划（含**跨 agent 进度看板**）→ 用户**一次对齐** 5 件事（稿子 / outline / 主题 / 素材 / 开发模式）→ 网页开发（**封面 00-cover + 第 1 章主线程强制验收**，其余逐章 / 顺序 / 并行）→ 可选音频合成（provider-agnostic：内置 MiniMax mmx-cli + OpenAI TTS，可换 ElevenLabs / edge-tts / Azure / 自带 TTS）。技术线 Vite + React + TS，包管理器 pnpm 优先 npm 后备。**outline 只规划节奏与信息密度，不规划动画** —— 动画由章节开发时按 PRINCIPLES + ANTI-AI 法则即时设计；outline 可选填**插图描述**，写了就在开发该章前调生图工具（ImageGen）按主题画风产出插图素材。每次点击推进口播稿的一个节拍，每一步独占整屏，进度条平时隐藏只在悬浮时出现。适用场景：用网页做视频（动态 PPT 但不像 PPT）、把口播稿 / 文章变成可交互的解说、为 B 站 / YouTube / 视频号录屏教程、做有电影感的产品 / talk demo。本 Skill 沉淀的是设计方法论 + 协作流程 —— 不绑定任何特定样式 / 字体 / 颜色 —— 因此能复用到任意主题与美学。
+description: 把一篇文章或旁白稿，做成「看起來像影片」的點擊驅動 16:9 網頁簡報，可選擇合成旁白音檔。流程：原始文章 → **一次產出**旁白稿 + outline 開發計畫（含**跨 agent 進度看板**）→ 使用者**一次對齊** 5 件事（稿子 / outline / 主題 / 素材 / 開發模式）→ 網頁開發（**封面 00-cover + 第 1 章主執行緒強制驗收**，其餘逐章 / 循序 / 平行）→ 選擇性音檔合成（provider-agnostic：內建 MiniMax mmx-cli + OpenAI TTS，可換 ElevenLabs / edge-tts / Azure / 自備 TTS）。技術線 Vite + React + TS，套件管理器 pnpm 優先 npm 備援。**outline 只規劃節奏與資訊密度，不規劃動畫** —— 動畫由章節開發時依 PRINCIPLES + ANTI-AI 法則即時設計；outline 可選填**插圖描述**，寫了就在開發該章前呼叫圖片生成工具（ImageGen）依主題畫風產出插圖素材。每次點擊推進旁白稿的一個節拍，每一步獨佔整個畫面，進度條平時隱藏、只在滑鼠停留時出現。適用情境：用網頁做影片（動態簡報但不像簡報）、把旁白稿 / 文章變成可互動的解說、為 YouTube / Instagram Reels / TikTok 錄製教學、做有電影感的產品 / talk demo。本 Skill 沉澱的是設計方法論 + 協作流程 —— 不綁定任何特定樣式 / 字體 / 顏色 —— 因此能重用到任意主題與美學。
 ---
 
 # Web Video Presentation
 
-把一篇文章或口播稿，一步步做成可录屏的"伪装成视频的网页"，可选合成
-口播音频。产出物 = Vite + React + TS 项目 + 按章节切分的音频。
+把一篇文章或旁白稿，一步步做成可錄影的「偽裝成影片的網頁」，可選擇合成
+旁白音檔。產出物 = Vite + React + TS 專案 + 依章節切分的音檔。
 
-## 适用场景
+## 適用情境
 
-- "我有口播稿 / 一篇文章，帮我做成视频" —— 口播驱动的内容
-- 想做 "动态 PPT"
-- 16:9 横屏录屏，大字、留白、每屏都要有动效
-- 教学 / 产品演示 / keynote 想要电影感
-- B 站 / YouTube /抖音视频内容
+- 「我有旁白稿 / 一篇文章，幫我做成影片」—— 旁白驅動的內容
+- 想做「動態簡報」
+- 16:9 橫向螢幕錄影，大字級、留白、每個畫面都要有動態效果
+- 教學 / 產品展示 / keynote 想要電影感
+- YouTube / Instagram Reels / TikTok 影片內容
 
-本 Skill **以方法论 + 协作流程为核心**。脚手架模板提供 token 和原语，
-但每个美学决策（配色、字型、动效气质）都应该针对你的主题重新设计 ——
+本 Skill **以方法論 + 協作流程為核心**。scaffold 樣板提供 token 和原語，
+但每個美學決策（配色、字體、動態調性）都應該針對你的主題重新設計 ——
 不要照搬。
 
 ---
 
-## 工作流总览
+## 工作流總覽
 
 ```
-Phase 1   内容编写
-   1.1  识别用户输入
-   1.2  一次产出 script.md + outline.md
-        （口播稿 + 开发计划 + 顶部进度看板）
+Phase 1   內容撰寫
+   1.1  辨識使用者輸入
+   1.2  一次產出 script.md + outline.md
+        （旁白稿 + 開發計畫 + 頂部進度看板）
    ▼
-   [CP-0] 内容自检（script / outline）
+   [CP-0] 內容自我檢查（script / outline）
    ▼
-[Checkpoint Plan · CP-1]  ← 必须停。一次对齐 5 件事：
-                            稿子 / outline / 主题 / 素材 / 开发模式
+[Checkpoint Plan · CP-1]  ← 必須停。一次對齊 5 件事：
+                            稿子 / outline / 主題 / 素材 / 開發模式
    ▼
-Phase 2   网页开发
-   2.1  脚手架（按确认的主题）
-   2.2  封面 00-cover + 第 1 章 = 主线程 + 完整版本（强制 anchor）
+Phase 2   網頁開發
+   2.1  scaffold（依確認的主題）
+   2.2  封面 00-cover + 第 1 章 = 主執行緒 + 完整版本（強制 anchor）
         ▼
-        [硬节点 · CP-2] 用户验收封面 + 第 1 章 ← 不可跳过
+        [硬節點 · CP-2] 使用者驗收封面 + 第 1 章 ← 不可跳過
         ▼
-   2.3  第 2~N 章（按选定模式：A 逐章 / B 顺序 / C 并行）
+   2.3  第 2~N 章（依選定模式：A 逐章 / B 循序 / C 平行）
         ▼
-        [CP-3] 第 2~N 章验收
+        [CP-3] 第 2~N 章驗收
    ▼
-[Checkpoint Audio · CP-4] ← 必须停。是否合成音频
+[Checkpoint Audio · CP-4] ← 必須停。是否合成音檔
    ▼
-Phase 3   音频合成（可选）
+Phase 3   音檔合成（選擇性）
    ▼
-Phase 4   录屏 + 后期 → [CP-5] 录屏路径确认
+Phase 4   螢幕錄影 + 後製 → [CP-5] 錄影路徑確認
 ```
 
-> **每个 CP 的状态都写在 `outline.md` 顶部「进度看板」里**，不是只存在
-> 对话里。见下文「进度看板协议」。
+> **每個 CP 的狀態都寫在 `outline.md` 頂部「進度看板」裡**，不是只存在
+> 對話裡。見下文「進度看板協定」。
 
-工作目录约定（agent 在用户当前目录下创建 / 编辑）：
+工作目錄慣例（agent 在使用者當前目錄下建立 / 編輯）：
 
 ```
 my-video/
-├── article.md          # 用户给原文时必有 —— 不删！开发阶段画面信息源
-├── script.md           # 必有：保持原文语言的平台化口播稿（决定节拍）
-├── outline.md          # 必有：★ 进度看板 + 开发计划
-│                       #   （章节切分 + 每步内容 + 信息池 + 选填插图描述）
-└── presentation/       # 脚手架产出的 Vite + React + TS 项目
-    ├── .theme / .pm          # 起步用的主题 id / 包管理器（pnpm 或 npm）
-    ├── src/chapters/00-cover/    # ★ 封面固定第一章，内容章节从 01- 起
+├── article.md          # 使用者給原文時必有 —— 不刪！開發階段畫面資訊來源
+├── script.md           # 必有：保持原文語言的平台化旁白稿（決定節拍）
+├── outline.md          # 必有：★ 進度看板 + 開發計畫
+│                       #   （章節切分 + 每步內容 + 資訊池 + 選填插圖描述）
+└── presentation/       # scaffold 產出的 Vite + React + TS 專案
+    ├── .theme / .pm          # 起步用的主題 id / 套件管理器（pnpm 或 npm）
+    ├── src/chapters/00-cover/    # ★ 封面固定為第一章，內容章節從 01- 起
     ├── src/chapters/<NN>-<id>/
-    │   ├── <Chapter>.tsx     # 视觉实现
+    │   ├── <Chapter>.tsx     # 視覺實作
     │   ├── <Chapter>.css
-    │   └── narrations.ts     # ★ step 数 + 口播文本的唯一真相源
+    │   └── narrations.ts     # ★ step 數 + 旁白文字的唯一真相來源
     ├── scripts/
-    │   ├── extract-narrations.ts   # 扫所有 narrations.ts → audio-segments.json
-    │   ├── synthesize-audio.sh     # provider-agnostic runner（循环 segments）
-    │   └── tts-providers/          # 每 provider 一个 .sh（内置 2 个）
-    │       ├── README.md           # 三函数契约 + 5 段现成代码片段（11labs / edge-tts / say / azure / gcloud）
-    │       ├── minimax.sh          # 默认 provider，用 mmx-cli
-    │       └── openai.sh           # 内置 OpenAI TTS（curl + OPENAI_API_KEY）
-    ├── audio-segments.json         # extract 产出（合成前 review）
-    └── public/audio/<id>/<N>.mp3   # 可选：合成的音频
+    │   ├── extract-narrations.ts   # 掃描所有 narrations.ts → audio-segments.json
+    │   ├── synthesize-audio.sh     # provider-agnostic runner（迴圈跑 segments）
+    │   └── tts-providers/          # 每個 provider 一個 .sh（內建 2 個）
+    │       ├── README.md           # 三函式契約 + 5 段現成程式碼片段（11labs / edge-tts / say / azure / gcloud）
+    │       ├── minimax.sh          # 預設 provider，用 mmx-cli
+    │       └── openai.sh           # 內建 OpenAI TTS（curl + OPENAI_API_KEY）
+    ├── audio-segments.json         # extract 產出（合成前 review）
+    └── public/audio/<id>/<N>.mp3   # 選擇性：合成的音檔
 ```
 
-> **关键**：`narrations.ts` 是 step 数和音频合成的**唯一真相源**。
-> 章节 `.tsx` 里的 `if (step === N)` 出现的最大 N + 1 必须等于
-> `narrations.length`。这保证 5 处地方（script / outline / 章节代码 /
-> chapters.ts / 音频文件）永远不会漂。
+> **關鍵**：`narrations.ts` 是 step 數和音檔合成的**唯一真相來源**。
+> 章節 `.tsx` 裡的 `if (step === N)` 出現的最大 N + 1 必須等於
+> `narrations.length`。這保證 5 個地方（script / outline / 章節程式碼 /
+> chapters.ts / 音檔）永遠不會漂移。
 
 ---
 
-## 技术线
+## 技術線
 
-| 项 | 用什么 | 说明 |
+| 項目 | 用什麼 | 說明 |
 |---|---|---|
-| 前端 | **Vite + React + TypeScript** | 脚手架用官方 `create-vite` 的 `react-ts` 模板 |
-| **包管理器** | **pnpm 优先，npm 后备** | `scaffold.sh` 自动探测：有 `pnpm` 就用 pnpm，没有才退回 npm。`--pm=pnpm` / `--pm=npm` 可强制 |
-| 包管理器记录 | `<project>/.pm` | 脚手架把选中的写进去。**后续所有命令（含 subagent、音频阶段）先读它，别猜** |
-| 脚本运行时 | `tsx`（devDependency） | 跑 `scripts/extract-narrations.ts` |
-| package.json 注入 | `node -e`（脚手架内） | 把 `extract-narrations` / `synthesize-audio` 挂进 scripts |
-| TTS runner | `bash` + 每 provider 一个 `.sh` | 见 [`AUDIO.md`](references/AUDIO.md) |
-| 生成插图 | 当前 agent 的生图工具 | 见 [`ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md)，调不到就降级 placeholder |
+| 前端 | **Vite + React + TypeScript** | scaffold 用官方 `create-vite` 的 `react-ts` 樣板 |
+| **套件管理器** | **pnpm 優先，npm 備援** | `scaffold.sh` 自動偵測：有 `pnpm` 就用 pnpm，沒有才退回 npm。`--pm=pnpm` / `--pm=npm` 可強制指定 |
+| 套件管理器紀錄 | `<project>/.pm` | scaffold 把選中的寫進去。**後續所有指令（含 subagent、音檔階段）先讀它，別猜** |
+| 指令碼執行環境 | `tsx`（devDependency） | 跑 `scripts/extract-narrations.ts` |
+| package.json 注入 | `node -e`（scaffold 內） | 把 `extract-narrations` / `synthesize-audio` 掛進 scripts |
+| TTS runner | `bash` + 每個 provider 一個 `.sh` | 見 [`AUDIO.md`](references/AUDIO.md) |
+| 生成插圖 | 當前 agent 的圖片生成工具 | 見 [`ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md)，呼叫不到就降級為 placeholder |
 
-命令写法（本 Skill 全文统一）：
+指令寫法（本 Skill 全文統一）：
 
 ```bash
 pnpm run dev              # npm run dev 亦可
@@ -109,473 +109,473 @@ pnpm exec tsc --noEmit    # 或 npx tsc --noEmit
 
 ---
 
-## 硬性自检协议（贯穿整个 Skill）
+## 強制自我檢查協定（貫穿整個 Skill）
 
-下面三个产出，每一个**完成后必须走自检 → 修复 → 再汇报 / 推进**：
+下面三個產出，每一個**完成後必須走自我檢查 → 修正 → 再回報 / 推進**：
 
-| 产出 | 自检清单出处 |
+| 產出 | 檢查清單出處 |
 |---|---|
-| `script.md` | [`SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) 三层自检（形式 / 风骨 / 念出来） |
-| `outline.md` | [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) 自检 |
-| 单章实现完成 | [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 完工自检 |
+| `script.md` | [`SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) 三層自我檢查（形式 / 風骨 / 唸出來） |
+| `outline.md` | [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) 自我檢查 |
+| 單章實作完成 | [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 完工自我檢查 |
 
-**执行方式**（按能力降级，**优先用更隔离的方式**）：
+**執行方式**（依能力降級，**優先用更隔離的方式**）：
 
-1. **Agent Teams（最优）**：开一个独立的 reviewer agent，给它"产出文件
-   路径 + 对应清单 + 关键上下文"，让它逐项核查并**严格汇报结论**
-   （哪几条 pass / 哪几条 fail + 证据 + 改写建议）。
-2. **subAgent（次优）**：没有 Teams 能力但能开 subagent 就用 subagent
-   走同样流程。
-3. **自检（兜底）**：当前 agent 都没有上述能力，就自己**严格逐项**
-   核查 —— 不允许目测一遍就放行。
+1. **Agent Teams（最佳）**：開一個獨立的 reviewer agent，給它「產出檔案
+   路徑 + 對應清單 + 關鍵脈絡」，讓它逐項檢核並**嚴格回報結論**
+   （哪幾條 pass / 哪幾條 fail + 證據 + 改寫建議）。
+2. **subAgent（次佳）**：沒有 Teams 能力但能開 subagent 就用 subagent
+   走同樣流程。
+3. **自我檢查（保底）**：當前 agent 都沒有上述能力，就自己**嚴格逐項**
+   檢核 —— 不允許目視掃一遍就放行。
 
-**铁律**：拿到结论后**先按 fail 项把产出改完**，再向用户汇报"做完了
-+ 自检结论 + 改了什么"。**直接拿原始结论汇报但不修复 = 违规**。
+**鐵則**：拿到結論後**先照 fail 項把產出改完**，再向使用者回報「做完了
++ 自我檢查結論 + 改了什麼」。**直接拿原始結論回報但不修正 = 違規**。
 
 ---
 
-## 进度看板协议（跨 agent 续接）
+## 進度看板協定（跨 agent 接續）
 
-**所有人工 Checkpoint 的状态都外部化在 `outline.md` 顶部的「进度看板」**
-（格式 spec 见 [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)）。
-理由很实际：换 agent、续接 session、并行 subagent 都看不到之前的对话，
-**只有文件里的状态是可靠的**。
+**所有人工 Checkpoint 的狀態都外部化在 `outline.md` 頂部的「進度看板」**
+（格式 spec 見 [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)）。
+理由很實際：換 agent、接續 session、平行 subagent 都看不到之前的對話，
+**只有檔案裡的狀態是可靠的**。
 
-| 规则 | 内容 |
+| 規則 | 內容 |
 |---|---|
-| **接手先读** | 任何 agent（新 session / subagent / 续接）动手前**先读进度看板**，以看板判断从哪一步开始 —— 不靠对话记忆，也不靠"看起来做到哪了" |
-| **过节点即回写** | 每过一个硬节点（含每章验收）**立刻**回写看板，回写完才准推进下一步 |
-| **subagent 由主线程回写** | 模式 C 的 subagent prompt 必须带上看板当前状态；subagent **自己不写** `outline.md`（避免并发写冲突），完工回报后由主线程统一回写 |
-| **状态词汇固定** | ⬜ 未开始 ／ 🟡 进行中 ／ 🔵 待用户验收 ／ ✅ 已通过 ／ ⏭️ 已跳过 |
-| **禁止** | 看板未回写就进入下一阶段；用自创状态词；只在对话里说"第 3 章过了"却不落盘 |
+| **接手先讀** | 任何 agent（新 session / subagent / 接續）動手前**先讀進度看板**，以看板判斷從哪一步開始 —— 不靠對話記憶，也不靠「看起來做到哪了」 |
+| **過節點就回寫** | 每過一個硬節點（含每章驗收）**立刻**回寫看板，回寫完才准推進下一步 |
+| **subagent 由主執行緒回寫** | 模式 C 的 subagent prompt 必須帶上看板當前狀態；subagent **自己不寫** `outline.md`（避免並行寫入衝突），完工回報後由主執行緒統一回寫 |
+| **狀態詞彙固定** | ⬜ 未開始 ／ 🟡 進行中 ／ 🔵 待使用者驗收 ／ ✅ 已通過 ／ ⏭️ 已跳過 |
+| **禁止** | 看板未回寫就進入下一階段；用自創狀態詞；只在對話裡說「第 3 章過了」卻不寫進檔案 |
 
-六个 checkpoint：
+六個 checkpoint：
 
-| # | 含义 | 什么时候变 ✅ |
+| # | 含義 | 什麼時候變 ✅ |
 |---|---|---|
-| CP-0 | 内容自检（script.md / outline.md） | 自检结论的 fail 项全部改完 |
-| CP-1 | Checkpoint Plan（5 件事对齐） | 用户确认稿子 / outline / 主题 / 素材 / 模式 |
-| CP-2 | 封面 + 第 1 章验收 | 用户明确说 OK / 继续 |
-| CP-3 | 第 2~N 章验收 | 所有内容章节都 ✅（逐章模式下每章单独在章节表里更新） |
-| CP-4 | Checkpoint Audio | 用户选了合成或不合成（不合成记 ⏭️） |
-| CP-5 | Phase 4 录屏路径确认 | 已告知用户该走 Auto 还是 Manual 路径 |
+| CP-0 | 內容自我檢查（script.md / outline.md） | 自我檢查結論的 fail 項全部改完 |
+| CP-1 | Checkpoint Plan（5 件事對齊） | 使用者確認稿子 / outline / 主題 / 素材 / 模式 |
+| CP-2 | 封面 + 第 1 章驗收 | 使用者明確說 OK / 繼續 |
+| CP-3 | 第 2~N 章驗收 | 所有內容章節都 ✅（逐章模式下每章單獨在章節表裡更新） |
+| CP-4 | Checkpoint Audio | 使用者選了合成或不合成（不合成記 ⏭️） |
+| CP-5 | Phase 4 錄影路徑確認 | 已告知使用者該走 Auto 還是 Manual 路徑 |
 
 ---
 
-## 各阶段文件读取指南
+## 各階段檔案閱讀指南
 
-不同阶段读不同的文件。**长会话里 agent 容易遗忘原则**，特别是
-Phase 2.4 的"实现单章"会重复 N 次 —— 每次都要回看核心约束。
+不同階段讀不同的檔案。**長對話裡 agent 容易忘記原則**，特別是
+Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核心限制。
 
-| 阶段 | 必读（每次都看） | 一次性看完 / 按需查 |
+| 階段 | 必讀（每次都看） | 一次性看完 / 依需求查 |
 |---|---|---|
-| **任何阶段 · 接手时** | `outline.md` 顶部**进度看板**（判断从哪一步开始） | —— |
-| Phase 1.1-1.2 内容编写 | `references/SCRIPT-STYLE.md` + `references/OUTLINE-FORMAT.md` + `article.md`（用户原文，如有） | —— |
-| **Checkpoint Plan 确认主题** | —— | `themes/*/theme.json`（动态读全部，列清单 + `bestFor` + `descriptionZh`）；`references/THEMES.md`（用户想了解主题系统 / 想派生新主题时） |
-| Phase 2.1 脚手架 | —— | SKILL.md 本节看一次 |
-| **Phase 2.4 实现单章（×N 次，被 2.2 / 2.3 调用）** | **`references/CHAPTER-CRAFT.md`** 单一入口 —— Part 0 十条原则 / Part 1 开工 5 问 / Part 2 关系→动作决策树 / Part 3 视觉工具箱 / Part 4 时长参考 / Part 5 反 AI 味反模式 / Part 6 代码硬规则（**含 narrations.ts 强制约束**）/ Part 7 完工自检 / Part 8 反馈速查 + 封面章节规格（做 00-cover 时）+ 当前主题的 `themes/<id>/theme.json`（若有 `illustrations` 按情境挑选；若有 `styleReference` 按它定封面版式 / 插图画风）+ 当前章节的 outline.md 段落 + **`article.md` 本章对应段落** + 素材清单 | **`references/ILLUSTRATIONS.md`（该章 outline 写了「插图描述」时**必读**）**；`references/EXAMPLES/`（结构示意，不是抄袭模板）；`references/THEMES.md` 完整 token 契约 |
-| Phase 3 音频合成 | `references/AUDIO.md`（含 narrations.ts → segments.json → 任意 provider 流程，内置 minimax + openai） | `templates/scripts/tts-providers/README.md`（换 provider / 自带 TTS 时） |
-| Phase 4 录屏 + 后期 | `references/RECORDING.md`（含 `?auto=1` 自动录屏） | —— |
-| 选 / 造 / 切主题 | —— | `references/THEMES.md` |
+| **任何階段 · 接手時** | `outline.md` 頂部**進度看板**（判斷從哪一步開始） | —— |
+| Phase 1.1-1.2 內容撰寫 | `references/SCRIPT-STYLE.md` + `references/OUTLINE-FORMAT.md` + `article.md`（使用者原文，如有） | —— |
+| **Checkpoint Plan 確認主題** | —— | `themes/*/theme.json`（動態讀全部，列清單 + `bestFor` + `descriptionZh`）；`references/THEMES.md`（使用者想了解主題系統 / 想衍生新主題時） |
+| Phase 2.1 scaffold | —— | SKILL.md 本節看一次 |
+| **Phase 2.4 實作單章（×N 次，被 2.2 / 2.3 呼叫）** | **`references/CHAPTER-CRAFT.md`** 單一入口 —— Part 0 十條原則 / Part 1 開工 5 問 / Part 2 關係→動作決策樹 / Part 3 視覺工具箱 / Part 4 時長參考 / Part 5 反 AI 味反模式 / Part 6 程式碼硬規則（**含 narrations.ts 強制限制**）/ Part 7 完工自我檢查 / Part 8 回饋速查 + 封面章節規格（做 00-cover 時）+ 當前主題的 `themes/<id>/theme.json`（若有 `illustrations` 依情境挑選；若有 `styleReference` 依它決定封面版型 / 插圖畫風）+ 當前章節的 outline.md 段落 + **`article.md` 本章對應段落** + 素材清單 | **`references/ILLUSTRATIONS.md`（該章 outline 寫了「插圖描述」時**必讀**）**；`references/EXAMPLES/`（結構示意，不是抄襲樣板）；`references/THEMES.md` 完整 token 契約 |
+| Phase 3 音檔合成 | `references/AUDIO.md`（含 narrations.ts → segments.json → 任意 provider 流程，內建 minimax + openai） | `templates/scripts/tts-providers/README.md`（換 provider / 自備 TTS 時） |
+| Phase 4 螢幕錄影 + 後製 | `references/RECORDING.md`（含 `?auto=1` 自動錄影） | —— |
+| 選 / 做 / 換主題 | —— | `references/THEMES.md` |
 
-> **写章节时只读一份 `CHAPTER-CRAFT.md`**。十条原则 / 开工 self-prompting /
-> 决策树 / 反 AI 味反模式 / 完工自检全部并入这一份单一入口。`EXAMPLES/`
-> **不是必读** —— 先按内容自由设计，卡壳才翻（按 anchor 翻"形"，不要照搬）。
-
----
-
-## Phase 1 —— 内容编写（一次产出）
-
-### 1.1 识别用户输入
-
-| 用户给的东西 | 该做的 |
-|---|---|
-| 原始文章（书面语 / 公众号 / 论文 / 博客） | 一次产出 `script.md` + `outline.md`（1.2），过 Checkpoint Plan |
-| 直接的口播稿 / 视频脚本 | 落盘成 `script.md`，一次产出 `outline.md`（1.2 简化版），过 Checkpoint Plan |
-| 啥都没有，只说"帮我做个 X 主题的视频" | **反问**：先给一段素材或大纲。Skill 不替用户构思内容 |
-
-### 1.2 一次产出 script.md + outline.md
-
-**两份产出物在一次思考中完成**：
-
-1. **生成 `script.md`**：按 [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md)
-   的规则把 article 转成保持原文语言的平台化口播稿。**保留 `article.md` 不删**——它是
-   outline 写信息池和章节实现画面时的细节源（双源原则）。
-2. **生成 `outline.md`**：按 [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)
-   规则建**进度看板** + 切章节（**第一个固定 `00-cover` 封面**）+ 切 step
-   + 每章首段抽**信息池** + 需要具象图的章节写**插图描述**。
-
-**outline 的边界**（关键）：
-
-| outline 必须写 | outline 不要写 |
-|---|---|
-| 顶部**进度看板**（CP-0~CP-5 + 逐章状态，初始全 ⬜） | 具体动画类型（blur clear / wipe / 弹簧） |
-| 章节切分（**含 `00-cover`**）/ 每章 step 数 / 估时 | CSS 实现手段（filter / SVG / clip-path） |
-| 每步屏幕内容（hero / 数据 / 标语 / 列表项） | 时长数值（不写 ~2.5s / 80~120ms） |
-| 章节级**信息池**：从 article 抽的数字 / 引用 / 案例 / 标签 | 持续微动 / 错峰量等微观节奏 |
-| 章节级**插图描述**（选填，只写"画什么"） | 插图画风 / 生图 prompt（画风由主题 `styleReference` 定） |
-| 步级关系名前缀（"反差对照" / "递进列表" / "金句" 等可选 hint） | —— |
-
-> **outline 不写动画的理由**：写死动画 = chapter agent 退化为翻译机；
-> 留白让 chapter agent 在每步开工时按 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-> 的"内容驱动决策树"自由设计，才有真正的视频感。详见
-> [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) Part 0 原则 7。
-
-**落盘后必须先走自检再进 Checkpoint Plan**：按上文「硬性自检协议」分别
-对 `script.md` / `outline.md` 执行（优先 Agent Teams → subAgent → 自检），
-按结论修复完成后再进入 Checkpoint Plan。
-
-▸ 回写 `outline.md` 进度看板：**CP-0 → ✅**
+> **寫章節時只讀一份 `CHAPTER-CRAFT.md`**。十條原則 / 開工 self-prompting /
+> 決策樹 / 反 AI 味反模式 / 完工自我檢查全部併入這一份單一入口。`EXAMPLES/`
+> **不是必讀** —— 先依內容自由設計，卡住才翻（依 anchor 參考「形」，不要照搬）。
 
 ---
 
-## Checkpoint Plan · CP-1 —— 5 件事一次对齐（**硬节点**）
+## Phase 1 —— 內容撰寫（一次產出）
 
-`script.md` + `outline.md` 写完后必须停下来。**用户在这一个节点同时确认
+### 1.1 辨識使用者輸入
+
+| 使用者給的東西 | 該做的 |
+|---|---|
+| 原始文章（書面語 / 電子報 / 論文 / 部落格） | 一次產出 `script.md` + `outline.md`（1.2），過 Checkpoint Plan |
+| 直接的旁白稿 / 影片腳本 | 寫入 `script.md`，一次產出 `outline.md`（1.2 簡化版），過 Checkpoint Plan |
+| 什麼都沒有，只說「幫我做個 X 主題的影片」 | **反問**：先給一段素材或大綱。Skill 不替使用者構思內容 |
+
+### 1.2 一次產出 script.md + outline.md
+
+**兩份產出物在一次思考中完成**：
+
+1. **產生 `script.md`**：依 [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md)
+   的規則把 article 轉成保持原文語言的平台化旁白稿。**保留 `article.md` 不刪**——它是
+   outline 寫資訊池和章節實作畫面時的細節來源（雙來源原則）。
+2. **產生 `outline.md`**：依 [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)
+   規則建立**進度看板** + 切章節（**第一個固定 `00-cover` 封面**）+ 切 step
+   + 每章首段抽出**資訊池** + 需要具象圖的章節寫**插圖描述**。
+
+**outline 的邊界**（關鍵）：
+
+| outline 必須寫 | outline 不要寫 |
+|---|---|
+| 頂部**進度看板**（CP-0~CP-5 + 逐章狀態，初始全 ⬜） | 具體動畫類型（blur clear / wipe / 彈簧） |
+| 章節切分（**含 `00-cover`**）/ 每章 step 數 / 估時 | CSS 實作手段（filter / SVG / clip-path） |
+| 每步畫面內容（hero / 數據 / 標語 / 列表項） | 時長數值（不寫 ~2.5s / 80~120ms） |
+| 章節級**資訊池**：從 article 抽的數字 / 引用 / 案例 / 標籤 | 持續微動 / 錯開時間量等微觀節奏 |
+| 章節級**插圖描述**（選填，只寫「畫什麼」） | 插圖畫風 / 生圖 prompt（畫風由主題 `styleReference` 決定） |
+| 步級關係名前綴（「對比反差」/「遞進列表」/「金句」等可選 hint） | —— |
+
+> **outline 不寫動畫的理由**：寫死動畫 = chapter agent 退化成翻譯機；
+> 留白讓 chapter agent 在每步開工時依 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
+> 的「內容驅動決策樹」自由設計，才有真正的影片感。詳見
+> [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) Part 0 原則 7。
+
+**寫入檔案後必須先走自我檢查再進 Checkpoint Plan**：依上文「強制自我檢查協定」分別
+對 `script.md` / `outline.md` 執行（優先 Agent Teams → subAgent → 自我檢查），
+依結論修正完成後再進入 Checkpoint Plan。
+
+▸ 回寫 `outline.md` 進度看板：**CP-0 → ✅**
+
+---
+
+## Checkpoint Plan · CP-1 —— 5 件事一次對齊（**硬節點**）
+
+`script.md` + `outline.md` 寫完後必須停下來。**使用者在這一個節點同時確認
 5 件事**。
 
-### agent 此时要做的预备工作
+### agent 此時要做的準備工作
 
-1. 读所有 `themes/*/theme.json` 拿 `nameZh` / `descriptionZh` / `bestFor`
-   / `mood` —— **不要硬编码清单**（当前内置只有一套，但照样动态读，
-   将来加了主题不用改这里）
-2. 对照 `script.md` 的内容类型 / 语气，说明这套主题**为什么合适**
-   （命中哪几条 `bestFor`）；不合适就主动提议派生新主题
-3. 扫一遍 `outline.md` 末尾"素材清单"部分，把 `⚠️`（待用户提供）和
-   `🎨`（待生图工具产出）两类分开列
+1. 讀所有 `themes/*/theme.json` 拿 `nameZh` / `descriptionZh` / `bestFor`
+   / `mood` —— **不要寫死清單**（目前內建只有一套，但照樣動態讀，
+   將來加了主題不用改這裡）
+2. 對照 `script.md` 的內容類型 / 語氣，說明這套主題**為什麼合適**
+   （命中哪幾條 `bestFor`）；不合適就主動提議衍生新主題
+3. 掃一遍 `outline.md` 末尾「素材清單」部分，把 `⚠️`（待使用者提供）和
+   `🎨`（待圖片生成工具產出）兩類分開列
 
-### 总结模板（骨架，agent 按情况填充）
+### 總結樣板（骨架，agent 依情況填充）
 
 ```
-内容计划写完，产出文件：
-  📄 article.md     {若用户给原文则保留}
-  📄 script.md      {X} 字 / ~{T} 分钟
-  📄 outline.md     进度看板 + 封面 + {N} 章 / {M} 步
-                    + 每章信息池 + 末尾素材清单
+內容計畫寫完，產出檔案：
+  📄 article.md     {若使用者給原文則保留}
+  📄 script.md      {X} 字 / ~{T} 分鐘
+  📄 outline.md     進度看板 + 封面 + {N} 章 / {M} 步
+                    + 每章資訊池 + 末尾素材清單
 
-章节速览：
+章節速覽：
   0. 00-cover 封面           <S> 步 ~<T>s
-  1. <id>     <章节标题>     <S> 步 ~<T>s
+  1. <id>     <章節標題>     <S> 步 ~<T>s
   2. ...
 
-接下来一次对齐 5 件事：
+接下來一次對齊 5 件事：
 
   1. 稿子 (script.md) 要不要改？
-     可以直接编辑文件，或口头告诉我修改方向。
+     可以直接編輯檔案，或口頭告訴我修改方向。
 
-  2. 开发计划 (outline.md) 要不要改？重点看：
-     - 章节切分 / step 数 / 估时是否合理（合理判断：每章 30~60s）
-     - 每步屏幕内容是否清晰
-     - 每章首段「信息池」是否有足够的 article 细节供画面挂
-     - 「插图描述」写得对不对（哪些步真的需要一张具象图）
-     - 末尾素材清单是否完整
+  2. 開發計畫 (outline.md) 要不要改？重點看：
+     - 章節切分 / step 數 / 估時是否合理（合理判斷：每章 30~60s）
+     - 每步畫面內容是否清晰
+     - 每章首段「資訊池」是否有足夠的 article 細節供畫面掛載
+     - 「插圖描述」寫得對不對（哪些步真的需要一張具象圖）
+     - 末尾素材清單是否完整
 
-  3. 主题确认：<nameZh> (<id>)
-     内置只有这一套。它命中你内容的 <bestFor 命中项>；<descriptionZh 摘要>。
-     沿用这套 / 还是要我按 references/THEMES.md 帮你派生一套新的？
+  3. 主題確認：<nameZh> (<id>)
+     內建只有這一套。它命中你內容的 <bestFor 命中項>；<descriptionZh 摘要>。
+     沿用這套 / 還是要我依 references/THEMES.md 幫你衍生一套新的？
 
-  4. 真素材怎么准备？
-     ⚠️ 需要你提供或我从现有素材挑：<列清单>
-        a) 我从 <现有素材路径> 帮你挑   b) 你自己提供   c) 全部 placeholder
-     🎨 我用生图工具产出（照主题 styleReference 的画风）：<列 outline 里的插图描述>
-        现在就可以改描述；开发到该章之前才会真的生成。
+  4. 真實素材怎麼準備？
+     ⚠️ 需要你提供或我從現有素材挑：<列清單>
+        a) 我從 <現有素材路徑> 幫你挑   b) 你自己提供   c) 全部 placeholder
+     🎨 我用圖片生成工具產出（照主題 styleReference 的畫風）：<列 outline 裡的插圖描述>
+        現在就可以改描述；開發到該章之前才會真的生成。
 
-  5. 开发模式选哪个？
+  5. 開發模式選哪個？
 
-     **封面 + 第 1 章无论哪种模式都必须主线程做完 + 用户验收**（强制 anchor）。
-     差异在第 2 章及之后：
+     **封面 + 第 1 章無論哪種模式都必須主執行緒做完 + 使用者驗收**（強制 anchor）。
+     差異在第 2 章及之後：
 
-     A) 默认 · 逐章确认（推荐）
-        每章做完都暂停验收 → 风险可控 / 节奏最稳
-     B) 第 1 章后顺序开发（不并行）
-        第 2~N 章主线程顺序做完后统一验收 → 速度中 / 适合 agent 不支持并行
-     C) 第 1 章后并行开发（subagent）
-        第 2~N 章用 subagent 并行 → 最快 / 用户控并行数（一次几章）
-        ⚠️ 风格各章会有差异（这是预期，主题禁区兜底）
+     A) 預設 · 逐章確認（推薦）
+        每章做完都暫停驗收 → 風險可控 / 節奏最穩
+     B) 第 1 章後循序開發（不平行）
+        第 2~N 章主執行緒循序做完後統一驗收 → 速度中等 / 適合 agent 不支援平行
+     C) 第 1 章後平行開發（subagent）
+        第 2~N 章用 subagent 平行 → 最快 / 使用者控制平行數（一次幾章）
+        ⚠️ 風格各章會有差異（這是預期，主題禁區保底）
 ```
 
-收到反馈后：
-- 稿子 / outline 要改：直接编辑文件，编辑完 ping 一次（或口头描述 agent 改）
-- **主题必须明确**才进入 Phase 2。用户说"主题你决定" → 用内置的
-  `we-bare-bears`，**告诉用户你用了什么、为什么**，给反悔机会
-- 模式选定 → 进 Phase 2
+收到回饋後：
+- 稿子 / outline 要改：直接編輯檔案，編輯完 ping 一次（或口頭描述讓 agent 改）
+- **主題必須明確**才進入 Phase 2。使用者說「主題你決定」→ 用內建的
+  `we-bare-bears`，**告訴使用者你用了什麼、為什麼**，給反悔機會
+- 模式選定 → 進 Phase 2
 
-▸ 回写 `outline.md` 进度看板：**CP-1 → ✅**，备注栏记下「主题：<id> ／
-开发模式：<A/B/C>」
+▸ 回寫 `outline.md` 進度看板：**CP-1 → ✅**，備註欄記下「主題：<id> ／
+開發模式：<A/B/C>」
 
 ---
 
-## Phase 2 —— 网页开发
+## Phase 2 —— 網頁開發
 
-### 2.1 脚手架
+### 2.1 scaffold
 
 ```bash
 bash <path-to-web-video-presentation>/scripts/scaffold.sh \
   ./presentation \
-  --theme=<确认的主题 id>
+  --theme=<確認的主題 id>
 
 bash <path-to-web-video-presentation>/scripts/scaffold.sh --list-themes
 ```
 
-包管理器**自动探测**（pnpm 优先，没有才用 npm），结果写进
-`presentation/.pm` —— 之后所有命令都读它。要强制指定加 `--pm=pnpm` 或
+套件管理器**自動偵測**（pnpm 優先，沒有才用 npm），結果寫進
+`presentation/.pm` —— 之後所有指令都讀它。要強制指定就加 `--pm=pnpm` 或
 `--pm=npm`。
 
-> 自定义主题 → 先按 [`references/THEMES.md`](references/THEMES.md)
-> "创作新主题"流程做一个 `themes/<my-theme>/`，再 `--theme=<my-theme>`。
+> 自訂主題 → 先依 [`references/THEMES.md`](references/THEMES.md)
+> 「建立新主題」流程做一個 `themes/<my-theme>/`，再 `--theme=<my-theme>`。
 
-脚手架带一个 `01-example` demo。在写第一章真实内容前**删掉**：
+scaffold 附一個 `01-example` demo。在寫第一章真實內容前**刪掉**：
 
 ```bash
 rm -rf presentation/src/chapters/01-example
 ```
 
-并把 `presentation/src/registry/chapters.ts` 里 `EXAMPLE_CHAPTER`
-的 import 和数组项移除。
+並把 `presentation/src/registry/chapters.ts` 裡 `EXAMPLE_CHAPTER`
+的 import 和陣列項移除。
 
-### 2.2 封面 + 第 1 章 —— 主线程 + 强制验收（CP-2）
+### 2.2 封面 + 第 1 章 —— 主執行緒 + 強制驗收（CP-2）
 
-**交付范围 = 两个章节**：
+**交付範圍 = 兩個章節**：
 
-| 章节 | 内容 |
+| 章節 | 內容 |
 |---|---|
-| `src/chapters/00-cover/` | **简报封面** —— 整片第一帧。规格见 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)「封面章节（00-cover）」 |
-| `src/chapters/01-<id>/` | 内容第 1 章 |
+| `src/chapters/00-cover/` | **簡報封面** —— 整片第一個畫面。規格見 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)「封面章節（00-cover）」 |
+| `src/chapters/01-<id>/` | 內容第 1 章 |
 
-**两个都做完才进用户验收** —— 不允许"先做第 1 章，封面回头补"。录屏第一
-帧就是封面，它决定观众对整片气质的第一印象；跟第 1 章一起做，气质对不对
-一次就能被看出来。
+**兩個都做完才進使用者驗收** —— 不允許「先做第 1 章，封面回頭補」。錄影第一
+個畫面就是封面，它決定觀眾對整片調性的第一印象；跟第 1 章一起做，調性對不對
+一次就能被看出來。
 
-**核心**：都是完整版本一次到位（节奏 + 视觉 + 真素材齐全）。
-**没有"骨架版"概念** —— 这一批就要做出**用户能直接验收**的样板。
+**核心**：都是完整版本一次到位（節奏 + 視覺 + 真實素材齊全）。
+**沒有「骨架版」概念** —— 這一批就要做出**使用者能直接驗收**的樣板。
 
-为什么必须主线程：
+為什麼必須主執行緒：
 
-- 它是 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 这套指引在**当前
-  主题 + 当前题材**下的第一次落地
-- 如果指引有盲区 / 主题颜色 / 字体 token 不够用，这一批一定会暴露 ——
-  这时候有人类反馈就能修指引 / 调主题，**早改成本最低**
-- 后续章节（无论顺序 / 并行）都要参考第 1 章的代码模式，所以它 =
-  当次项目的"风格锚点（不强求章节间一致，但单章自身得有完整说服力）"
+- 它是 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 這套指引在**當前
+  主題 + 當前題材**下的第一次落地
+- 如果指引有盲點 / 主題顏色 / 字體 token 不夠用，這一批一定會暴露 ——
+  這時候有人類回饋就能修指引 / 調主題，**早改成本最低**
+- 後續章節（無論循序 / 平行）都要參考第 1 章的程式碼模式，所以它 =
+  這次專案的「風格錨點（不強求章節間一致，但單章自身得有完整說服力）」
 
-**做完后必须停下来**等用户验收：
+**做完後必須停下來**等使用者驗收：
 
 ```
-封面 + 第 1 章 <id> 做完了，dev server 在 localhost:5173 运行。
+封面 + 第 1 章 <id> 做完了，dev server 在 localhost:5173 執行中。
 
-验收重点：
-  □ 封面：主标题 / 副标 / 讲者或出处齐全，第一帧就定调主题气质？
-  □ 视觉气质对不对？符合 <theme nameZh> 的预期吗？
-  □ 节奏对不对？某些步太快 / 太慢 / 信息太薄？
-  □ 内容驱动动画是否到位？还是有几步是无脑入场动画？
-  □ 双源原则：屏幕画面有没有"口播没念但 article 能挂"的细节？
-  □ 生成插图（若有）：画风跟主题对得上吗？图里有没有跑出文字？
-  □ 反 AI 味检查：紫粉渐变 / 圆角彩色边框 / 假插画 / emoji 是否有？
+驗收重點：
+  □ 封面：主標題 / 副標 / 講者或出處齊全，第一個畫面就定調主題調性？
+  □ 視覺調性對不對？符合 <theme nameZh> 的預期嗎？
+  □ 節奏對不對？某些步太快 / 太慢 / 資訊太薄？
+  □ 內容驅動動畫是否到位？還是有幾步是無腦進場動畫？
+  □ 雙來源原則：畫面上有沒有「旁白沒唸但 article 能掛載」的細節？
+  □ 生成插圖（若有）：畫風跟主題對得上嗎？圖裡有沒有跑出文字？
+  □ 反 AI 味檢查：紫粉漸層 / 圓角彩色邊框 / 假插畫 / emoji 是否有？
 
-问题告诉我，我针对性改。OK 了告诉我"继续"，我按选定模式做第 2 章及之后。
+有問題告訴我，我針對性修改。OK 了告訴我「繼續」，我依選定模式做第 2 章及之後。
 ```
 
-▸ 用户说 OK 后回写 `outline.md` 进度看板：**CP-2 → ✅**，章节表
+▸ 使用者說 OK 後回寫 `outline.md` 進度看板：**CP-2 → ✅**，章節表
 `00-cover` / `01-<id>` → ✅
 
-### 2.3 第 2~N 章 —— 按选定模式
+### 2.3 第 2~N 章 —— 依選定模式
 
-**所有模式下的共同规则**：每章独立按 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-开发。**风格不强求章节间完全一致** —— 主题颜色 / 字体 token 兜底视觉
-统一，动画 / 节奏 / 视觉演示由章节自由发挥是设计预期。
+**所有模式下的共同規則**：每章獨立依 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
+開發。**風格不強求章節間完全一致** —— 主題顏色 / 字體 token 保底維持視覺
+統一，動畫 / 節奏 / 視覺演示由章節自由發揮是設計預期。
 
-#### 模式 A · 默认 · 逐章确认
+#### 模式 A · 預設 · 逐章確認
 
-第 2 章做完 → 暂停验收 → OK → 第 3 章 → 暂停 → ... → 第 N 章。**每章
-独立验收**，问题随时改，**风险最低，节奏最稳**。**用户不明确选模式时
-默认走这个**。
+第 2 章做完 → 暫停驗收 → OK → 第 3 章 → 暫停 → ... → 第 N 章。**每章
+獨立驗收**，有問題隨時改，**風險最低，節奏最穩**。**使用者不明確選模式時
+預設走這個**。
 
-▸ 每章验收通过就回写章节表该行 → ✅；全部 ✅ 后 **CP-3 → ✅**
+▸ 每章驗收通過就回寫章節表該列 → ✅；全部 ✅ 後 **CP-3 → ✅**
 
-#### 模式 B · 第 1 章后顺序开发
+#### 模式 B · 第 1 章後循序開發
 
-第 2 章 → 第 3 章 → ... → 第 N 章 **主线程顺序做完，最后统一验收**。
-速度中等，适合 agent 不支持并行任务的环境。
+第 2 章 → 第 3 章 → ... → 第 N 章 **主執行緒循序做完，最後統一驗收**。
+速度中等，適合 agent 不支援平行任務的環境。
 
-▸ 每章做完先记 🔵（待验收），统一验收通过后一次刷成 ✅ + **CP-3 → ✅**
+▸ 每章做完先記 🔵（待驗收），統一驗收通過後一次刷成 ✅ + **CP-3 → ✅**
 
-#### 模式 C · 第 1 章后并行开发（subagent）
+#### 模式 C · 第 1 章後平行開發（subagent）
 
-用 subagent 把第 2~N 章并行做完，最大并行数由用户控制（"一次 4 章"
-/ "一次 2 章"）。**最快，但风格各章会有差异** —— 这是预期，因为：
+用 subagent 把第 2~N 章平行做完，最大平行數由使用者控制（「一次 4 章」
+/「一次 2 章」）。**最快，但風格各章會有差異** —— 這是預期，因為：
 
-1. 每个 subagent 看不到别的 subagent 产出，无法机械对齐
-2. 章节代码物理分离（每章一个文件夹 / 自己的 CSS 前缀），不会互相
-   破坏
-3. 主题 token 兜底视觉统一（颜色 / 字体 / hero 数字 / 卡片 / 分割线
-   性格 / 装饰），气质不会跑偏
-4. **风格不一致 = 人手写视频的呼吸感**（多 voice / 多视角）
+1. 每個 subagent 看不到別的 subagent 產出，無法機械對齊
+2. 章節程式碼物理分離（每章一個資料夾 / 自己的 CSS 前綴），不會互相
+   破壞
+3. 主題 token 保底維持視覺統一（顏色 / 字體 / hero 數字 / 卡片 / 分隔線
+   個性 / 裝飾），調性不會跑偏
+4. **風格不一致 = 人手寫影片的呼吸感**（多 voice / 多視角）
 
-并行 subagent 的 prompt 必须包含：
+平行 subagent 的 prompt 必須包含：
 
-- 当前章节 outline 段落（含信息池 + **本章插图描述**，若有）
-- `references/CHAPTER-CRAFT.md` 的路径（**单一必读** —— 视觉演示要求 +
-  逐步揭示 + 双源原则 + 反 AI 味 + 代码红线 + 完工自检全部在这一份里）
-- **本章有插图描述时**：`references/ILLUSTRATIONS.md` 的路径 + 主题
-  `styleReference` 的实际文件路径（subagent 自己生成自己那几张图）
-- 当前主题 `theme.json` 的 `descriptionZh` / `mood` / `bestFor`（参考气质
-  即可，动画 / 时长 / 字号 / emoji 由 chapter agent 自由决定）
-- **第 1 章代码作为"代码风格"参考**（不是"视觉抄袭对象"）
-- **进度看板当前状态**（让 subagent 知道整体进行到哪）
-- 包管理器：读 `presentation/.pm`（本项目是 pnpm 还是 npm）
-- 硬规则：每章独立 CSS 前缀（`.cd-` / `.mg-` / `.wg-` / ...）；
-  不修改 `chapters.ts`；**不写 `outline.md`**（进度看板由主线程回写，
-  避免并发冲突）；完工跑 `pnpm exec tsc --noEmit`（或 `npx tsc --noEmit`）
+- 當前章節 outline 段落（含資訊池 + **本章插圖描述**，若有）
+- `references/CHAPTER-CRAFT.md` 的路徑（**單一必讀** —— 視覺演示要求 +
+  逐步揭示 + 雙來源原則 + 反 AI 味 + 程式碼紅線 + 完工自我檢查全部在這一份裡）
+- **本章有插圖描述時**：`references/ILLUSTRATIONS.md` 的路徑 + 主題
+  `styleReference` 的實際檔案路徑（subagent 自己生成自己那幾張圖）
+- 當前主題 `theme.json` 的 `descriptionZh` / `mood` / `bestFor`（參考調性
+  即可，動畫 / 時長 / 字級 / emoji 由 chapter agent 自由決定）
+- **第 1 章程式碼作為「程式碼風格」參考**（不是「視覺抄襲對象」）
+- **進度看板當前狀態**（讓 subagent 知道整體進行到哪）
+- 套件管理器：讀 `presentation/.pm`（本專案是 pnpm 還是 npm）
+- 硬規則：每章獨立 CSS 前綴（`.cd-` / `.mg-` / `.wg-` / ...）；
+  不修改 `chapters.ts`；**不寫 `outline.md`**（進度看板由主執行緒回寫，
+  避免並行衝突）；完工跑 `pnpm exec tsc --noEmit`（或 `npx tsc --noEmit`）
 
-▸ subagent 全部回报后由**主线程**统一回写章节表 + **CP-3 → ✅**
+▸ subagent 全部回報後由**主執行緒**統一回寫章節表 + **CP-3 → ✅**
 
-**重要**：无论选哪种模式，**用户随时可以中途切换模式**。第 2 章 OK
-后用户说"剩下的并行" / "剩下的逐章" 都行。
+**重要**：無論選哪種模式，**使用者隨時可以中途切換模式**。第 2 章 OK
+後使用者說「剩下的平行」/「剩下的逐章」都行。
 
-### 2.4 实现单章（每章必走）
+### 2.4 實作單章（每章必走）
 
-#### 2.4.0 插图素材准备（**只在本章 outline 写了「插图描述」时做**）
+#### 2.4.0 插圖素材準備（**只在本章 outline 寫了「插圖描述」時做**）
 
-**动手写章节代码之前**先把图备齐：
+**動手寫章節程式碼之前**先把圖備齊：
 
-1. 读 [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md)
-2. 先查主题 `theme.json` 的 `illustrations` 有没有现成的能命中，能用就用
-3. 要生成的：以主题 `styleReference` 为画风锚，调当前 agent 的生图工具
-   （Claude Code 用 ImageGen），产出到
+1. 讀 [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md)
+2. 先查主題 `theme.json` 的 `illustrations` 有沒有現成的能命中，能用就用
+3. 要生成的：以主題 `styleReference` 為畫風錨點，呼叫當前 agent 的圖片生成工具
+   （Claude Code 用 ImageGen），產出到
    `presentation/public/illustrations/<chapter-id>/<slug>.png`
-4. 调不到工具 / 生成失败 → 降级 placeholder 占位卡，**并在交付时明确
-   告诉用户哪张没生成出来**
-5. 回写 `outline.md` 素材清单：`🎨` → `✓`（或降级后的 `⚠️`）
+4. 呼叫不到工具 / 生成失敗 → 降級為 placeholder 佔位卡，**並在交付時明確
+   告訴使用者哪張沒生成出來**
+5. 回寫 `outline.md` 素材清單：`🎨` → `✓`（或降級後的 `⚠️`）
 
-#### 2.4.1 章节实现
+#### 2.4.1 章節實作
 
-详细指引见 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) ——
-**单一必读入口**，覆盖：封面规格 / 视觉演示要求 / 逐步揭示 / 内容取舍 /
-双源原则 / 视频演示基本审美 / 反 AI 味 / 代码红线 / 完工自检。
+詳細指引見 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) ——
+**單一必讀入口**，涵蓋：封面規格 / 視覺演示要求 / 逐步揭示 / 內容取捨 /
+雙來源原則 / 影片演示基本美感 / 反 AI 味 / 程式碼紅線 / 完工自我檢查。
 
-**核心要点**（CHAPTER-CRAFT.md 详述）：
+**核心要點**（CHAPTER-CRAFT.md 詳述）：
 
-- **每章必须有 CSS / SVG / Canvas / JS 视觉演示**，禁纯文字章节 ——
-  **生成插图不算数**，演示元素必须章节自己画
-- **逐步揭示**：清单 / 列表必须 1 项 = 1 step，禁一次全展示
-- **双源原则**：节奏跟口播稿（顺序不能乱），细节回原文章抽（信息池 +
+- **每章必須有 CSS / SVG / Canvas / JS 視覺演示**，禁止純文字章節 ——
+  **生成插圖不算數**，演示元素必須章節自己畫
+- **逐步揭示**：清單 / 列表必須 1 項 = 1 step，禁止一次全部展示
+- **雙來源原則**：節奏跟旁白稿（順序不能亂），細節回原文章抽（資訊池 +
   本章 article 段落）
-- **主题角色素材**：`theme.json` 若声明 `illustrations`，只在该 step 确实
-  描述人物行动 / 分工 / 情绪 / 协作时穿插；每个 scene 最多一张，角色
-  服务叙事而不是充当固定角标或背景装饰
-- **完工自检逐项过**，不达标回去改 —— 按上文「硬性自检协议」执行
-  （优先 Agent Teams → subAgent → 自检），**改完再向用户汇报本章交付**
+- **主題角色素材**：`theme.json` 若宣告 `illustrations`，只在該 step 確實
+  描述人物行動 / 分工 / 情緒 / 協作時穿插；每個 scene 最多一張，角色
+  服務敘事而不是充當固定角標或背景裝飾
+- **完工自我檢查逐項過**，不達標回去改 —— 依上文「強制自我檢查協定」執行
+  （優先 Agent Teams → subAgent → 自我檢查），**改完再向使用者回報本章交付**
 
-### 2.5 大改后 bump STORAGE_KEY
+### 2.5 大改後 bump STORAGE_KEY
 
-改动 `chapters.ts`（增加 / 删除 / 重排章节，或某章 `narrations.ts`
-长度变化）后，**bump** `presentation/src/hooks/useStepper.ts` 的
-`STORAGE_KEY`（如 `v4` → `v5`），避免持久化游标落到不存在的 step 上。
+改動 `chapters.ts`（新增 / 刪除 / 重排章節，或某章 `narrations.ts`
+長度變化）後，**bump** `presentation/src/hooks/useStepper.ts` 的
+`STORAGE_KEY`（如 `v4` → `v5`），避免持久化的游標落到不存在的 step 上。
 
 ---
 
-## Checkpoint Audio · CP-4 —— 是否合成音频（**硬节点**）
+## Checkpoint Audio · CP-4 —— 是否合成音檔（**硬節點**）
 
-Phase 2 结束后必须停下来，问用户：
+Phase 2 結束後必須停下來，問使用者：
 
 ```
-网页做完，封面 + {N} 章 {M} 步，dev server 在 localhost:5173 跑着。
+網頁做完，封面 + {N} 章 {M} 步，dev server 在 localhost:5173 跑著。
 
-要不要合成音频做"自动播放录屏"？
-  ✓ 合成 → 扫所有章节的 narrations.ts 出 audio-segments.json，
-           调 TTS provider 合成每步一个 mp3 到 public/audio/。
-           合成完后用 ?auto=1 模式可以一镜到底录屏（音视频天然同步）。
-           内置两个 provider：
-             • minimax (mmx-cli)    —— 默认，中文音色稳
-             • openai  (OPENAI_API_KEY) —— curl-based，多数已有 key
-           其它后端 (ElevenLabs / edge-tts 免费 / macOS say 离线 /
-           Azure / Google) 见 scripts/tts-providers/README.md 的现成片段。
-  ✗ 不合成 → 跳过 Phase 3，直接 Phase 4 用手动录屏 + 后期配音。
+要不要合成音檔做「自動播放錄影」？
+  ✓ 合成 → 掃描所有章節的 narrations.ts 出 audio-segments.json，
+           呼叫 TTS provider 合成每步一個 mp3 到 public/audio/。
+           合成完後用 ?auto=1 模式可以一鏡到底錄影（影音天然同步）。
+           內建兩個 provider：
+             • minimax (mmx-cli)    —— 預設，中文音色穩
+             • openai  (OPENAI_API_KEY) —— curl-based，多數人已有 key
+           其它後端 (ElevenLabs / edge-tts 免費 / macOS say 離線 /
+           Azure / Google) 見 scripts/tts-providers/README.md 的現成片段。
+  ✗ 不合成 → 跳過 Phase 3，直接 Phase 4 用手動錄影 + 後製配音。
 ```
 
 要合成 → Phase 3。不合成 → 直接 Phase 4。
 
-▸ 回写 `outline.md` 进度看板：**CP-4 → ✅**（不合成记 **⏭️**）
+▸ 回寫 `outline.md` 進度看板：**CP-4 → ✅**（不合成記 **⏭️**）
 
 ---
 
-## Phase 3 —— 音频合成（可选）
+## Phase 3 —— 音檔合成（選擇性）
 
-详细流程见 [`references/AUDIO.md`](references/AUDIO.md)。简版
-（`pnpm` 换成 `npm` 也行 —— 看 `presentation/.pm`）：
+詳細流程見 [`references/AUDIO.md`](references/AUDIO.md)。簡版
+（`pnpm` 換成 `npm` 也行 —— 看 `presentation/.pm`）：
 
 ```bash
 cd presentation
-pnpm run extract-narrations   # 扫所有 narrations.ts → audio-segments.json
-# 让用户扫一眼 audio-segments.json 确认文本对
-pnpm run synthesize-audio                       # 默认 minimax provider，增量
-# 或用内置 openai (要 OPENAI_API_KEY):
+pnpm run extract-narrations   # 掃描所有 narrations.ts → audio-segments.json
+# 讓使用者掃一眼 audio-segments.json 確認文字對
+pnpm run synthesize-audio                       # 預設 minimax provider，增量
+# 或用內建 openai (要 OPENAI_API_KEY):
 PRESENTATION_TTS=openai pnpm run synthesize-audio
-# 或自定义：写一个 scripts/tts-providers/<name>.sh，见该目录的 README.md
+# 或自訂：寫一個 scripts/tts-providers/<name>.sh，見該目錄的 README.md
 ```
 
-合成完告诉用户：输出位置 / 总段数 / 哪些段时长异常（太长 = 该 step 拆
-分；太短 = 文案太薄）—— 给最后一次校准节奏的机会。然后进入 Phase 4。
+合成完告訴使用者：輸出位置 / 總段數 / 哪些段時長異常（太長 = 該 step 該拆
+分；太短 = 文案太薄）—— 給最後一次校準節奏的機會。然後進入 Phase 4。
 
 ---
 
-## Phase 4 —— 录屏 + 后期
+## Phase 4 —— 螢幕錄影 + 後製
 
-详见 [`references/RECORDING.md`](references/RECORDING.md)。两种路径：
+詳見 [`references/RECORDING.md`](references/RECORDING.md)。兩種路徑：
 
-| 场景 | 推荐路径 |
+| 情境 | 建議路徑 |
 |---|---|
-| Phase 3 已合成音频 | **Auto 模式一镜到底**：浏览器开 `localhost:5173/?auto=1` → 按 SPACE → 整片自动播完 → 停录 → 裁头尾即成片，**无需后期对音轨** |
-| Phase 3 跳过 | 默认 Manual 模式手动点击推进 → 后期任意剪辑工具配音 |
+| Phase 3 已合成音檔 | **Auto 模式一鏡到底**：瀏覽器開 `localhost:5173/?auto=1` → 按 SPACE → 整片自動播完 → 停止錄影 → 裁掉頭尾即成片，**不需後製對音軌** |
+| Phase 3 跳過 | 預設 Manual 模式手動點擊推進 → 後製用任意剪輯工具配音 |
 
-> agent 在 Phase 3 / Checkpoint Audio 后**主动告诉用户**适合的录屏路径。
+> agent 在 Phase 3 / Checkpoint Audio 後**主動告訴使用者**適合的錄影路徑。
 
-▸ 告知后回写 `outline.md` 进度看板：**CP-5 → ✅**
+▸ 告知後回寫 `outline.md` 進度看板：**CP-5 → ✅**
 
 ---
 
-## 十条原则（一句话清单）
+## 十條原則（一句話清單）
 
-完整展开见 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-Part 0 —— **写章节时回那里查**，下面只是索引。
+完整展開見 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
+Part 0 —— **寫章節時回那裡查**，下面只是索引。
 
-| # | 原则 | 一句话 |
+| # | 原則 | 一句話 |
 |---|---|---|
-| 1 | 16:9 固定舞台 | 内容 1920×1080 + transform scale，没有响应式 |
-| 2 | 全局 step 计数器 | 章节是 step 的纯函数，无定时器 |
-| 3 | 每步独占整屏 | `if (step === N) return <FullScene />` |
-| 4 | 口播节拍 = step | 一节拍 = 一 step = 一聚焦想法 |
-| 5 | 隐藏的边角控件 | 进度条 / 翻页器默认 opacity 0 |
-| 6 | 舞台无 chrome | 没有 header / footer / 页码 / 品牌条 |
-| 7 | **内容驱动动画** | 先找内在动作，找不到才入场动画兜底；持续微动慎用 |
-| 8 | 多点逐个揭示 | 1 项 = 1 step，禁同步 stagger 上 N 项 |
-| 9 | 整片同一主题 | 章节间不翻表面色；**颜色 / 字体走 token**，其它尺度章节自由 |
-| 10 | 双源原则 | script 定节拍，**article 定画面密度**（落到信息池） |
+| 1 | 16:9 固定舞台 | 內容 1920×1080 + transform scale，沒有響應式 |
+| 2 | 全域 step 計數器 | 章節是 step 的純函式，無計時器 |
+| 3 | 每步獨佔整個畫面 | `if (step === N) return <FullScene />` |
+| 4 | 旁白節拍 = step | 一節拍 = 一 step = 一個聚焦的想法 |
+| 5 | 隱藏的邊角控制項 | 進度條 / 翻頁器預設 opacity 0 |
+| 6 | 舞台無 chrome | 沒有 header / footer / 頁碼 / 品牌條 |
+| 7 | **內容驅動動畫** | 先找內在動作，找不到才用進場動畫保底；持續微動慎用 |
+| 8 | 多點逐個揭示 | 1 項 = 1 step，禁止同步 stagger 上 N 項 |
+| 9 | 整片同一主題 | 章節間不換表面色；**顏色 / 字體走 token**，其它尺度章節自由 |
+| 10 | 雙來源原則 | script 定節拍，**article 定畫面密度**（落到資訊池） |
 
 ---
 
-## 常见用户反馈速查
+## 常見使用者回饋速查
 
-简化表见 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-Part 8「常见反馈速查」。**关键**：先定位是哪一层（节奏 / 视觉 / 内容
-/ 代码），再改最小切片，**不要重做整章**。
+簡化表見 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
+Part 8「常見回饋速查」。**關鍵**：先定位是哪一層（節奏 / 視覺 / 內容
+/ 程式碼），再改最小切片，**不要重做整章**。
 
 ---
 
-## 相关资源
+## 相關資源
 
-按"何时读"标注，避免一次性全读：
+依「何時讀」標註，避免一次全部讀完：
 
-| 文件 | 何时读 | 内容 |
+| 檔案 | 何時讀 | 內容 |
 |---|---|---|
-| [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) | Phase 1.2 必读 | 文章 → 口播稿规则、平台变体 |
-| [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) | Phase 1.2 必读 · **接手时查进度看板** | outline.md 字段 spec、**进度看板**、`00-cover` 编号约定、命名约定、章节切分、信息池、**插图描述** |
-| [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) | **Phase 2.4 每章单一必读入口** | Part 0 十条原则 / Part 1 开工 5 问 / Part 2 关系→动作决策树 / Part 3 视觉工具箱 / Part 4 时长 / Part 5 反 AI 味反模式 / Part 6 代码硬规则 / Part 7 完工自检 / Part 8 反馈速查 / **封面章节（00-cover）规格** |
-| [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md) | **该章 outline 写了「插图描述」时必读** | 该生成什么 / 不该生成什么、以主题 `styleReference` 为画风锚的 prompt 配方、输出路径、调不到生图工具时的 placeholder 降级 |
-| [`references/EXAMPLES/`](references/EXAMPLES/) | **可选** —— 看结构 | 章节结构示意（hook / list-reveal / case-tech-review）；**不是抄袭模板** |
-| [`references/THEMES.md`](references/THEMES.md) | 选 / 造 / 切主题时 | 完整 token 契约 + 内置主题清单 + 创作流程 |
-| [`references/AUDIO.md`](references/AUDIO.md) | Phase 3 才读 | provider-agnostic 音频合成流程、内置 minimax 用法、换 provider 路径、故障排查 |
-| [`templates/scripts/tts-providers/README.md`](templates/scripts/tts-providers/README.md) | 换 / 加 TTS provider 时 | 三函数契约 + 内置 2 个 (minimax / openai) + 5 种现成代码片段（ElevenLabs / edge-tts / macOS say / Azure / Google） |
-| [`references/RECORDING.md`](references/RECORDING.md) | Phase 4 才读 | 录屏工具 + 后期合成 |
-| [`themes/`](themes) | Checkpoint Plan / Phase 1.2 时翻 | 内置主题（含 `theme.json` + `tokens.css` + 可选 `assets/`）。当前只有 `we-bare-bears`，要别的气质照 THEMES.md 派生 |
-| [`scripts/scaffold.sh`](scripts/scaffold.sh) | Phase 2.1 跑一次 | 一键项目脚手架（pnpm 优先 / npm 后备，`--pm=` 可强制） |
+| [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) | Phase 1.2 必讀 | 文章 → 旁白稿規則、平台變體 |
+| [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) | Phase 1.2 必讀 · **接手時查進度看板** | outline.md 欄位 spec、**進度看板**、`00-cover` 編號慣例、命名慣例、章節切分、資訊池、**插圖描述** |
+| [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) | **Phase 2.4 每章單一必讀入口** | Part 0 十條原則 / Part 1 開工 5 問 / Part 2 關係→動作決策樹 / Part 3 視覺工具箱 / Part 4 時長 / Part 5 反 AI 味反模式 / Part 6 程式碼硬規則 / Part 7 完工自我檢查 / Part 8 回饋速查 / **封面章節（00-cover）規格** |
+| [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md) | **該章 outline 寫了「插圖描述」時必讀** | 該生成什麼 / 不該生成什麼、以主題 `styleReference` 為畫風錨點的 prompt 配方、輸出路徑、呼叫不到圖片生成工具時的 placeholder 降級 |
+| [`references/EXAMPLES/`](references/EXAMPLES/) | **選擇性** —— 看結構 | 章節結構示意（hook / list-reveal / case-tech-review）；**不是抄襲樣板** |
+| [`references/THEMES.md`](references/THEMES.md) | 選 / 做 / 換主題時 | 完整 token 契約 + 內建主題清單 + 建立流程 |
+| [`references/AUDIO.md`](references/AUDIO.md) | Phase 3 才讀 | provider-agnostic 音檔合成流程、內建 minimax 用法、換 provider 路徑、疑難排解 |
+| [`templates/scripts/tts-providers/README.md`](templates/scripts/tts-providers/README.md) | 換 / 加 TTS provider 時 | 三函式契約 + 內建 2 個 (minimax / openai) + 5 種現成程式碼片段（ElevenLabs / edge-tts / macOS say / Azure / Google） |
+| [`references/RECORDING.md`](references/RECORDING.md) | Phase 4 才讀 | 螢幕錄影工具 + 後製合成 |
+| [`themes/`](themes) | Checkpoint Plan / Phase 1.2 時翻 | 內建主題（含 `theme.json` + `tokens.css` + 選擇性 `assets/`）。目前只有 `we-bare-bears`，要別的調性照 THEMES.md 衍生 |
+| [`scripts/scaffold.sh`](scripts/scaffold.sh) | Phase 2.1 跑一次 | 一鍵專案 scaffold（pnpm 優先 / npm 備援，`--pm=` 可強制指定） |

@@ -26,7 +26,7 @@ export function AutoToggle({ mode, onCycle }: Props) {
           e.stopPropagation();
           onCycle();
         }}
-        title="切换播放模式（M）"
+        title="切換播放模式（M）"
       >
         <span className="at-dot" />
         <span className="at-label">{LABEL[mode]}</span>

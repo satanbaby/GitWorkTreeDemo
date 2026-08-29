@@ -26,7 +26,7 @@ export default function ExampleChapter({ step }: ChapterStepProps) {
           <div className="kicker">Chapter 01 — Example</div>
           <h1 className="ex-cover-h">
             <MaskReveal show duration={900}>
-              <span className="serif-cn">这是&nbsp;</span>
+              <span className="serif-cn">這是&nbsp;</span>
             </MaskReveal>
             <MaskReveal show delay={300} duration={900}>
               <span className="serif-it ex-em">first&nbsp;step</span>
@@ -59,10 +59,10 @@ export default function ExampleChapter({ step }: ChapterStepProps) {
             <div className="kicker">每一步</div>
             <h2 className="ex-split-h">
               <MaskReveal show duration={900}>
-                <span className="serif-cn">独占&nbsp;</span>
+                <span className="serif-cn">獨佔&nbsp;</span>
               </MaskReveal>
               <MaskReveal show delay={300} duration={900}>
-                <span className="serif-it ex-em">整个屏幕</span>
+                <span className="serif-it ex-em">整個畫面</span>
               </MaskReveal>
               <MaskReveal show delay={650} duration={900}>
                 <span className="serif-cn">.</span>
