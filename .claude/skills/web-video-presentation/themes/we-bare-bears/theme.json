@@ -20,6 +20,11 @@
     "輕鬆文化 / 生活內容"
   ],
   "illustrationGuidance": "角色插圖只在口播節拍確實描述人物行動、分工、情緒或協作情境時穿插；一個 scene 最多使用一張，保留大面積留白給核心資訊，不把角色當作每頁固定裝飾。",
+  "styleReference": {
+    "path": "/theme-assets/title-page-style-reference.png",
+    "layoutNote": "封面版式基準：左上大標題 + 副標 + 天空藍短橫線，左下淡紫圓角重點清單卡（編號圓點 + 條列），右側大面積角色場景插圖，底部整寬圓角虛線總結條。",
+    "styleNote": "全片插圖畫風基準：熊熊繪本風 —— 圓潤炭黑手繪輪廓、奶油紙底、天空藍與蜂蜜木色為主、淡紫／淡黃柔和幾何形狀點綴、平塗無寫實陰影、角色表情友善。"
+  },
   "illustrations": [
     {
       "id": "grizzly-presenting",

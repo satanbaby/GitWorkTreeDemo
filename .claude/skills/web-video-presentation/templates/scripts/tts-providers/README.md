@@ -12,20 +12,22 @@
 
 ## 怎么用
 
+> 下面写 `pnpm`；项目用 npm 就换成 `npm run`，参数完全一样。
+
 ```bash
 # 默认（minimax）
-npm run synthesize-audio
+pnpm run synthesize-audio
 
 # 换 provider
-PRESENTATION_TTS=openai npm run synthesize-audio
-npm run synthesize-audio -- --provider=elevenlabs
+PRESENTATION_TTS=openai pnpm run synthesize-audio
+pnpm run synthesize-audio -- --provider=elevenlabs
 
 # 指定音色（每个 provider 自己解析）
-PRESENTATION_TTS_VOICE=alloy npm run synthesize-audio
-npm run synthesize-audio -- --voice=zh-CN-YunxiNeural
+PRESENTATION_TTS_VOICE=alloy pnpm run synthesize-audio
+pnpm run synthesize-audio -- --voice=zh-CN-YunxiNeural
 
 # 强制全部重合成
-npm run synthesize-audio -- --force
+pnpm run synthesize-audio -- --force
 ```
 
 `--provider` 和 `--voice` 的命令行参数会覆盖 env var。
@@ -49,7 +51,7 @@ npm run synthesize-audio -- --force
 1. 在这个目录建 `<name>.sh`（小写、kebab-case）
 2. 实现 `tts_synthesize text out_path [voice]`（必需）
 3. 可选实现 `tts_check`（启动前校验环境）和 `tts_install_help`（失败时打印怎么修）
-4. `PRESENTATION_TTS=<name> npm run synthesize-audio`
+4. `PRESENTATION_TTS=<name> pnpm run synthesize-audio`
 
 ---
 
@@ -103,9 +105,9 @@ provider 直接抄它起手最快。
 
 ```bash
 export OPENAI_API_KEY=sk-...
-PRESENTATION_TTS=openai npm run synthesize-audio
+PRESENTATION_TTS=openai pnpm run synthesize-audio
 # 用 HD 模型 + 别的音色
-OPENAI_TTS_MODEL=tts-1-hd npm run synthesize-audio -- --provider=openai --voice=nova
+OPENAI_TTS_MODEL=tts-1-hd pnpm run synthesize-audio -- --provider=openai --voice=nova
 ```
 
 ### ElevenLabs — `tts-providers/elevenlabs.sh`
@@ -321,4 +323,4 @@ tts_check && tts_synthesize "测试一下" /tmp/test.mp3 ""
 afplay /tmp/test.mp3   # macOS 播一下听听
 ```
 
-跑通了再 `npm run synthesize-audio`。
+跑通了再 `pnpm run synthesize-audio`。

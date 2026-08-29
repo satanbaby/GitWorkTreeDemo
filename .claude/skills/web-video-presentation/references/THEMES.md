@@ -40,43 +40,40 @@
 
 ## 内置主题
 
-24 套主题，每个都有**独立的设计 DNA** —— 不是简单的换色版。挑一个
-匹配你主题情绪的，或者作为你自己主题的起点。
+**当前只内置一套**。要别的气质，照下方「创作新主题」从它派生一套 ——
+派生成本很低（改一个 `tokens.css` + 一个 `theme.json`），比养一堆用不到
+的主题清爽。
 
-### 深色主题
+| id | 性格 |
+| --- | --- |
+| `we-bare-bears` | 熊熊遇見你式溫暖日常。奶油紙張 + 天空藍單一 accent + 蜂蜜木色中性色 + Nunito 圓體。**圓角紙卡 + 2px 炭黑手繪輪廓與淡藍錯位影**是簽名。附 `assets/` 素材包：三張角色圖 + 一張封面版式／插圖畫風參考圖。適合協作、Git、入門教學與輕鬆知識內容。 |
 
-| id                | 性格                                                                                                                                                                                                            |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `midnight-press`  | 电影感编辑级深色。暖色 espresso（不是纯黑）+ 火热橙。Instrument Serif italic 英文 vs Noto Serif SC 中文。hero 数字：斜体衬线。慢速电影感节奏（1.6s 揭示）。140×100 padding。只有 vignette，没有颗粒。            |
-| `chalk-garden`    | 深石板黑板。Patrick Hand 全场手写，粉笔黄 accent。**2px 虚线 rule** 是签名。film grain（overlay）+ vignette。衬线带 chalk text-shadow。手绘节奏。                                                                |
-| `terminal-green`  | 80 年代磷光终端。纯黑 + JetBrains Mono only + 0px 直角。**CRT 扫描线**贴在舞台上。文字带磷光 text-shadow。利落线性动效（180/400/650ms）。hero 数字：等宽带发光。                                                  |
-| `blueprint`       | 工程蓝图。深海军蓝 + 绘图青 + IBM Plex Mono。**2px 虚线青色 rule + 60px 制图网格**是签名。hero 数字：等宽青色。等宽配对营造技术 / 蓝图感。                                                                       |
-| `dark-botanical`  | 高级感编辑暗底 —— 时尚刊物 / 博物馆图录。近黑 + 暖陶 / 玫粉 / 鎏金叠层。Cormorant italic + IBM Plex Sans。**柔光晕染（blurred light pool）作为签名**。慢速电影感节奏（1.7s）。140×100 padding。              |
-| `neon-cyber`      | 赛博朋克未来派。深海军底 + 电光青 + 玫红双霓虹。Clash Display + Satoshi。**青色发光网格 + 双色霓虹描边（cyan + magenta text-shadow）**是签名。snappy 节奏（380/650ms）。                                       |
-| `bold-signal`     | hero pitch-deck 暗底。Archivo Black + Space Grotesk。大橙色焦点色卡 + 制表数编号。**对角线深色渐变 + 大字标语**是签名。punchy 节奏（420/680ms）。                                                                |
-| `creative-voltage`| 复古朋克创意工作室。饱和电光蓝底 + 霓虹黄强调。Syne + Space Mono。**halftone 网点 + 偏移霓黄阴影**是签名。punchy + 能量节奏（450/720ms）。                                                                       |
+<details>
+<summary>历史主题（已移除）</summary>
 
-### 浅色主题
+早期版本内置 24 套主题（midnight-press / newsroom / bauhaus-bold / …）。
+现已收敛为单一主题 —— 需要那种气质就按「创作新主题」自己派生，
+本文件的 token 契约与设计规则完全适用。
 
-| id                   | 性格                                                                                                                                                                                                            |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `paper-press`        | midnight-press 的白天孪生兄弟。暖奶油 + 纸纹（multiply blend）。火热橙。hero 数字：斜体编辑级衬线。慢速电影感节奏。140×100 padding。                                                                              |
-| `warm-keynote`       | 现代 SaaS keynote。奶油 + 棕褐墨 + 青绿 + Inter。**大圆角（32px）glass slab** 配 backdrop blur。**粗黑 font-black hero 数字**。舞台上 40px 暖色网格。弹簧动效。                                                  |
-| `newsroom`           | NYT 报刊。报纸奶油 + 墨黑衬线 + 旗红。Playfair Display + Noto Serif SC。**0 圆角**（报纸不会圆角）。hero 数字：超大斜体显示衬线。安静的印刷节奏。淡纸纹。                                                        |
-| `bauhaus-bold`       | 现代主义宣言。米白 + 墨黑 + 原色蓝。Archivo Black + Inter。**0 圆角 + 4px 实色厚边 + 4px 黑色画框包住舞台 + 偏移实色阴影**。hero 数字：font-weight 900 巨字。利落快速动效。无装饰。                              |
-| `sunset-zine`        | 独立 risograph zine。暖桃 + riso 洋红 + Fraunces。**虚线剪贴线 + 偏移桃色阴影**。hero 数字：斜体 Fraunces。粗 riso 纸纹。弹簧 overshoot 动效。                                                                  |
-| `monochrome-print`   | 安静精炼的印刷杂志 —— Monocle / Wallpaper / MIT Press。米白 + 墨黑衬线 + 墨蓝 accent。Source Serif。**只有 1px 实线发丝、4px 精炼圆角**。hero 数字：斜体 tabular figures。**无装饰** —— 极简纯粹。极静节奏（1.7s 揭示）。 |
-| `vintage-editorial`  | 俏皮编辑奶油底。Fraunces italic + Work Sans + 暖陶 accent。**细线几何叠层（圆 + 线 + 点）**是签名。有性格、会说话，像专栏作家。中速带轻微 overshoot。                                                            |
-| `pastel-dream`       | 友好柔光。柔粉蓝灰底 + 奶油卡 + 鼠尾草绿。Plus Jakarta Sans。**大圆角（20px）+ 右侧多色 pill 色条**是签名。soft springy（520/820ms）。                                                                          |
-| `split-canvas`       | 双拼画布 —— 蜜桃 + 薰衣草 50/50 硬切分。Outfit + 玫红 accent。**屏幕本身就是双色底**，章节自由在哪一侧落内容。playful 中速（480/780ms）。                                                                       |
-| `electric-studio`    | 企业电光蓝。净白底 + 单一电光蓝 + Manrope。**贴底 4px 电蓝条**作为签名，B2B / 路演 / 财报场景的清晰自信。punchy 节奏（420/700ms）。                                                                              |
-| `indigo-porcelain`   | 靛蓝瓷 —— **靛蓝当墨**（不是 accent，是字色本身）+ 瓷白纸。Playfair Display italic + Noto Serif SC + IBM Plex Sans 正文。学术 / 研究气质，像一本当代思想期刊。无装饰 —— 纯粹。慢速（1.55s）。                       |
-| `forest-ink`         | 森林墨 —— **森林绿当墨** + 象牙暖纸。Source Serif 正文 + Playfair Display。旧版《国家地理》感，沉稳、文献感。faint warm grain。慢速（1.65s）。                                                                  |
-| `kraft-paper`        | 牛皮纸 —— **深棕当墨** + 牛皮米。Fraunces + Source Serif + 紫铜 accent。老笔记本 / 老信封感。**粗暖纸纹**是签名。慢速 tactile（1.55s）。                                                                       |
-| `dune`               | 沙丘 —— **炭褐当墨** + 沙底 + 几乎无 accent（muted clay）。Inter display + Source Serif 正文。**无装饰 + 极宽 padding（140×100）**是签名。建筑手册 / 画廊感。最慢节奏（1.75s）。                                |
-| `swiss-ikb`          | 瑞士国际主义。**极细 200 weight Inter / Helvetica** + 净暖白底 + IKB 克莱因蓝 + **1px 发丝网格 (64px)**。`r-card: 0` 直角。Massimo Vignelli / Helvetica Forever 能量。punchy + linear（400/650ms）。           |
-| `we-bare-bears`      | 熊熊遇見你式溫暖日常。奶油紙張 + 天空藍單一 accent + 蜂蜜木色中性色 + Nunito 圓體。**圓角紙卡 + 2px 炭黑手繪輪廓與淡藍錯位影**是簽名。適合協作、Git、入門教學與輕鬆知識內容。                          |
+</details>
 
+### 主题该长什么样（派生时的方向参考）
+
+一套好主题 = **一个设计签名 + 一个 accent + 一组字型配对**，不是三种
+装饰叠一起。几个可用的方向（不是清单，是思路）：
+
+| 想要的气质 | 该怎么调 |
+| --- | --- |
+| 电影感 / 编辑级暗底 | 暖色近黑（不用纯黑）当 `--surface`，单一暖橙 accent，衬线斜体英文 + 中文衬线，慢节奏，只留 vignette 不加颗粒 |
+| 报刊 / 纪录片 | 报纸奶油底 + 墨黑衬线 + 单一旗红，`--r-card: 0`（报纸不圆角），淡纸纹 |
+| 终端 / 技术 / 蓝图 | 全场等宽字，直角，虚线 rule + 网格 `--surface-pattern`，冷色 accent，利落线性动效 |
+| 现代主义 / 宣言 | 米白 + 墨黑 + 原色，`--r-card: 0` + 4px 实色厚边 + 偏移实色阴影，900 字重 hero 数字 |
+| 精炼 / 安静 / 画廊 | 单一中性墨色当 `--text`、几乎无 accent，1px 发丝 rule，**无装饰**，极宽 `--stage-pad-*`，最慢节奏 |
+| 手作 / 怀旧 / zine | 暖纸底 + 粗纸纹、虚线剪贴线、偏移彩色阴影，衬线斜体 + overshoot 弹簧动效 |
+| 友好 / 入门 / 协作 | **就是 `we-bare-bears`** —— 直接用，别重造 |
+
+规则永远是那几条（详见下方「创作新主题 → 第 2 步」）：**一个** accent、
+**一个** 设计签名、`--text` 对 `--surface` ≥ 4.5:1。
 
 随时列出可用主题：
 
@@ -89,11 +86,11 @@ bash <path-to-web-video-presentation>/scripts/scaffold.sh --list-themes
 ## 脚手架时挑一个主题
 
 ```bash
-# 默认（midnight-press）
+# 默认（we-bare-bears）
 bash scripts/scaffold.sh ./presentation
 
 # 显式指定
-bash scripts/scaffold.sh ./talk --theme=newsroom
+bash scripts/scaffold.sh ./talk --theme=we-bare-bears
 ```
 
 脚手架会把所选主题的 `tokens.css` 拷到 `<project>/src/styles/tokens.css`，
@@ -108,7 +105,7 @@ bash scripts/scaffold.sh ./talk --theme=newsroom
 没有素材包的主题，切换 = 一次文件覆盖：
 
 ```bash
-cp <path-to-web-video-presentation>/themes/newsroom/tokens.css \
+cp <path-to-web-video-presentation>/themes/<id>/tokens.css \
    presentation/src/styles/tokens.css
 ```
 
@@ -201,7 +198,7 @@ cp -R <path-to-web-video-presentation>/themes/<id>/assets/. \
 | `--card-glass-bg`  | `rgba(255,255,255,0.06)` | `.card-glass` 的背景                            |
 | `--card-glass-border` | `rgba(255,255,255,0.12)` | `.card-glass` 的边框                            |
 | `--shadow-stage`   | dark drop           | 舞台的 box-shadow                                     |
-| `--stage-border`   | `none`              | 舞台的可选边框（Bauhaus 用 `4px solid black`）         |
+| `--stage-border`   | `none`              | 舞台的可选边框（如粗黑画框 `4px solid black`）         |
 
 ### 可选的装饰层（主题可选用，给质感加签名）
 
@@ -225,40 +222,17 @@ CSS"领域 —— 在那里解决，别扩主题契约。
 
 ## 创作新主题
 
-### 1. 复制一个最接近的作为起点
+### 1. 从 `we-bare-bears` 复制一份作为起点
 
-挑一个**最接近**你目标气质的：
+内置只有这一套，所以起点就是它。它是浅色 / 单一 accent / 圆角 / 有素材包
+的结构 —— 结构完整，改起来比从空文件写快。
 
-| 目标情绪                                | 起点                  |
-| --------------------------------------- | --------------------- |
-| 阴郁、电影感、编辑级                    | `midnight-press`      |
-| 编辑级 - 浅色                           | `paper-press`         |
-| 现代 keynote / SaaS                     | `warm-keynote`        |
-| 教室 / 解说                             | `chalk-garden`        |
-| 终端 / 黑客 / 复古 CRT                  | `terminal-green`      |
-| 纪录片 / 严肃 / 新闻                    | `newsroom`            |
-| 工程 / 蓝图 / 技术                      | `blueprint`           |
-| 现代主义 / 布鲁塔利斯特 / 宣言          | `bauhaus-bold`        |
-| 独立 / 玩味 / zine                      | `sunset-zine`         |
-| 精炼 / 安静 / 印刷                      | `monochrome-print`    |
-| 高级感暗底 / 时尚 / 博物馆图录          | `dark-botanical`      |
-| 赛博朋克 / 未来感 / AI / web3           | `neon-cyber`          |
-| 俏皮编辑 / 有声音的博主 / 文化随笔      | `vintage-editorial`   |
-| 柔粉 / 友好 / onboarding / 女性向       | `pastel-dream`        |
-| 双色分屏 / 对照 / 辩论                  | `split-canvas`        |
-| pitch deck / 大字宣言 / 焦点色卡         | `bold-signal`         |
-| B2B / 企业 / 投资人路演                 | `electric-studio`     |
-| 复古朋克 / 创意工作室 / 设计周          | `creative-voltage`    |
-| 学术 / 研究 / 中国当代文化              | `indigo-porcelain`    |
-| 自然 / 可持续 / 户外 / 纪录             | `forest-ink`          |
-| 文学 / 怀旧 / 书评 / 手工艺             | `kraft-paper`         |
-| 建筑 / 艺术展览 / 高端画廊              | `dune`                |
-| 瑞士国际主义 / Helvetica / 信息驱动设计 | `swiss-ikb`           |
-| 溫暖卡通 / 團隊協作 / 友善技術教學      | `we-bare-bears`       |
+上方「主题该长什么样」给了几个方向的调法；真正决定气质的是第 2 步那几个
+旋钮，不是起点是哪一套。
 
 ```bash
 cd <path-to-web-video-presentation>/themes
-cp -r monochrome-print my-theme
+cp -r we-bare-bears my-theme
 ```
 
 ### 2. 改 `my-theme/tokens.css`
@@ -315,6 +289,7 @@ cp -r monochrome-print my-theme
 | `preview` | ✓ | 4 色对象 | Checkpoint Plan 列清单时的视觉预览 |
 | `illustrationGuidance` | 可选 | 字符串 | 主题素材的节制使用原则 |
 | `illustrations` | 可选 | 对象数组 | `path` / `character` / `bestFor` / `altZh` 素材索引 |
+| `styleReference` | 可选 | 对象 | `path` / `layoutNote` / `styleNote` —— **一张图管两件事**：`layoutNote` 给封面章节（`00-cover`）定版式，`styleNote` 给生成插图定画风 |
 
 > **主题不再约束动画选型 / 时长 / 字号 / emoji**。视觉风格由 `tokens.css`
 > 的颜色 / 字体 / 字号 token 决定，动画 / 节奏 / 视觉演示完全交给 chapter
@@ -331,12 +306,25 @@ cp -r monochrome-print my-theme
 每个 scene 最多一张，避免把角色变成每页固定贴纸。脚手架会自动复制素材，
 章节不应直接引用 Skill 仓库的绝对路径。
 
+### 可选风格参考图（`styleReference`）
+
+素材包里还可以放**一张风格参考图**（一张成品版式的样张），在 `theme.json`
+的 `styleReference` 里登记。它同时喂给两个流程：
+
+| 字段 | 谁读 | 用来干嘛 |
+|---|---|---|
+| `layoutNote` | 封面章节 `00-cover`（[`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md)） | 照它的版式用 **HTML** 复刻封面 —— 不是把图贴上去 |
+| `styleNote` | 生成插图流程（[`ILLUSTRATIONS.md`](ILLUSTRATIONS.md)） | 当画风锚：生图工具支持参考图就直接喂这张图，不支持就用 `styleNote` 当文字前缀 |
+
+`we-bare-bears` 的 `title-page-style-reference.png` 就是范例。做新主题时
+这张图**可选** —— 没有的话封面和插图都按 `descriptionZh` / `mood` 自己发挥。
+
 ### 4. 用所有 demo 章节测试一遍
 
 ```bash
 bash scripts/scaffold.sh /tmp/test-theme --theme=my-theme
 cd /tmp/test-theme
-npm run dev
+pnpm run dev              # 或 npm run dev
 ```
 
 把 demo 每一步点完。检查：

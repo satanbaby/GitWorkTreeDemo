@@ -49,7 +49,7 @@
 ```
 hook-chapter/
 ├── README.md       ← 本文件
-├── chapter.tsx     ← 完整章节示例 —— 默认绑 newsroom 主题
+├── chapter.tsx     ← 完整章节示例 —— 写于一个报刊型主题下
 └── chapter.css
 ```
 
@@ -59,7 +59,7 @@ hook-chapter/
 |---|---|
 | 素材 | `<img src="/hook/<asset>.png" />` 真截图 |
 | 字号 | hero = 144px serif (`var(--t-display-1)`) |
-| 主导动作 | brush-stroke + 印章砸下（newsroom 气质） |
+| 主导动作 | brush-stroke + 印章砸下（贴该主题的印刷气质） |
 | 伴随动作 | accent 红条 scaleX + 副标 stagger 200ms |
 | 持续微动 | accent 红条光晕 `infinite` 呼吸；图片 ken burns 缓推 |
 | 卡片样式 | drop-shadow + 微旋转 1deg |
@@ -70,13 +70,15 @@ hook-chapter/
 > [`../../CHAPTER-CRAFT.md`](../../CHAPTER-CRAFT.md)「避免 AI 味」一节
 > 关于「每步都挂 ken burns / 持续闪烁」的反模式。
 
-## 切到其它主题时
+## 换主题时
 
-- `bauhaus-bold` → brush 划掉换 hard-cut 大色块；hero 字体换 Archivo Black
-- `terminal-green` → 三张图换"FILE_001/002/003"占位框；hero 用打字机
-- `chalk-garden` → 粉笔感虚线 + 慢速 wiggle 入场
-- `midnight-press` → blur clear 慢镜入场 + ken burns + scanline；
-  takeover 改"主标 blur 锐化 + 暖橙光晕呼吸"
+颜色和字体家族全走 token，**换任何主题都不会破**。要动的只有**主导动作
+的形式**，让它贴新主题的气质，例如：
+
+- 粗黑宣言型主题 → brush 划掉换 hard-cut 大色块，hero 换极粗字重
+- 终端型主题 → 三张图换 `FILE_001/002/003` 占位框，hero 用打字机
+- 手绘 / 粉笔型主题 → 手绘虚线 + 慢速 wiggle 入场
+- 电影感慢主题 → blur clear 慢镜入场，takeover 改"主标 blur 锐化 + 光晕呼吸"
 
 **结构（N+2 步、独占节奏、takeover、收束）保持不变。**
 

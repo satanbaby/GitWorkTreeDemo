@@ -34,7 +34,10 @@
 - **动效优先**：每一步都需要一个移动的视觉锚点，静态正文是坏味道。
 - **主题 token**：视觉属性通过语义 token 驱动，换主题不只是换颜色。
 - **可插拔 TTS**：provider-agnostic 音频 runner，**内置 2 个 provider**（MiniMax `mmx-cli` + OpenAI TTS via curl）；往 `tts-providers/` 丢一个 `.sh` 就能换成 ElevenLabs / edge-tts / Azure / Google Cloud / macOS `say` / 任何自部署 TTS。
-- **硬 checkpoint**：稿子/主题、outline、音频合成前都必须停下来与用户确认。
+- **硬 checkpoint + 状态外部化**：Agent 在固定节点停下来确认，且每个节点的状态都写在 **`outline.md` 顶部的「进度看板」** —— 换 session、续接、并行 subagent 都能看出流程走到哪。
+- **封面章节是必须的**：`00-cover` 与第 1 章一起在主线程做完、一起验收；内容章节从 `01-` 起。
+- **选填生成式插图**：某章可在 outline 写「插图描述」，开发该章之前 Agent 调生图工具产出素材，画风锚定主题的 `styleReference`，让全片插图属于同一套视觉语言。
+- **pnpm 优先 / npm 后备**：脚手架自动探测包管理器，结果写进 `<project>/.pm`，`--pm=` 可强制指定。
 
 ---
 
@@ -42,23 +45,28 @@
 
 ```text
 Phase 1.1  识别用户输入
-Phase 1.2  文章 -> 口播稿
+Phase 1.2  文章 -> 口播稿 + outline.md（含进度看板）
    |
-Checkpoint A1  稿子、主题、粗略素材计划
+CP-0       script.md / outline.md 自检
    |
-Phase 1.3  口播稿 + 原文 -> outline.md
+CP-1       Checkpoint Plan：稿子 / outline / 主题 / 素材 / 开发模式
    |
-Checkpoint A2  outline 确认 + 开发模式选择
+Phase 2.1  脚手架 Vite / React / TS 项目
+Phase 2.2  封面 00-cover + 第 1 章（主线程）
    |
-Phase 2    构建 Vite / React / TS 演示
+CP-2       用户验收封面 + 第 1 章  <- 不可跳过
    |
-Checkpoint B   询问是否合成音频
+Phase 2.3  第 2~N 章（逐章 / 顺序 / 并行）
+   |
+CP-3       第 2~N 章验收
+   |
+CP-4       Checkpoint Audio：合成或跳过
    |
 Phase 3    可选音频合成
-Phase 4    录屏与后期
+Phase 4    录屏与后期 -> CP-5
 ```
 
-这些 checkpoint 是 Skill 契约的一部分：Agent 不应该从原文一路闷头做到成品。主题选择会影响动效气质，outline 确认能避免章节节奏跑偏。
+这些 checkpoint 是 Skill 契约的一部分：Agent 不应该从原文一路闷头做到成品。每过一个节点就立刻回写 `outline.md` 的进度看板 —— 只存在于对话里的状态等于没有状态。
 
 ---
 
@@ -69,13 +77,14 @@ skills/web-video-presentation/
 ├── SKILL.md
 ├── README.md / README.zh-CN.md
 ├── references/
-│   ├── PRINCIPLES.md
-│   ├── CHAPTER-CRAFT.md
-│   ├── OUTLINE-FORMAT.md
+│   ├── CHAPTER-CRAFT.md       # 每章唯一必读入口
+│   ├── OUTLINE-FORMAT.md      # 进度看板 + outline spec
 │   ├── SCRIPT-STYLE.md
+│   ├── ILLUSTRATIONS.md       # 生成式插图流程
 │   ├── THEMES.md
 │   ├── AUDIO.md
-│   └── RECORDING.md
+│   ├── RECORDING.md
+│   └── EXAMPLES/
 ├── scripts/
 │   └── scaffold.sh
 ├── templates/
@@ -89,12 +98,11 @@ skills/web-video-presentation/
 │   │       ├── minimax.sh            # 默认 provider（mmx-cli）
 │   │       └── openai.sh             # 内置：OpenAI TTS（curl + OPENAI_API_KEY）
 │   └── src/
-└── themes/                    # 23 套主题，每套独立设计签名
-    ├── midnight-press/
-    ├── warm-keynote/
-    ├── newsroom/
-    ├── bauhaus-bold/
-    └── ...                     # 完整列表见 references/THEMES.md
+└── themes/                    # 1 套内置主题（要别的气质从它派生）
+    └── we-bare-bears/
+        ├── theme.json         # 元数据 + illustrations + styleReference
+        ├── tokens.css
+        └── assets/            # 3 张角色图 + 1 张风格参考图
 ```
 
 ---
@@ -106,7 +114,7 @@ skills/web-video-presentation/
 如果要手动脚手架：
 
 ```bash
-bash skills/web-video-presentation/scripts/scaffold.sh ./presentation --theme=paper-press
+bash skills/web-video-presentation/scripts/scaffold.sh ./presentation --theme=we-bare-bears
 ```
 
 查看可用主题：
@@ -119,203 +127,36 @@ bash skills/web-video-presentation/scripts/scaffold.sh --list-themes
 
 ---
 
-## 主题画廊
+## 主题
 
-Skill 内置 **23 套**主题，每套都有独立的设计 DNA —— 不是简单换色版。下面按底色分两组浏览，挑一套接近目标气质的，或者把任意一格当作派生新主题的起点。点击任意预览图可放大查看 1920×1080 原帧。
+Skill **内置 1 套主题**。早期版本内置 24 套，现在刻意收敛成单一一套 ——
+派生一套新的成本很低：复制目录、改 `tokens.css` 和 `theme.json`，完事。
 
-> 所有截图都是真实的 16:9 舞台，来自 [`demo/web-video-presentation-demo`](../../demo/web-video-presentation-demo/) 现场画廊。
+### `we-bare-bears` · 熊熊遇見你
 
-### 深色 · 8 套
+溫暖日常繪本感：奶油紙張、天空藍單一 accent、蜂蜜木色中性色、Nunito 圓體。
+簽名是**圓角紙卡 + 2px 炭黑手繪輪廓與淡藍錯位影**。
 
-> 电影感深色画布 —— 适合需要聚焦、戏剧张力、强对比的叙事。
+**適合**：團隊協作 / Git 教學 · 入門技術分享 · 工作流程與工具解說 ·
+友善知識科普 · 輕鬆文化生活內容。
 
-<table>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/midnight-press.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/midnight-press.webp" alt="midnight-press 预览" /></a>
-<br /><strong><code>midnight-press</code> · 暗色印刷</strong>
-<br /><sub>电影感编辑暗底 · 暖暗底 + 火热橙</sub>
-<br /><sub><b>适合</b> · 开发者教程 · AI / 工具评测 · 技术 deep dive</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/dark-botanical.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/dark-botanical.webp" alt="dark-botanical 预览" /></a>
-<br /><strong><code>dark-botanical</code> · 暗夜植物</strong>
-<br /><sub>高级时尚刊物 · 暖陶 / 玫粉 / 鎏金叠层</sub>
-<br /><sub><b>适合</b> · 品牌故事 · 时尚 / 美妆 · 高端产品发布</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/chalk-garden.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/chalk-garden.webp" alt="chalk-garden 预览" /></a>
-<br /><strong><code>chalk-garden</code> · 粉笔花园</strong>
-<br /><sub>深石板黑板 · 手写 Patrick Hand + 粉笔黄</sub>
-<br /><sub><b>适合</b> · 科普讲解 · 教学课堂 · 面向初学者的亲切口吻</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/blueprint.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/blueprint.webp" alt="blueprint 预览" /></a>
-<br /><strong><code>blueprint</code> · 工程蓝图</strong>
-<br /><sub>制图工作台 · 深海军 + 制图青 + 60 px 网格</sub>
-<br /><sub><b>适合</b> · 技术架构 · 系统拆解 · API / SDK 介绍</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/terminal-green.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/terminal-green.webp" alt="terminal-green 预览" /></a>
-<br /><strong><code>terminal-green</code> · 终端绿</strong>
-<br /><sub>80 年代磷光 CRT · 纯等宽 + 扫描线</sub>
-<br /><sub><b>适合</b> · CLI 工具教程 · 黑客 / 安全话题 · 复古技术致敬</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/neon-cyber.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/neon-cyber.webp" alt="neon-cyber 预览" /></a>
-<br /><strong><code>neon-cyber</code> · 霓虹赛博</strong>
-<br /><sub>赛博朋克未来 · 电光青 + 玫红双霓虹</sub>
-<br /><sub><b>适合</b> · AI / 大模型评测 · web3 / 安全 · 未来主义与赛博朋克</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/bold-signal.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/bold-signal.webp" alt="bold-signal 预览" /></a>
-<br /><strong><code>bold-signal</code> · 焦点信号</strong>
-<br /><sub>Pitch Deck 主舞台 · 暗渐变 + 大橙焦点卡</sub>
-<br /><sub><b>适合</b> · pitch deck / 路演 · 产品发布 · 大字宣言 / brand keynote</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/creative-voltage.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/creative-voltage.webp" alt="creative-voltage 预览" /></a>
-<br /><strong><code>creative-voltage</code> · 电压创意</strong>
-<br /><sub>饱和电光蓝 + 霓虹黄 + halftone 网点</sub>
-<br /><sub><b>适合</b> · 设计周 / 创意分享 · 工作室作品集 · 字体 / 视觉文化</sub>
-</td>
-</tr>
-</table>
+另附 `assets/` 素材包：三張角色插圖，加一張**風格參考圖** —— 它同時是封面
+版式藍圖，也是生成插圖的畫風錨點。
 
-### 浅色 · 15 套
-
-> 明亮编辑画布 —— 适合清晰、克制、带纸感温度的内容。
-
-<table>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/paper-press.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/paper-press.webp" alt="paper-press 预览" /></a>
-<br /><strong><code>paper-press</code> · 亮色印刷</strong>
-<br /><sub>编辑纸张 · 暖奶油 + 火热橙</sub>
-<br /><sub><b>适合</b> · 杂志型内容 · 生活方式 · 日常工具评测</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/newsroom.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/newsroom.webp" alt="newsroom 预览" /></a>
-<br /><strong><code>newsroom</code> · 报社</strong>
-<br /><sub>NYT 大报 · 新闻纸奶油 + 旗红</sub>
-<br /><sub><b>适合</b> · 纪录片 / 报道 · 深度评测 · 时事 / 热点解读</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/monochrome-print.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/monochrome-print.webp" alt="monochrome-print 预览" /></a>
-<br /><strong><code>monochrome-print</code> · 黑白印刷</strong>
-<br /><sub>精炼克制 · Monocle / Wallpaper 气质</sub>
-<br /><sub><b>适合</b> · 深度阅读改编 · 学术 / 思想型内容 · 文化艺术评论</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/vintage-editorial.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/vintage-editorial.webp" alt="vintage-editorial 预览" /></a>
-<br /><strong><code>vintage-editorial</code> · 复古编辑</strong>
-<br /><sub>俏皮 Fraunces + 几何叠层（圆 / 线 / 点）</sub>
-<br /><sub><b>适合</b> · 个人见解 / 评论 · 文化随笔 · 设计 / 字体话题</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/sunset-zine.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/sunset-zine.webp" alt="sunset-zine 预览" /></a>
-<br /><strong><code>sunset-zine</code> · 日落 Zine</strong>
-<br /><sub>Risograph 拼贴 · 暖桃 + 玫红 + 虚线剪贴</sub>
-<br /><sub><b>适合</b> · 生活向 vlog · 创意分享 · 小红书 / 抖音风</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/pastel-dream.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/pastel-dream.webp" alt="pastel-dream 预览" /></a>
-<br /><strong><code>pastel-dream</code> · 柔光梦</strong>
-<br /><sub>柔粉 + 鼠尾草绿 + 右侧 pill 色条</sub>
-<br /><sub><b>适合</b> · 产品 onboarding · 友好教学 · 心理 / 健康 / 母婴</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/warm-keynote.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/warm-keynote.webp" alt="warm-keynote 预览" /></a>
-<br /><strong><code>warm-keynote</code> · 暖色 Keynote</strong>
-<br /><sub>现代 SaaS Keynote · glass slab + 青绿 + 暖色网格</sub>
-<br /><sub><b>适合</b> · SaaS keynote · B 端产品发布 · 团队对外汇报</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/electric-studio.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/electric-studio.webp" alt="electric-studio 预览" /></a>
-<br /><strong><code>electric-studio</code> · 电光企业</strong>
-<br /><sub>企业级清晰 · 净白 + 贴底电光蓝色条</sub>
-<br /><sub><b>适合</b> · B2B 产品演讲 · 投资人路演 · 企业财报 / 季度更新</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/bauhaus-bold.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/bauhaus-bold.webp" alt="bauhaus-bold 预览" /></a>
-<br /><strong><code>bauhaus-bold</code> · 包豪斯</strong>
-<br /><sub>宣言式现代主义 · 0 圆角 + 4 px 厚边</sub>
-<br /><sub><b>适合</b> · 产品发布 · 观点宣言 · 品牌主张</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/swiss-ikb.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/swiss-ikb.webp" alt="swiss-ikb 预览" /></a>
-<br /><strong><code>swiss-ikb</code> · 瑞士克莱因蓝</strong>
-<br /><sub>极细 200 Helvetica + IKB + 1 px 发丝网格</sub>
-<br /><sub><b>适合</b> · AI / 科技产品发布 · 年度数据汇报 · 信息图</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/dune.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/dune.webp" alt="dune 预览" /></a>
-<br /><strong><code>dune</code> · 沙丘</strong>
-<br /><sub>炭褐 + 沙底 · 近乎零 accent，建筑画廊感</sub>
-<br /><sub><b>适合</b> · 建筑 / 室内 / 空间 · 艺术展览 · 高端品牌画册</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/indigo-porcelain.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/indigo-porcelain.webp" alt="indigo-porcelain 预览" /></a>
-<br /><strong><code>indigo-porcelain</code> · 靛蓝瓷</strong>
-<br /><sub>靛蓝<em>本身即墨</em>（不是 accent）+ 瓷白</sub>
-<br /><sub><b>适合</b> · 学术 / 论文解读 · AI / 数据深度 · 严肃技术汇报</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/forest-ink.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/forest-ink.webp" alt="forest-ink 预览" /></a>
-<br /><strong><code>forest-ink</code> · 森林墨</strong>
-<br /><sub>森林绿<em>本身即墨</em> + 象牙 · 旧版国家地理</sub>
-<br /><sub><b>适合</b> · 自然 / 可持续 · 纪录 / 非虚构 · 慢生活</sub>
-</td>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/kraft-paper.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/kraft-paper.webp" alt="kraft-paper 预览" /></a>
-<br /><strong><code>kraft-paper</code> · 牛皮纸</strong>
-<br /><sub>深棕<em>本身即墨</em> + 牛皮米 + 紫铜 accent</sub>
-<br /><sub><b>适合</b> · 书评 / 文学随笔 · 历史 / 怀旧 · 手工艺 / 食物</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/split-canvas.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/split-canvas.webp" alt="split-canvas 预览" /></a>
-<br /><strong><code>split-canvas</code> · 双拼画布</strong>
-<br /><sub>50/50 双底色 · 蜜桃左 + 薰衣草右</sub>
-<br /><sub><b>适合</b> · 双主题对比 / 辩论 · 故事讲述 · 概念对照科普</sub>
-</td>
-<td align="center" width="50%" valign="middle">
-<br />
-<strong>+ 派生你自己的</strong>
-<br /><sub>完整 token 契约、每套设计签名、<br />以及怎么派生新主题（Swiss 黄 / 绿 / 橙变体等），<br />见 <a href="./references/THEMES.md">THEMES.md</a>。</sub>
-<br /><br />
-</td>
-</tr>
-</table>
+- 元数据：[`themes/we-bare-bears/theme.json`](themes/we-bare-bears/theme.json)
+- Token：[`themes/we-bare-bears/tokens.css`](themes/we-bare-bears/tokens.css)
+- 自创主题：[`references/THEMES.md`](references/THEMES.md)
 
 ---
 
 ## Reference Map
 
-- [PRINCIPLES.md](./references/PRINCIPLES.md)：视频感网页演示的核心原则
-- [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md)：章节实现规则与视觉 checklist
-- [OUTLINE-FORMAT.md](./references/OUTLINE-FORMAT.md)：outline 必须遵循的结构
+- [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md)：每章唯一必读入口 —— 封面规格、十条原则、视觉演示底线、反 AI 味、代码红线、完工自检
+- [OUTLINE-FORMAT.md](./references/OUTLINE-FORMAT.md)：outline 结构 —— 进度看板、`00-cover` 编号、信息池、选填插图描述
 - [SCRIPT-STYLE.md](./references/SCRIPT-STYLE.md)：文章转口播稿规则
-- [PATTERNS.md](./references/PATTERNS.md)：可选视觉 primitive 配方
+- [ILLUSTRATIONS.md](./references/ILLUSTRATIONS.md)：什么该生成、以主题 `styleReference` 为锚的 prompt 配方、输出路径、placeholder 降级
+- [THEMES.md](./references/THEMES.md)：完整 token 契约 + 派生新主题流程
+- [EXAMPLES/](./references/EXAMPLES/)：可选的章节结构 anchor（不是抄袭模板）
 - [AUDIO.md](./references/AUDIO.md)：可选口播音频合成流程（provider-agnostic）
 - [tts-providers/README.md](./templates/scripts/tts-providers/README.md)：TTS provider 三函数契约 + 内置 2 个 (minimax / openai) + ElevenLabs / edge-tts / Azure / Google / macOS say 的现成代码片段
 - [RECORDING.md](./references/RECORDING.md)：录屏与后期注意事项

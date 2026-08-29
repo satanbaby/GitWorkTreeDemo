@@ -3,7 +3,7 @@
 > **节选**：前 2 章（10 step），用来展示 outline 在科技测评题材里的
 > 形状。完整版 7 章 36 步在调用此 Skill 的具体项目里，不进 spec。
 
-> **主题**：`midnight-press`（电影感慢镜、blur clear、暖橙 accent、
+> **主题**：`<theme-id>`（电影感慢镜、blur clear、暖色 accent、
 > scanline；克制有重量。**禁**砸下 shake / 弹簧 / emoji）
 >
 > **总时长**：约 6 分 30 秒

@@ -10,12 +10,12 @@ import "./chapter.css";
 /**
  * hook-chapter · 完整章节示例
  * ─────────────────────────────────────────
- * 默认绑 newsroom 主题（serif + 报头红 + 印刷盖章 motion）。
+ * 示例写于一个报刊型主题下（衬线 + 单一红 accent + 印刷盖章 motion）。
  *
  * 关键手段：
  * - 真素材：<img src="/hook/{name}.png" /> 而不是 placeholder
  * - 字号狠对比：hero 用 --t-display-1（≥ 144px）+ 微微负字距
- * - 主导动作：mask reveal + 印章砸下（贴 newsroom 印刷气质）
+ * - 主导动作：mask reveal + 印章砸下（贴该主题的印刷气质）
  * - takeover：三张图缩入 + 巨字爆出 + accent 红条贯穿
  * - 收束：brush 划掉旧概念
  *

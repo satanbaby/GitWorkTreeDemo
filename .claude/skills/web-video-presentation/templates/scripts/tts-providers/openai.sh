@@ -40,7 +40,7 @@ Install deps (only if missing):
   curl  — brew install curl  / apt-get install curl
   jq    — brew install jq    / apt-get install jq
 
-Or pick another provider:  PRESENTATION_TTS=<name> npm run synthesize-audio
+Or pick another provider:  PRESENTATION_TTS=<name> pnpm run synthesize-audio
 EOF
 }
 

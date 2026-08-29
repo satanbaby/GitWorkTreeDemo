@@ -34,10 +34,10 @@
 #   • Prints progress per segment with elapsed time.
 #
 # Examples:
-#   npm run synthesize-audio
-#   npm run synthesize-audio -- --force
-#   PRESENTATION_TTS=openai npm run synthesize-audio
-#   npm run synthesize-audio -- --provider=elevenlabs --voice=Rachel
+#   pnpm run synthesize-audio
+#   pnpm run synthesize-audio -- --force
+#   PRESENTATION_TTS=openai pnpm run synthesize-audio
+#   pnpm run synthesize-audio -- --provider=elevenlabs --voice=Rachel
 # ────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -68,7 +68,7 @@ PROVIDER_FILE="$PROVIDERS_DIR/$PROVIDER.sh"
 
 # ── Pre-flight ────────────────────────────────────────────────────────
 if [[ ! -f "$SEGMENTS" ]]; then
-  echo "✗ $SEGMENTS not found. Run: npm run extract-narrations" >&2
+  echo "✗ $SEGMENTS not found. Run: pnpm run extract-narrations" >&2
   exit 1
 fi
 if ! command -v jq >/dev/null; then

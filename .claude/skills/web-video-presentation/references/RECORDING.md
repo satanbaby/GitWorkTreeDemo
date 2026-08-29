@@ -12,9 +12,9 @@
 ### 前置
 
 - 章节代码做完，每章都有 `narrations.ts`
-- 已经跑过 `npm run extract-narrations` + `npm run synthesize-audio`，
+- 已经跑过 `pnpm run extract-narrations` + `pnpm run synthesize-audio`，
   `public/audio/<id>/<step>.mp3` 全部就位
-- `npm run dev` 跑着，浏览器能打开页面
+- `pnpm run dev` 跑着，浏览器能打开页面（`npm run dev` 亦可 —— 看 `.pm`）
 
 ### 录制步骤
 

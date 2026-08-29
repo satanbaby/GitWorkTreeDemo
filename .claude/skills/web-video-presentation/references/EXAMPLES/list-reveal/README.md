@@ -56,7 +56,7 @@
 ```
 list-reveal/
 ├── README.md
-├── chapter.tsx     ← 完整章节示例 —— 默认绑 newsroom 主题
+├── chapter.tsx     ← 完整章节示例 —— 写于一个报刊型主题下
 └── chapter.css
 ```
 
@@ -75,12 +75,15 @@ list-reveal/
 > **新写章节时**：抄结构（单网格 N 槽位、每 step 只填一个槽位、位置
 > 不重排），按本章内容 + 本主题气质自由设计主导动作的形式。
 
-## 切到其它主题时
+## 换主题时
 
-- `bauhaus-bold` → 序号换 Archivo Black + 大色块；用 hard-cut 砸下
-- `terminal-green` → 序号 `[01]` `[02]` `[03]` 风格；打字机入场
-- `chalk-garden` → 粉笔下划线手绘 + wiggle 入场
-- `midnight-press` → 数字 blur clear 慢锐化 + 暖橙光晕慢呼吸
+颜色和字体家族全走 token，**换任何主题都不会破**。要动的只有序号样式和
+入场动作的形式，让它贴新主题的气质，例如：
+
+- 粗黑宣言型主题 → 序号换极粗字重 + 大色块，hard-cut 砸下
+- 终端型主题 → 序号 `[01]` `[02]` `[03]` 风格，打字机入场
+- 手绘 / 粉笔型主题 → 手绘下划线 + wiggle 入场
+- 电影感慢主题 → 数字 blur clear 慢锐化 + accent 光晕慢呼吸
 
 **结构不变**：N+1 step、单网格 N 槽位、每 step 只填一个槽位。
 

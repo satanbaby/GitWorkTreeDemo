@@ -47,11 +47,14 @@ presentation/public/audio/
 
 ## 标准流程
 
+> 命令一律写 `pnpm`。项目用的是哪个包管理器看 `presentation/.pm`；
+> 是 `npm` 就把 `pnpm run` 换成 `npm run`，其余完全一样。
+
 ### 1. 抽取 segments
 
 ```bash
 cd presentation
-npm run extract-narrations
+pnpm run extract-narrations
 ```
 
 这会扫所有章节的 `narrations.ts`，按 `chapters.ts` 注册顺序生成
@@ -84,9 +87,9 @@ ls scripts/tts-providers/    # 看本项目带了哪些
 #### 2.A 用内置 minimax 合成
 
 ```bash
-npm run synthesize-audio              # 增量：跳过已存在的 mp3
-npm run synthesize-audio -- --force   # 全部重合成
-npm run synthesize-audio -- --voice=<voice-id>  # 指定音色
+pnpm run synthesize-audio              # 增量：跳过已存在的 mp3
+pnpm run synthesize-audio -- --force   # 全部重合成
+pnpm run synthesize-audio -- --voice=<voice-id>  # 指定音色
 ```
 
 启动时 runner 会先调 provider 的 `tts_check`：
@@ -108,10 +111,10 @@ npm run synthesize-audio -- --voice=<voice-id>  # 指定音色
 
 ```bash
 export OPENAI_API_KEY=sk-...                   # 在 platform.openai.com 拿
-PRESENTATION_TTS=openai npm run synthesize-audio
+PRESENTATION_TTS=openai pnpm run synthesize-audio
 # 换音色 + HD 模型
 OPENAI_TTS_MODEL=tts-1-hd PRESENTATION_TTS=openai \
-  npm run synthesize-audio -- --voice=nova
+  pnpm run synthesize-audio -- --voice=nova
 ```
 
 可选 env：
@@ -135,9 +138,9 @@ Cloud）。
 `scripts/tts-providers/<name>.sh` → 设好环境变量 → 切换 provider 跑：
 
 ```bash
-PRESENTATION_TTS=elevenlabs npm run synthesize-audio
+PRESENTATION_TTS=elevenlabs pnpm run synthesize-audio
 # 或
-npm run synthesize-audio -- --provider=edge-tts
+pnpm run synthesize-audio -- --provider=edge-tts
 ```
 
 如果用户的 TTS 完全自研，**按三函数契约**写一个 `<name>.sh` 即可：
@@ -160,10 +163,10 @@ npm run synthesize-audio -- --provider=edge-tts
 
   1. 用内置 openai provider（如果你已有 OpenAI key）
      export OPENAI_API_KEY=sk-...
-     PRESENTATION_TTS=openai npm run synthesize-audio
+     PRESENTATION_TTS=openai pnpm run synthesize-audio
 
   2. 帮你装 MiniMax CLI（默认 provider，中文音色更稳）
-     npm install -g mmx-cli && mmx auth login --api-key sk-xxxxx
+     pnpm add -g mmx-cli && mmx auth login --api-key sk-xxxxx
      API key 在 https://platform.minimaxi.com 获取
 
   3. 换其它 provider
@@ -174,7 +177,7 @@ npm run synthesize-audio -- --provider=edge-tts
        • Azure       (要 AZURE_SPEECH_KEY)
        • Google      (要 gcloud auth)
      复制一段保存成 tts-providers/<name>.sh，
-     再 PRESENTATION_TTS=<name> npm run synthesize-audio
+     再 PRESENTATION_TTS=<name> pnpm run synthesize-audio
 
   4. 暂时跳过
      稿子和 narrations 都在，你自己用任意 TTS 录制即可——文件
@@ -235,7 +238,7 @@ Auto 模式首次需要按一次 `Space` 启动（绕过浏览器自动播放限
 | `narrations.ts in X must export an array named "narrations"` | 该章节的 narrations.ts 没 export 名为 narrations 的数组 |
 | `TTS provider 'X' not found` | `scripts/tts-providers/X.sh` 不存在；列出来看哪些可用，或抄 README 加一个 |
 | `provider 'X' does not define tts_synthesize` | 你的 `<X>.sh` 没定义必需的函数。看 README 的契约部分 |
-| 中间断了几条没合成 | `npm run synthesize-audio` 重跑 —— 已存在文件会跳过 |
+| 中间断了几条没合成 | `pnpm run synthesize-audio` 重跑 —— 已存在文件会跳过 |
 | 浏览器没播音频 | Auto / Audio 模式下首次需要用户手势——确认你按了 SPACE 启动 Auto，或者点过页面 |
 | 音频 404 但 Auto 模式还能跑 | 找不到 mp3 时 useAudioPlayer 退化到字数估时（4 字/秒），保证预览不中断 |
 
@@ -243,7 +246,7 @@ minimax 专属：
 
 | 现象 | 原因 / 修法 |
 |---|---|
-| `mmx: command not found` | `npm install -g mmx-cli`；npm 全局 bin 不在 PATH 时 `npm config get prefix` 看一下 |
+| `mmx: command not found` | `pnpm add -g mmx-cli`（或 `npm install -g mmx-cli`）；全局 bin 不在 PATH 时 `pnpm bin -g` / `npm config get prefix` 看一下 |
 | `mmx is not authenticated` | `mmx auth login --api-key sk-xxxxx` 重新登录 |
 | 中文音色不自然 | mmx 默认音色未必最佳；查 `mmx speech --help` 看 `--voice` 可选项，传 `--voice=<id>` |
 | 整段合成被截断 | 单段过长（mmx 默认上限约 5000 字符）。在 narrations.ts 里把这条拆成两条（也意味着该 step 应该拆成两个 step） |

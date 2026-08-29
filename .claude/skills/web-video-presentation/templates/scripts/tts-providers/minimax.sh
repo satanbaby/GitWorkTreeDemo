@@ -23,11 +23,11 @@ tts_install_help() {
   cat <<'EOF' >&2
 To use the MiniMax provider:
 
-  Install:  npm install -g mmx-cli
+  Install:  pnpm add -g mmx-cli
   Login:    mmx auth login --api-key sk-xxxxx
             (get a key at https://platform.minimaxi.com)
 
-Or pick another provider:  PRESENTATION_TTS=<name> npm run synthesize-audio
+Or pick another provider:  PRESENTATION_TTS=<name> pnpm run synthesize-audio
 See tts-providers/README.md for the list and how to add your own.
 EOF
 }
