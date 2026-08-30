@@ -7,3 +7,11 @@
 .tp-stash-demo{display:grid;grid-template-columns:1fr 420px 1fr;align-items:center;width:1500px;margin:80px auto 0}.tp-stack{position:relative;height:300px}.tp-stack>div{position:absolute;inset:35px 80px;padding:65px 35px;border:5px solid var(--rule);border-radius:22px;background:var(--surface-3);font:900 26px var(--font-mono);animation:tp-stack 650ms var(--ease-overshoot) both}.tp-careful{margin-top:40px;text-align:center;font:900 30px var(--font-display-cn);color:var(--accent)}
 .tp-lab{display:grid;grid-template-columns:repeat(3,1fr) 1.1fr;gap:30px;margin-top:75px}.tp-test-subject{height:460px;padding:40px;background:var(--surface-2);animation:tp-action 650ms var(--ease-overshoot) both}.tp-test-subject b{font:900 29px var(--font-mono)}.tp-test-subject i{display:block;height:100px;margin-top:35px;border:4px solid var(--rule);border-radius:18px;background:var(--surface-3)}.tp-checklist{height:460px;padding:42px;border:6px solid var(--rule);border-radius:24px;background:var(--accent-soft)}.tp-checklist strong{font:900 28px var(--font-display-en)}.tp-checklist span{display:block;margin-top:38px;font:800 22px var(--font-mono)}.tp-checklist span i{display:inline-block;width:25px;height:25px;margin-right:20px;border:5px solid var(--accent);transform:rotate(45deg)}
 @keyframes tp-hole{from{transform:scale(.2) rotate(-10deg)}to{transform:scale(1)}}@keyframes tp-tree{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}@keyframes tp-stamp{from{opacity:0;transform:scale(1.8) rotate(-12deg)}to{opacity:1;transform:scale(1) rotate(-5deg)}}@keyframes tp-draw{to{stroke-dashoffset:0}}@keyframes tp-foundation{from{opacity:0;transform:translateY(120px)}to{opacity:1;transform:translateY(0)}}@keyframes tp-action{from{opacity:0;transform:translateY(-60px)}to{opacity:1;transform:translateY(0)}}@keyframes tp-ripple{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}@keyframes tp-stack{from{opacity:0;transform:translateX(-80px)}to{opacity:1}}
+
+/* 開場的大圓佔住畫面右側 x≈1010~1790，標題若不限寬就會壓進圓裡讀不清楚。 */
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.tp-intro{justify-content:normal}

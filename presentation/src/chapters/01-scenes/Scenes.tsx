@@ -164,18 +164,20 @@ export default function Scenes({ step }: ChapterStepProps) {
   }
 
   if (step === 5) {
+    // 三個工作現場等距圍住中心的人：左 / 上 / 右三根輻條，
+    // 下方留給收尾句 —— 四個方位都有內容，不會空一角。
     const sites = [
-      ["sc-site-a", "hotfix 插隊"],
-      ["sc-site-b", "PR review"],
-      ["sc-site-c", "雙版本維護"],
+      ["sc-site-left", "hotfix 插隊"],
+      ["sc-site-top", "PR review"],
+      ["sc-site-right", "雙版本維護"],
     ];
 
     return (
       <div className="sc-scene sc-converge scene-pad">
         <svg className="sc-converge-lines" viewBox="0 0 1920 1080" aria-hidden="true">
-          <path pathLength="1" d="M390 290 C610 290 650 470 850 490" />
-          <path pathLength="1" d="M1530 290 C1310 290 1270 470 1070 490" />
-          <path pathLength="1" d="M390 790 C610 790 670 620 850 600" />
+          <path pathLength="1" d="M478 500 H726" />
+          <path pathLength="1" d="M960 226 V266" />
+          <path pathLength="1" d="M1194 500 H1442" />
         </svg>
 
         {sites.map(([className, label], index) => (

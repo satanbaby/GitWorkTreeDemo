@@ -9,3 +9,17 @@
 
 /* revised definition · left-to-right repository → folders */
 .ct-definition{padding:66px 104px;display:block}.ct-def-copy{display:grid;grid-template-columns:1fr auto;align-items:end}.ct-def-copy h1{font-size:66px}.ct-def-copy small{margin:0 0 8px;font-size:21px}.ct-horizontal{position:relative;width:1540px;height:650px;margin:20px auto 0}.ct-horizontal .ct-repo-core{left:20px;top:220px;width:330px;height:210px;transform:none;display:flex;flex-direction:column;gap:20px}.ct-horizontal .ct-repo-core svg{position:static;width:78px;height:78px;color:var(--accent)}.ct-horizontal .ct-repo-core span{font:900 40px var(--font-display-en)}.ct-horizontal>svg{position:absolute;left:115px;top:50px;width:1120px;height:500px}.ct-horizontal>svg path{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ct-draw 900ms 180ms var(--ease-quart) forwards}.ct-folder-row{position:absolute;z-index:4;left:610px;right:0;top:92px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.ct-folder-row .ct-tree{position:relative;inset:auto;width:auto;height:420px;padding:38px 30px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--surface-2)}.ct-folder-row .ct-tree svg{width:150px;height:125px;color:var(--accent)}.ct-folder-row .ct-tree span{margin-top:30px;font-size:38px}.ct-folder-row .ct-tree small{margin-top:12px;font:800 18px var(--font-mono);color:var(--text-2)}
+
+/* step 2：.ct-def-copy 是 grid-template-columns:1fr auto，但三個子元素靠隱式
+   排列 —— p 落 col1、h1 被擠到 col2、small 掉到第二列，所以標題會飛到右上角
+   跟圖表脫節。改成顯式 grid-areas：kicker 與標題同一欄，出處靠右對齊底部。 */
+.ct-definition .ct-def-copy{grid-template-areas:"kicker source" "title source";column-gap:48px;align-items:end}
+.ct-definition .ct-def-copy>p{grid-area:kicker;align-self:start}
+.ct-definition .ct-def-copy h1{grid-area:title}
+.ct-definition .ct-def-copy small{grid-area:source;justify-self:end;text-align:right}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.ct-definition{justify-content:normal}

@@ -234,6 +234,13 @@ body {
   padding: var(--stage-pad-y) var(--stage-pad-x);
   display: flex;
   flex-direction: column;
+  /* Distribute the stack over the full 1080px height instead of piling it
+     against the top edge. Without this a scene whose content is ~700px tall
+     leaves a 300px+ dead band along the bottom — the single biggest source
+     of "off-balance" framing in a 16:9 recording. Scenes that already fill
+     the stage (grid + align-items:center, or a 100%-height child) are
+     unaffected. */
+  justify-content: center;
 }
 .stack { display: flex; flex-direction: column; }
 .row   { display: flex; flex-direction: row; }

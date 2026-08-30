@@ -70,7 +70,7 @@ git branch -d hotfix/payment-timeout
 
 ## VS Code 實作素材
 
-素材目錄已有 Git Worktree Manager 擴充套件畫面。擴充套件識別碼為 `jackiotyu.git-worktree-manager`。示範流程是從側邊欄按「新增 Worktree」，選擇「建立新分支」，挑基準分支，輸入 worktree 目錄，然後在另一個 VS Code 視窗開啟。兩個視窗可以分別停在原本 feature 與 hotfix，獨立編輯和提交。最後從 worktree 操作選單移除 linked worktree。
+素材目錄已有 Git Worktree Manager 擴充套件畫面。擴充套件識別碼為 `jackiotyu.git-worktree-manager`。本章以 VS Code icon 明確標示編輯器與新視窗：示範流程是從側邊欄按「新增 Worktree」，選擇「建立新分支」，挑基準分支，輸入 worktree 目錄，然後在另一個 VS Code 視窗開啟。兩個視窗可以分別停在原本 feature 與 hotfix，獨立編輯和提交。最後從 worktree 操作選單移除 linked worktree。
 
 ## 實務情境
 

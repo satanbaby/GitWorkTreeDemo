@@ -22,14 +22,21 @@ export default function SwitchCost({ step }: ChapterStepProps) {
               <div className="sw-file-grid">{Array.from({ length: 9 }, (_, i) => <i key={i} />)}</div>
             </div>
           </div>
+          {/* 這個 slot 要跟上方 viewport 的循環同步：兩個分支名疊在同一格上
+              交叉淡入淡出，時間點與 sw-feature-loop / sw-hotfix-loop 完全一致，
+              才看得出「同一個槽位，一次只裝得下一個 checkout」。 */}
           <div className="sw-slot">
             <span>CHECKOUT SLOT</span>
+            <div className="sw-slot-now">
+              <b className="sw-now-feature">feature</b>
+              <b className="sw-now-hotfix">hotfix</b>
+            </div>
             <strong>1 / 1</strong>
           </div>
           <div className="sw-loop-legend">
-            <span><i />feature</span>
+            <span className="sw-leg-feature"><i />feature</span>
             <b>git switch</b>
-            <span><i />hotfix</span>
+            <span className="sw-leg-hotfix"><i />hotfix</span>
           </div>
         </div>
       </div>

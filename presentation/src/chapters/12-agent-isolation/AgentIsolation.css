@@ -9,3 +9,36 @@
 .ai-claude{display:grid;grid-template-columns:38% 62%;align-items:center;gap:62px}.ai-claude-copy{position:relative;z-index:3}.ai-claude-copy>svg{width:88px;height:88px;margin-bottom:28px;color:var(--accent)}.ai-claude-copy h1{font-size:72px}.ai-claude-copy>strong{display:block;margin-top:34px;font-size:25px;color:var(--text-2)}.ai-shot{position:relative;height:820px;padding:26px;background:var(--surface-2);animation:ai-shot 760ms var(--ease-quart) both}.ai-shot img{width:100%;height:100%;object-fit:contain}.ai-focus{position:absolute;right:82px;bottom:102px;width:370px;height:150px;border:7px solid var(--accent);border-radius:24px;box-shadow:0 0 0 14px var(--accent-soft);animation:ai-focus 900ms 420ms var(--ease-overshoot) both}.ai-focus i{position:absolute;right:-74px;top:50%;width:70px;height:8px;background:var(--accent)}.ai-focus span{position:absolute;right:-62px;top:-52px;font:900 23px var(--font-mono);color:var(--accent)}
 
 @keyframes ai-task-in{from{opacity:0;transform:translateY(55px) rotate(-1deg)}to{opacity:1;transform:translateY(0) rotate(0)}}@keyframes ai-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes ai-foundation{from{opacity:0;transform:translateY(100px)}to{opacity:1;transform:translateY(0)}}@keyframes ai-draw{to{stroke-dashoffset:0}}@keyframes ai-folder-away{0%{opacity:1;transform:translateX(0) rotate(0)}100%{opacity:0;transform:translateX(-180px) rotate(-8deg) scale(.72)}}@keyframes ai-removed{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}@keyframes ai-link-break{0%{transform:scaleX(1)}100%{transform:scaleX(.25);opacity:.28}}@keyframes ai-branch-stay{0%{transform:scale(.96)}55%{transform:scale(1.04)}100%{transform:scale(1)}}@keyframes ai-shot{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:translateX(0)}}@keyframes ai-focus{from{opacity:0;transform:scale(.65)}to{opacity:1;transform:scale(1)}}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.ai-claude{justify-content:normal}
+
+/* ── step 4「直接勾 worktree」重排 ────────────────────────────────
+   舊的 .ai-focus 是一個盲寫座標的絕對定位方框（right:82 / bottom:102），
+   落在截圖右下角的空白處與那隻小機器人上，完全沒有標到工具列的
+   「☑ worktree」。改成兩層：
+     1) .ai-shot 鎖成截圖原生比例（934×637），標註畫在同座標系的 SVG 裡
+     2) 底下再放一個 2.8 倍的局部放大鏡，讓那顆 checkbox 在錄影時看得清楚 */
+.ai-claude-right{display:flex;flex-direction:column;align-items:center;gap:26px;min-width:0}
+.ai-shot{height:auto;width:100%;aspect-ratio:934 / 637;padding:0;overflow:hidden}
+.ai-shot img{width:100%;height:100%;object-fit:contain;display:block}
+.ai-marks{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.ai-mark-box{fill:none;stroke:var(--accent);stroke-width:5;transform-origin:354px 528px;animation:ai-mark-in 620ms 380ms var(--ease-overshoot) both}
+.ai-mark-lead{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ai-mark-draw 520ms 820ms var(--ease-quart) forwards}
+.ai-head-fill{fill:var(--accent)}
+.ai-mark-chip{opacity:0;animation:fade-in 400ms 1120ms both}
+.ai-mark-chip rect{fill:var(--surface);stroke:var(--accent);stroke-width:4}
+.ai-mark-chip text{fill:var(--accent);font-family:var(--font-display-cn);font-size:26px;font-weight:900;text-anchor:middle}
+
+/* 局部放大鏡：同一張圖放大 2.8 倍，只開工具列那一條的視窗
+   （原圖 x 85~430、y 508~548） */
+.ai-zoom{display:flex;flex-direction:column;align-items:center;gap:14px;animation:ai-zoom-in 700ms 1250ms var(--ease-overshoot) both}
+.ai-zoom-window{position:relative;width:966px;height:112px;overflow:hidden;border:6px solid var(--accent);border-radius:18px;background:var(--surface);box-shadow:var(--card-shadow,none)}
+.ai-zoom-window img{position:absolute;left:-238px;top:-1422px;width:2615px;max-width:none;height:auto}
+.ai-zoom>span{font:850 25px var(--font-mono);color:var(--accent)}
+@keyframes ai-mark-in{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes ai-mark-draw{to{stroke-dashoffset:0}}
+@keyframes ai-zoom-in{from{opacity:0;transform:translateY(34px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}

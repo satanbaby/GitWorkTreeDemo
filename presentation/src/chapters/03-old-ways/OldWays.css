@@ -1,6 +1,6 @@
 .ow-scene{color:var(--text);overflow:hidden}.ow-kicker{margin:0 0 16px;font-family:var(--font-mono);font-size:22px;font-weight:850;letter-spacing:.1em;color:var(--accent)}.ow-overview{padding:110px 110px}.ow-overview>h1{margin:0;font-size:104px;line-height:1}.ow-ticket-row{width:1500px;margin:100px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:34px}.ow-ticket{height:280px;padding:44px;display:flex;flex-direction:column;justify-content:space-between;background:var(--surface-2);animation:ow-ticket 700ms calc(var(--ow-i)*120ms) var(--ease-overshoot) both}.ow-ticket span{font-family:var(--font-display-en);font-size:44px;font-weight:900;color:var(--accent)}.ow-ticket strong{font-family:var(--font-display-en);font-size:48px}.ow-route{width:1050px;height:120px;margin:30px auto;display:flex;justify-content:space-between;border-top:7px solid var(--rule)}.ow-route i{width:34px;height:34px;margin-top:-20px;border:6px solid var(--rule);border-radius:50%;background:var(--surface)}
 .ow-method{padding:84px 104px}.ow-title p{margin:0 0 14px;font-family:var(--font-mono);font-size:22px;font-weight:900;letter-spacing:.1em;color:var(--accent)}.ow-title h1{margin:0;font-size:74px;line-height:1.12}.ow-title.ow-cost h1{color:var(--text)}.ow-history{position:relative;width:1450px;height:650px;margin:52px auto 0;padding:64px;background:var(--surface-2)}.ow-branch{position:absolute;left:90px;right:90px;bottom:160px;height:12px;border-radius:8px;background:var(--rule);display:flex;justify-content:space-around}.ow-branch i{width:38px;height:38px;margin-top:-13px;border:6px solid var(--rule);border-radius:50%;background:var(--surface)}.ow-wip-good,.ow-wip-bad{position:absolute;left:48%;bottom:125px;width:150px;height:150px;display:grid;place-items:center;border:5px solid var(--rule);border-radius:50%;background:var(--surface-3);animation:ow-drop 780ms var(--ease-overshoot) both}.ow-wip-good span,.ow-wip-bad span{font-family:var(--font-display-en);font-size:42px;font-weight:900}.ow-wip-good strong{position:absolute;top:-55px;font-size:26px;color:var(--accent)}.ow-history>p{position:absolute;left:80px;top:90px;font-size:34px;font-weight:800}.ow-history-cost svg{position:absolute;inset:90px 200px;width:900px;height:260px}.ow-history-cost svg path{fill:none;stroke:var(--accent);stroke-width:8;stroke-dasharray:1;stroke-dashoffset:1;animation:ow-draw 900ms var(--ease-quart) forwards}.ow-rewrite{position:absolute;right:80px;top:90px;display:flex;gap:20px}.ow-rewrite b{padding:18px 24px;border:3px dashed var(--accent);border-radius:16px;font-size:24px}
-.ow-stash-stage{width:1450px;height:640px;margin:48px auto 0;display:grid;grid-template-columns:1fr 180px 1fr;align-items:center}.ow-files{display:grid;gap:20px}.ow-files>div{height:105px;padding:24px 30px;border:3px solid var(--rule);border-radius:18px;background:var(--surface-2);font-family:var(--font-mono);font-size:22px;font-weight:800;animation:ow-file-funnel 700ms var(--ease-quart) both}.ow-files i{display:inline-block;width:80px;height:10px;margin-left:20px;border-radius:8px;background:var(--accent);opacity:.6}.ow-funnel{text-align:center;font-size:110px;font-weight:900;color:var(--accent);animation:ow-funnel 900ms var(--ease-overshoot) both}.ow-stash-box{height:360px;padding:54px;display:flex;flex-direction:column;justify-content:center;background:var(--surface-3)}.ow-stash-box span{font-family:var(--font-mono);font-size:23px;font-weight:800}.ow-stash-box strong{margin-top:18px;font-size:76px}.ow-clean{position:absolute;right:160px;bottom:110px;font-family:var(--font-display-en);font-size:54px;font-weight:900;color:var(--accent)}.ow-stash-pile{position:relative;width:1400px;height:620px;margin:50px auto}.ow-stash-card{position:absolute;left:50%;top:50%;width:540px;height:220px;padding:34px;background:var(--surface-2);transform:translate(-50%,-50%) translate(calc((var(--ow-i) - 2)*150px),calc((var(--ow-i) - 2)*38px)) rotate(calc((var(--ow-i) - 2)*3deg));animation:ow-pile 760ms calc(var(--ow-i)*90ms) var(--ease-overshoot) both}.ow-stash-card span{font-family:var(--font-mono);font-size:22px;font-weight:900;color:var(--accent)}.ow-stash-card i{display:block;width:70%;height:12px;margin-top:18px;border-radius:8px;background:var(--rule);opacity:.25}.ow-stash-card strong{position:absolute;right:28px;bottom:24px;font-size:24px}
+.ow-stash-pile{position:relative;width:1470px;height:620px;margin:50px auto}.ow-stash-card{position:absolute;left:50%;top:50%;width:540px;height:220px;padding:34px;background:var(--surface-2);transform:translate(-50%,-50%) translate(calc((var(--ow-i) - 2)*212px),calc((var(--ow-i) - 2)*38px)) rotate(calc((var(--ow-i) - 2)*3deg));animation:ow-pile 760ms calc(var(--ow-i)*90ms) var(--ease-overshoot) both}.ow-stash-card span{font-family:var(--font-mono);font-size:22px;font-weight:900;color:var(--accent)}.ow-stash-card i{display:block;width:70%;height:12px;margin-top:18px;border-radius:8px;background:var(--rule);opacity:.25}.ow-stash-card strong{position:absolute;right:28px;bottom:24px;font-size:24px}
 .ow-clone-pair{width:1500px;height:640px;margin:48px auto 0;display:grid;grid-template-columns:1fr 90px 1fr;align-items:center}.ow-repo{height:520px;padding:48px;background:var(--surface-2);animation:ow-room 760ms var(--ease-quart) both}.ow-repo>span{font-family:var(--font-mono);font-size:22px;font-weight:850;color:var(--accent)}.ow-repo>strong{display:block;margin-top:22px;font-family:var(--font-display-en);font-size:64px}.ow-tree{height:280px;margin-top:40px;padding:28px;border:4px solid var(--rule);border-radius:20px;display:grid;gap:22px}.ow-tree i{border-bottom:10px solid var(--accent);width:70%}.ow-tree i:nth-child(2){width:90%;border-color:var(--rule)}.ow-tree i:nth-child(3){width:55%}.ow-wall{height:580px;border-left:6px dashed var(--rule);opacity:.35}.ow-duplicate{width:1450px;height:620px;margin:50px auto 0;display:grid;grid-template-columns:1fr 120px 1fr;align-items:center}.ow-disk{height:360px;padding:48px;display:flex;align-items:center;gap:40px;background:var(--surface-2)}.ow-disk>span{width:150px;height:150px;display:grid;place-items:center;border:8px solid var(--accent);border-radius:50%;font-family:var(--font-display-en);font-size:70px;font-weight:900}.ow-disk b{display:block;margin:18px 0;font-size:34px}.ow-plus{text-align:center;font-size:90px;font-weight:900;color:var(--accent)}.ow-meter{position:absolute;left:300px;right:300px;bottom:95px;height:48px;border:4px solid var(--rule);border-radius:20px;overflow:hidden}.ow-meter i{display:block;width:100%;height:100%;background:var(--accent);transform-origin:left;animation:ow-meter 900ms var(--ease-quart) both}.ow-meter strong{position:absolute;right:20px;top:55px;font-size:28px}
 .ow-diverge{width:1400px;height:600px;margin:60px auto 0;display:grid;grid-template-columns:1fr 180px 1fr;align-items:center}.ow-log{height:450px;padding:44px;border:4px solid var(--rule);border-radius:28px;background:var(--surface-2);display:flex;flex-direction:column;align-items:center;gap:34px}.ow-log span{font-family:var(--font-display-en);font-size:48px;font-weight:900}.ow-log i{width:34px;height:34px;border:6px solid var(--rule);border-radius:50%;position:relative}.ow-log i::after{content:"";position:absolute;left:10px;top:27px;width:6px;height:42px;background:var(--rule)}.ow-log i:last-child::after{display:none}.ow-log .ow-new{border-color:var(--accent);background:var(--accent-soft);animation:ow-new 720ms var(--ease-overshoot) both}.ow-gap{text-align:center;font-size:100px;font-weight:900;color:var(--accent)}
 .ow-exchange{padding:88px 104px;display:grid;grid-template-columns:38% 62%;align-items:center;gap:50px}.ow-exchange-copy h1{margin:0;font-size:74px;line-height:1.15}.ow-exchange-copy h1 span{color:var(--accent)}.ow-exchange-demo{height:720px;display:grid;grid-template-columns:1fr 180px 1fr;align-items:center}.ow-terminal{height:420px;padding:42px;background:var(--surface-2)}.ow-terminal span{font-family:var(--font-display-en);font-size:42px;font-weight:900}.ow-terminal code{display:block;margin-top:62px;font-family:var(--font-mono);font-size:25px}.ow-terminal strong{display:block;margin-top:30px;font-size:38px;color:var(--accent)}.ow-bridge{display:grid;justify-items:center;gap:18px}.ow-bridge i{width:100%;height:8px;background:var(--rule);animation:ow-bridge 1s 400ms var(--ease-quart) both}.ow-bridge b{font-family:var(--font-mono);font-size:20px;color:var(--accent)}
@@ -12,3 +12,110 @@
 /* revised clone cost · illustration plus HTML disk labels */
 .ow-repo-waste{position:relative;width:1540px;height:650px;margin:32px auto 0}.ow-repo-waste>img{position:absolute;left:0;top:5px;width:1540px;max-width:none;animation:ow-repo-land 850ms var(--ease-overshoot) both}.ow-size-label{position:absolute;z-index:3;top:24px;width:230px;padding:15px 20px;border:4px solid var(--rule);border-radius:18px;background:var(--surface);box-shadow:10px 11px 0 var(--accent-soft);text-align:center;animation:ow-size-drop 620ms var(--ease-overshoot) both}.ow-size-label span,.ow-size-label strong{display:block;font-family:var(--font-mono)}.ow-size-label span{font-size:18px;color:var(--text-2)}.ow-size-label strong{margin-top:3px;font-size:38px;color:var(--accent)}.ow-size-0{left:95px}.ow-size-1{left:505px;animation-delay:120ms}.ow-size-2{left:915px;animation-delay:240ms}.ow-space-total{position:absolute;z-index:4;right:0;bottom:0;width:390px;padding:28px 34px;background:var(--surface-3);animation:ow-total-in 700ms 520ms var(--ease-overshoot) both}.ow-space-total span{font:850 18px var(--font-mono);color:var(--text-2)}.ow-space-total strong{display:block;margin-top:7px;font-size:72px;color:var(--accent)}.ow-space-total i{display:block;height:13px;margin-top:12px;border-radius:8px;background:var(--accent);transform-origin:left;animation:ow-meter 850ms 720ms var(--ease-quart) both}
 @keyframes ow-repo-land{from{opacity:0;transform:translateY(45px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes ow-size-drop{from{opacity:0;transform:translateY(-50px)}to{opacity:1;transform:translateY(0)}}@keyframes ow-total-in{from{opacity:0;transform:translateX(80px) rotate(3deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+
+/* ── step 3「半成品寫進歷史」重排 ─────────────────────────────
+   舊版是「一條 branch 線 + 一段浮空的 SVG 弧線」，弧線兩端沒有接到任何
+   節點，觀眾看不出它在指什麼。改成單一 SVG 座標系：時間軸、commit 節點、
+   WIP 節點、回頭改寫的箭頭全部畫在同一個 viewBox 裡，位置不可能再漂掉。 */
+.ow-history-cost{height:auto;min-height:600px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;padding:44px 40px}
+.ow-history-cost svg.ow-cost-svg{position:static;inset:auto;width:1330px;height:auto}
+.ow-cost-svg .ow-track{stroke:var(--rule);stroke-width:10;stroke-linecap:round}
+.ow-cost-svg .ow-node{fill:var(--surface);stroke:var(--rule);stroke-width:8}
+.ow-cost-svg .ow-wip-node{fill:var(--accent-soft);stroke:var(--accent);stroke-width:8;stroke-dasharray:16 13;transform-origin:610px 300px;animation:ow-wip-land 700ms var(--ease-overshoot) both}
+.ow-cost-svg .ow-wip-text{fill:var(--text);font-family:var(--font-display-en);font-size:42px;font-weight:900;text-anchor:middle;dominant-baseline:central}
+.ow-cost-svg .ow-return{fill:none;stroke:var(--accent);stroke-width:8;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ow-draw 900ms 420ms var(--ease-quart) forwards}
+.ow-cost-svg .ow-head{fill:var(--accent)}
+.ow-cost-svg .ow-return-text{fill:var(--accent);font-family:var(--font-mono);font-size:31px;font-weight:850;text-anchor:middle;opacity:0;animation:fade-in 460ms 1080ms both}
+.ow-history-cost .ow-rewrite{position:static;right:auto;top:auto;display:flex;align-items:center;gap:22px}
+.ow-history-cost .ow-rewrite b{padding:18px 26px;border:3px dashed var(--accent);border-radius:16px;font-size:27px}
+.ow-history-cost .ow-rewrite i{font-style:normal;font-size:30px;font-weight:900;color:var(--accent)}
+@keyframes ow-wip-land{from{opacity:0;transform:translateY(-120px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* step 7：插圖是 16:9（1672×941），原本容器寫死 650px 高但圖寬 1540px 會長到
+   866px，垂直置中後直接撞出舞台下緣。改成容器與圖同尺寸，容量標籤依同比例
+   重新對到三個罐子的中心。 */
+.ow-repo-waste{width:1360px;height:765px;margin:26px auto 0}
+.ow-repo-waste>img{width:1360px}
+.ow-size-label{width:210px;top:18px}
+.ow-size-label strong{font-size:34px}
+.ow-size-0{left:80px}
+.ow-size-1{left:442px}
+.ow-size-2{left:804px}
+.ow-space-total{width:340px;padding:24px 28px}
+.ow-space-total strong{font-size:62px}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.ow-exchange{justify-content:normal}
+
+
+/* ── step 4「stash」：圖示化 git 節點 + 變更被包進隱藏的 stash ──────────
+   要演的是「機制」而不是「log」：分支上的 commit 節點維持不動，working tree
+   裡三個未 commit 的變更在指令下達後被吸進右側的保險櫃，櫃門關上、掛上
+   stash@{0}，而分支線一個節點都沒有增加。
+   .ow-stash-scene 是 1600×640 的固定座標系，SVG 的 viewBox 與 HTML 的絕對
+   定位共用同一套數字，所以卡片飛行的終點保證落在櫃子上。 */
+.ow-stash-scene{position:relative;width:1600px;height:640px;margin:26px auto 0}
+.ow-stash-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ow-branch-line{stroke:var(--rule);stroke-width:9;stroke-linecap:round}
+.ow-branch-node{fill:var(--surface);stroke:var(--rule);stroke-width:8;animation:ow-node-pop 520ms var(--ease-overshoot) both}
+.ow-stash-dash{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:14 14;
+  animation:ow-dash-draw 700ms 2500ms var(--ease-quart) both}
+
+/* working tree：三個髒檔案 */
+.ow-wt{position:absolute;left:0;top:22px;width:940px;height:290px}
+.ow-wt-label{font:850 22px var(--font-mono);letter-spacing:.1em;color:var(--text-2)}
+.ow-wt-files{position:absolute;left:15px;top:140px;display:flex;gap:20px}
+.ow-dirty{width:290px;height:110px;padding:24px 26px;display:flex;align-items:center;gap:16px;
+  background:var(--surface-2);
+  animation:ow-dirty-in 560ms var(--ease-overshoot) both, ow-suck 880ms var(--ease-quart) forwards}
+.ow-dirty b{font:900 30px var(--font-mono);color:var(--accent)}
+.ow-dirty span{font:750 21px var(--font-mono);color:var(--text-2)}
+.ow-wt-clean{position:absolute;left:15px;top:170px;font:900 46px var(--font-display-en);color:var(--accent);
+  opacity:0;animation:fade-in 460ms 2700ms both}
+
+/* 指令 */
+.ow-stash-cmd{position:absolute;left:0;top:322px;padding:20px 30px;border:4px solid var(--rule);border-radius:18px;
+  background:var(--surface-3);font:800 30px var(--font-mono);
+  animation:ow-cmd-fire 620ms 1250ms var(--ease-overshoot) both}
+.ow-stash-cmd em{font-style:normal;font-weight:900;color:var(--accent);margin-right:12px}
+
+/* 分支標示 */
+.ow-branch-name{position:absolute;left:60px;top:510px;font:850 26px var(--font-mono);color:var(--text-2)}
+.ow-branch-note{position:absolute;left:60px;top:556px;font:900 30px var(--font-display-cn);color:var(--accent);
+  opacity:0;animation:fade-in 500ms 3160ms both}
+
+/* 隱藏的 stash 保險櫃 —— 用虛線邊框表示它不在任何 branch 上 */
+.ow-vault{position:absolute;left:1140px;top:190px;width:420px;height:300px;padding:44px 36px;
+  border:6px dashed var(--accent);border-radius:26px;background:var(--accent-soft);perspective:900px;
+  animation:ow-vault-open 620ms 1300ms var(--ease-overshoot) both}
+.ow-vault-lid{position:absolute;left:-6px;right:-6px;top:-6px;height:56px;
+  border:6px solid var(--accent);border-radius:26px 26px 0 0;background:var(--surface-3);
+  transform-origin:top center;animation:ow-lid-close 560ms 2650ms var(--ease-overshoot) both}
+.ow-vault>span{font:850 21px var(--font-mono);color:var(--accent)}
+.ow-vault>strong{display:block;margin-top:14px;font:900 46px var(--font-mono);
+  opacity:0;animation:fade-in 440ms 2900ms both}
+.ow-vault-count{position:absolute;left:36px;right:36px;bottom:40px;font:750 22px var(--font-display-cn);color:var(--text-2);
+  opacity:0;animation:fade-in 440ms 3020ms both}
+.ow-vault-count b{font:900 34px var(--font-display-en);color:var(--accent)}
+
+@keyframes ow-node-pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes ow-dash-draw{from{opacity:0}to{opacity:1}}
+@keyframes ow-dirty-in{from{opacity:0;transform:translateY(-38px)}to{opacity:1;transform:translateY(0)}}
+/* 變更被「吸」進櫃子：位移到櫃子中心並縮小消失 */
+@keyframes ow-suck{
+  0%{transform:translate(0,0) scale(1) rotate(0);opacity:1}
+  22%{transform:translate(0,-26px) scale(1.04) rotate(-2deg);opacity:1}
+  100%{transform:translate(var(--dx),var(--dy)) scale(.16) rotate(9deg);opacity:0}
+}
+@keyframes ow-cmd-fire{0%{opacity:0;transform:translateY(20px)}60%{opacity:1;transform:translateY(0) scale(1.05)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes ow-vault-open{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes ow-lid-close{from{transform:rotateX(-105deg)}to{transform:rotateX(0)}}
+
+/* 疊卡原本每張只往右錯開 150px，但 stash@{n} 標籤含左內距就要 ~155px —— 每張
+   卡的編號都被下一張切掉尾巴，只有最上面那張讀得完整。錯開量拉到 212px
+   （540 + 4×212 = 1388，容器 1470 裝得下），五個編號全部露出來。
+   另外原本每張卡右下都寫 which one?，但那個位置永遠被下一張蓋住，只有最上面
+   那張看得到 —— 改成只有最上面那張掛牌，其餘不再放看不見的字。 */

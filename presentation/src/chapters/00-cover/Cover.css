@@ -319,3 +319,9 @@
 @keyframes cv-turn {
   to { transform: rotate(360deg); }
 }
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.cv-scene{justify-content:normal}

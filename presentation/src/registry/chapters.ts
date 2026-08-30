@@ -11,8 +11,6 @@ import Concept from "../chapters/04-concept/Concept";
 import { narrations as conceptNarrations } from "../chapters/04-concept/narrations";
 import VsClone from "../chapters/05-vs-clone/VsClone";
 import { narrations as vsCloneNarrations } from "../chapters/05-vs-clone/narrations";
-import Esim from "../chapters/06-esim/Esim";
-import { narrations as esimNarrations } from "../chapters/06-esim/narrations";
 import CmdCreate from "../chapters/07-cmd-create/CmdCreate";
 import { narrations as cmdCreateNarrations } from "../chapters/07-cmd-create/narrations";
 import CmdManage from "../chapters/08-cmd-manage/CmdManage";
@@ -72,15 +70,11 @@ export const CHAPTERS: ChapterDef[] = [
   },
   {
     id: "vs-clone",
+    // 原 06-esim 章（手機 / eSIM 比喻）已整段併入這一章 —— 兩章講的是同一個
+    // 論點，拆開等於同一件事講兩輪。詳見該章 narrations.ts 的說明。
     title: "跟多 clone 的差異",
     narrations: vsCloneNarrations,
     Component: VsClone,
-  },
-  {
-    id: "esim",
-    title: "手機與 eSIM 的比喻",
-    narrations: esimNarrations,
-    Component: Esim,
   },
   {
     id: "cmd-create",

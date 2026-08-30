@@ -7,3 +7,19 @@
 
 /* revised agent signal · real brand marks and folder icons */
 .cl-agent-head{display:grid;place-items:center}.cl-agent-head svg{width:72px;height:72px;color:var(--accent)}.cl-agent-unit>b{font-size:20px}.cl-agent-tree{display:grid;grid-template-columns:130px 1fr;align-items:center;text-align:left}.cl-agent-tree svg{width:105px;color:var(--accent)}.cl-agent-tree span{font-size:27px}
+
+/* 同上：禁止標誌的圓形佔住 x≈900~1800，標題與底線都收回左欄，
+   不要疊在圖形上。 */
+.cl-line{left:105px;right:auto;width:760px}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.cl-not-always{justify-content:normal}
+
+/* 標題原本是 place-items:center + text-align:center，但右側的禁止標誌圓形
+   佔住 x≈900~1800，置中的標題正好壓在圖形上讀不出來。改成與全片一致的
+   「文字靠左、圖形靠右」構圖。 */
+.cl-not-always{place-items:center start;text-align:left}
+.cl-not-always h1{max-width:780px}

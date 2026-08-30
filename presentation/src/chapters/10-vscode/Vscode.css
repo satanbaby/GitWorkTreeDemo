@@ -6,3 +6,67 @@
 .vs-two-windows .vs-shot,.vs-history .vs-shot{width:1490px;height:720px;margin:35px auto 0;animation:vs-shot 700ms var(--ease-overshoot) both}.vs-window-label{position:absolute;top:330px;padding:18px 28px;border:5px solid var(--rule);border-radius:18px;background:var(--surface-3);font:900 28px var(--font-mono);color:var(--accent)}.vs-original{left:190px}.vs-hotfix{right:150px}.vs-split-line{position:absolute;left:50%;top:300px;bottom:65px;width:8px;background:var(--accent);animation:vs-split 700ms var(--ease-quart) both}.vs-history svg{position:absolute;inset:0;width:100%;height:100%}.vs-history path{fill:none;stroke:var(--accent);stroke-width:10;stroke-dasharray:1;stroke-dashoffset:1;animation:vs-draw 800ms var(--ease-quart) forwards}.vs-commit-chip{position:absolute;right:130px;bottom:95px;padding:20px 28px;border:5px solid var(--rule);border-radius:18px;background:var(--accent-soft);font:900 22px var(--font-mono);animation:vs-chip 700ms var(--ease-overshoot) both}.vs-history-note{position:absolute;left:125px;bottom:80px;font:850 22px var(--font-mono);color:var(--accent)}
 .vs-clean-pair{display:grid;grid-template-columns:1fr 100px 1fr;align-items:center;gap:20px;margin-top:45px}.vs-clean-pair .vs-shot{height:620px;animation:vs-shot 650ms var(--ease-overshoot) both}.vs-clean-arrow{text-align:center;font:900 80px var(--font-display-en);color:var(--accent)}.vs-clean-captions{position:absolute;left:160px;right:160px;bottom:45px;display:flex;justify-content:space-between}.vs-clean-captions b{padding:16px 24px;border:4px solid var(--rule);border-radius:16px;background:var(--accent-soft);font:900 21px var(--font-mono)}
 @keyframes vs-fall{from{opacity:0;transform:translateY(-80px) rotate(5deg)}to{opacity:1;transform:translateY(0)}}@keyframes vs-editor{from{opacity:0;transform:scale(.75) rotate(4deg)}to{opacity:1;transform:scale(1)}}@keyframes vs-shot{from{opacity:0;transform:translateY(55px) rotate(1deg)}to{opacity:1;transform:translateY(0)}}@keyframes vs-focus{from{opacity:0;transform:scaleX(.2);transform-origin:left}to{opacity:1;transform:scaleX(1)}}@keyframes vs-window{from{opacity:0;transform:translate(120px,80px) scale(.5)}to{opacity:1;transform:translate(0) scale(1)}}@keyframes vs-split{from{transform:scaleY(0);transform-origin:top}to{transform:scaleY(1)}}@keyframes vs-draw{to{stroke-dashoffset:0}}@keyframes vs-chip{from{opacity:0;transform:translateX(130px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── 截圖標註系統重寫 ────────────────────────────────────────────────
+   舊做法：每個標註都是一個 position:absolute 的空 div，座標是憑感覺寫的，
+   量到的是「被 letterbox 過的容器」而不是圖片本身 —— 所以框永遠對不準，
+   線也永遠接不到東西。
+   新做法：.vs-shot 用 aspect-ratio 鎖成圖片的原生比例，object-fit:contain
+   於是剛好填滿；標註畫在一層 viewBox = 圖片原生尺寸的 SVG 裡，直接用截圖
+   自己的像素座標下筆，任何縮放下都對得準。 */
+.vs-shot{position:relative;height:auto!important;width:auto;max-width:100%;max-height:100%}
+.vs-marks{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.vs-mark-box{fill:none;stroke:var(--accent);stroke-width:7;transform-origin:center;animation:vs-mark-in 620ms 260ms var(--ease-overshoot) both}
+.vs-mark-box-b{animation-delay:420ms}
+.vs-mark-lead{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:vs-draw 520ms 780ms var(--ease-quart) forwards}
+.vs-mark-text{fill:var(--accent);font-family:var(--font-mono);font-size:38px;font-weight:850;text-anchor:middle;opacity:0;animation:fade-in 420ms 1080ms both}
+.vs-mark-win{fill:none;stroke-width:8;animation:vs-mark-in 640ms var(--ease-overshoot) both}
+.vs-mark-back{stroke:var(--text-mute);stroke-dasharray:20 16}
+.vs-mark-front{stroke:var(--accent);animation-delay:300ms}
+.vs-mark-tag rect{fill:var(--surface);stroke:var(--rule);stroke-width:5}
+.vs-mark-tag text{fill:var(--text);font-family:var(--font-display-cn);font-size:34px;font-weight:900;text-anchor:middle}
+.vs-mark-tag-a{animation:fade-in 420ms 340ms both}
+.vs-mark-tag-b{animation:fade-in 420ms 640ms both}
+.vs-mark-tag-b rect{fill:var(--accent-soft);stroke:var(--accent)}
+.vs-mark-link{fill:none;stroke:var(--accent);stroke-width:8;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:vs-draw 900ms 700ms var(--ease-quart) forwards}
+.vs-head-fill{fill:var(--accent)}
+.vs-mark-text-link{font-size:44px;animation-delay:1450ms}
+@keyframes vs-mark-in{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+/* 各步驟的截圖尺寸（改用 aspect-ratio 後只需要給寬或高其中一個） */
+.vs-market .vs-shot{width:960px;transform:rotate(1deg)}
+.vs-directory .vs-shot{width:1000px}
+.vs-two-shots .vs-shot,.vs-clean-pair .vs-shot{width:100%}
+.vs-new-window .vs-shot{width:1180px;margin:44px auto 0}
+.vs-two-windows .vs-shot{width:1320px;margin:26px auto 0}
+.vs-history .vs-shot{width:1075px;margin:20px auto 0}
+/* 舊的盲框標註全部停用 */
+.vs-focus,.vs-path-highlight,.vs-split-line,.vs-window-label,.vs-history svg:not(.vs-marks),.vs-commit-chip{display:none}
+.vs-history-note{position:absolute;left:125px;bottom:70px}
+
+/* 標註文字底下墊一塊色塊，避免壓在截圖內容上讀不出來 */
+.vs-mark-chip rect{fill:var(--surface);stroke:var(--accent);stroke-width:5}
+.vs-mark-chip text{fill:var(--accent);font-family:var(--font-display-cn);font-size:40px;font-weight:900;text-anchor:middle}
+.vs-mark-chip{opacity:0;animation:fade-in 420ms 1080ms both}
+.vs-history .vs-mark-chip{animation-delay:1450ms}
+/* 左欄路徑三段：貼齊內容寬度，不要撐成整欄的長條 */
+.vs-path-parts{justify-items:start}
+.vs-path-parts b{display:inline-block}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.vs-no-memory,.vs-market,.vs-directory{justify-content:normal}
+
+/* 10-1 / 10-5: use the real VS Code brand mark for the editor and new window. */
+.vs-editor-shape{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:80px}
+.vs-editor-shape .vs-editor-icon{width:310px;height:310px;color:var(--accent)}
+.vs-editor-shape b{margin:0}
+.vs-editor-shape>span{font:850 24px var(--font-mono);letter-spacing:.08em;color:var(--text-2)}
+.vs-window-pop{width:440px;height:280px;padding:48px 35px 24px;display:flex;flex-direction:column;align-items:center}
+.vs-window-pop .vs-window-icon{width:62px;height:62px;color:var(--accent)}
+.vs-window-pop strong{font-size:33px}
+.vs-window-pop span{margin-top:12px}
+/* 分支名是識別字，維持等寬 —— 中文才需要走主題的 CN 字型。 */
+.vs-tag-branch{fill:var(--accent);font-family:var(--font-mono);font-weight:850}

@@ -7,3 +7,17 @@
 .ar-conflict{padding:68px 104px}.ar-conflict-copy{position:relative;z-index:5;width:660px}.ar-conflict-copy h1{font-size:74px}.ar-conflict-badges{display:flex;gap:18px;margin-top:36px}.ar-conflict-badges strong{padding:14px 20px;border:3px dashed var(--rule);border-radius:14px;font:850 19px var(--font-mono);color:var(--accent)}.ar-conflict>img{position:absolute;z-index:2;right:-25px;bottom:20px;width:1420px;max-width:none;animation:ar-conflict-land 850ms var(--ease-overshoot) both}.ar-owner{position:absolute;z-index:6;right:105px;bottom:74px;width:320px;padding:26px 30px;background:var(--surface-3);animation:ar-owner 650ms 520ms var(--ease-overshoot) both}.ar-owner span,.ar-owner strong{display:block;font-family:var(--font-mono)}.ar-owner span{font-size:17px;color:var(--text-2)}.ar-owner strong{margin-top:5px;font-size:34px;color:var(--accent)}.ar-owner i{display:block;width:100%;height:10px;margin-top:15px;border-radius:8px;background:var(--accent);animation:ar-owner-line 720ms 720ms var(--ease-quart) both}
 
 @keyframes ar-brand-pop{from{opacity:0;transform:translateY(55px) rotate(-2deg) scale(.9)}to{opacity:1;transform:translateY(0) rotate(0) scale(1)}}@keyframes ar-agent-drop{from{opacity:0;transform:translateY(-55px)}to{opacity:1;transform:translateY(0)}}@keyframes ar-target{from{opacity:0;transform:translate(-50%,80px) scale(.82)}to{opacity:1;transform:translate(-50%,0) scale(1)}}@keyframes ar-draw{to{stroke-dashoffset:0}}@keyframes ar-conflict-land{from{opacity:0;transform:translate(80px,40px) scale(.95)}to{opacity:1;transform:translate(0,0) scale(1)}}@keyframes ar-owner{from{opacity:0;transform:translateX(90px) rotate(4deg)}to{opacity:1;transform:translateX(0) rotate(0)}}@keyframes ar-owner-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.ar-brand-intro{justify-content:normal}
+
+/* 這一頁的 agent 卡牆（top:245）、連接線（top:370）與 SHARED project/（top:805）
+   全是舞台絕對座標，只有 <p> 標籤與 <h1> 在流排裡。base.css 的
+   .scene-pad{justify-content:center} 會把這兩行從頂端推到垂直中央（y 473 / 516），
+   正好撞進 y 245~495 的卡牆底下，字就被卡片蓋住。
+   前一輪只替 grid 版面的場景補了 justify-content 覆寫，漏掉這種「flex 直列 +
+   絕對定位裝飾」的頁 —— 跟 .vc-onebase 是同一個問題。 */
+.ar-many{justify-content:flex-start}

@@ -13,3 +13,37 @@
 .sw-loop-legend span{display:flex;align-items:center;gap:10px}.sw-loop-legend span i{width:12px;height:12px;border:3px solid var(--accent);border-radius:50%;background:var(--surface)}.sw-loop-legend b{padding:10px 18px;border:3px dashed var(--rule);border-radius:14px;color:var(--accent)}
 @keyframes sw-feature-loop{0%,38%{transform:translateX(0)}48%,88%{transform:translateX(-100%)}100%{transform:translateX(0)}}
 @keyframes sw-hotfix-loop{0%,38%{transform:translateX(100%)}48%,88%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。
+   這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
+   分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
+   既有的 align-items。 */
+.sw-limit{justify-content:normal}
+
+/* ── checkout slot 跟著循環切換 ───────────────────────────────────
+   viewport 裡的 feature / hotfix 用 4.8s 無限循環互換，但底下的 slot 原本
+   是靜態的「CHECKOUT SLOT ‧ 1/1」，看不出當下裝的是哪一個 —— 這頁的重點
+   正是「一次只能有一個 checkout」，指示器不同步等於把論點丟掉。
+   下面所有 keyframes 的百分比都與 sw-feature-loop / sw-hotfix-loop 對齊：
+     0~38% feature ／ 38~48% 切換 ／ 48~88% hotfix ／ 88~100% 切回 */
+.sw-slot{gap:28px}
+.sw-slot-now{position:relative;width:330px;height:60px;flex:none}
+.sw-slot-now b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  border:3px solid var(--accent);border-radius:16px;background:var(--accent-soft);
+  font:900 30px var(--font-mono);color:var(--accent)}
+.sw-now-feature{animation:sw-slot-feature 4.8s var(--ease-quart) infinite both}
+.sw-now-hotfix{animation:sw-slot-hotfix 4.8s var(--ease-quart) infinite both}
+@keyframes sw-slot-feature{0%,38%{opacity:1;transform:translateY(0)}44%{opacity:0;transform:translateY(-14px)}48%,88%{opacity:0;transform:translateY(14px)}94%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes sw-slot-hotfix{0%,38%{opacity:0;transform:translateY(14px)}44%{opacity:0;transform:translateY(14px)}48%,88%{opacity:1;transform:translateY(0)}94%{opacity:0;transform:translateY(-14px)}100%{opacity:0;transform:translateY(14px)}}
+
+/* 圖例上的兩顆點也跟著亮／暗，並在切換的瞬間讓 git switch 這顆 chip 閃一下 */
+.sw-leg-feature i{animation:sw-dot-feature 4.8s var(--ease-quart) infinite both}
+.sw-leg-hotfix i{animation:sw-dot-hotfix 4.8s var(--ease-quart) infinite both}
+.sw-leg-feature{animation:sw-legtext-feature 4.8s var(--ease-quart) infinite both}
+.sw-leg-hotfix{animation:sw-legtext-hotfix 4.8s var(--ease-quart) infinite both}
+.sw-loop-legend b{animation:sw-switch-fire 4.8s var(--ease-quart) infinite both}
+@keyframes sw-dot-feature{0%,38%{background:var(--accent)}48%,88%{background:var(--surface)}100%{background:var(--accent)}}
+@keyframes sw-dot-hotfix{0%,38%{background:var(--surface)}48%,88%{background:var(--accent)}100%{background:var(--surface)}}
+@keyframes sw-legtext-feature{0%,38%{color:var(--accent)}48%,88%{color:var(--text-mute)}100%{color:var(--accent)}}
+@keyframes sw-legtext-hotfix{0%,38%{color:var(--text-mute)}48%,88%{color:var(--accent)}100%{color:var(--text-mute)}}
+@keyframes sw-switch-fire{0%,34%{opacity:.45;transform:scale(1)}43%{opacity:1;transform:scale(1.09)}52%,84%{opacity:.45;transform:scale(1)}93%{opacity:1;transform:scale(1.09)}100%{opacity:.45;transform:scale(1)}}
