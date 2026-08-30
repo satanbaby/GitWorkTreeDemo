@@ -1,13 +1,74 @@
 import type { ChapterStepProps } from "../../registry/types";
+import { BrandIcon, FolderIcon, type BrandName } from "../../components/VisualIcons";
 import "./AgentRisk.css";
 
-const themeAsset=(name:string)=>`${import.meta.env.BASE_URL}theme-assets/${name}`;
-const Agent=({name,className=""}:{name:string;className?:string})=><div className={`ar-agent ${className}`}><div className="ar-head"><i/><i/></div><b>{name}</b><div className="ar-body"><i/><i/><i/></div></div>;
+const illustration = (name: string) =>
+  `${import.meta.env.BASE_URL}illustrations/agent-risk/${name}`;
 
-export default function AgentRisk({step}:ChapterStepProps){
- if(step===0)return <div className="ar-scene ar-intro scene-pad"><img src={themeAsset("ice-bear-coding.png")} alt="白熊專注使用筆電執行 Coding Agent 任務"/><div className="ar-cursor"><i/><i/></div><p>REAL-WORLD USE CASE</p><h1>Coding<br/><span>Agent</span></h1><div className="ar-enter">讀取　→　修改　→　執行</div></div>;
- if(step===1)return <div className="ar-scene ar-pipeline scene-pad"><p>AGENT DOES MORE THAN READ</p><h1>它會真的<span>動你的專案。</span></h1><div className="ar-conveyor">{[["EDIT","app.ts"],["FORMAT","prettier"],["TEST","vitest"],["BUILD","dist/"]].map(([a,b],i)=><div className="ar-action card" key={a} style={{animationDelay:`${i*140}ms`}}><strong>{a}</strong><span>{b}</span><i/></div>)}</div><div className="ar-belt"><i/><i/><i/><i/><i/><i/></div></div>;
- if(step===2)return <div className="ar-scene ar-crowded scene-pad"><p>ONE WORKING DIRECTORY</p><h1>兩個 agent，<span>擠進同一個現場。</span></h1><div className="ar-collision"><Agent name="AGENT A" className="ar-left-agent"/><Agent name="AGENT B" className="ar-right-agent"/><div className="ar-directory card"><b>project/</b>{["app.ts","HEAD","dist/"].map(x=><div key={x}><span>{x}</span><i/><i/></div>)}</div><svg viewBox="0 0 1500 580"><path pathLength="1" d="M180 150 C400 150 430 290 660 290"/><path pathLength="1" d="M1320 430 C1100 430 1050 290 830 290"/></svg></div><div className="ar-three">同時改檔　·　同時切 branch　·　同時清輸出</div></div>;
- if(step===3)return <div className="ar-scene ar-polluted scene-pad"><div className="ar-glitch"><span>WHO?</span><span>WHO?</span><span>WHO?</span></div><p>COLLISION RESULT</p><h1>互相覆蓋，<br/><span>測試結果被污染。</span></h1><div className="ar-result"><div className="ar-diff card"><b>app.ts</b><div><i className="ar-del"/><i className="ar-add"/><i className="ar-del"/><i className="ar-add"/></div><strong>last writer wins</strong></div><div className="ar-test card"><b>TEST RUN</b>{["pass","fail","pass","?"].map((x,i)=><span key={`${x}-${i}`}>{x}</span>)}<strong>owner: unknown</strong></div></div><div className="ar-verdict">你分不出來，是誰改壞的。</div></div>;
- return null;
+const agents: { name: string; brand: BrandName; workitem: string }[] = [
+  { name: "CODEX 1", brand: "codex", workitem: "workitem 1" },
+  { name: "CODEX 2", brand: "codex", workitem: "workitem 2" },
+  { name: "CLAUDE", brand: "claude", workitem: "workitem 3" },
+  { name: "COPILOT", brand: "copilot", workitem: "workitem 4" },
+];
+
+export default function AgentRisk({ step }: ChapterStepProps) {
+  if (step === 0) return (
+    <div className="ar-scene ar-brand-intro scene-pad">
+      <div className="ar-brand-copy">
+        <p>PARALLEL CODING</p>
+        <h1>Coding<br /><span>Agent</span></h1>
+        <strong>不同 agent，同一個並行問題。</strong>
+      </div>
+      <div className="ar-brand-stage">
+        {(["claude", "codex", "copilot"] as BrandName[]).map((brand, index) => (
+          <article className="ar-brand-mark card" style={{ animationDelay: `${index * 140}ms` }} key={brand}>
+            <BrandIcon name={brand} />
+            <span>{brand === "copilot" ? "COPILOT" : brand.toUpperCase()}</span>
+          </article>
+        ))}
+        <svg viewBox="0 0 920 690" aria-hidden="true"><path pathLength="1" d="M140 470 C300 560 630 560 790 470" /></svg>
+      </div>
+    </div>
+  );
+
+  if (step === 1) return (
+    <div className="ar-scene ar-many scene-pad">
+      <p>FOUR AGENTS · ONE DIRECTORY</p>
+      <h1>各自接任務，<span>最後卻寫進同一個現場。</span></h1>
+      <div className="ar-agent-grid">
+        {agents.map((agent, index) => (
+          <article className="ar-agent-card card" style={{ animationDelay: `${index * 110}ms` }} key={agent.name}>
+            <BrandIcon name={agent.brand} />
+            <strong>{agent.name}</strong>
+            <span>{agent.workitem}</span>
+          </article>
+        ))}
+      </div>
+      <div className="ar-shared-target card">
+        <FolderIcon />
+        <div><span>SHARED</span><strong>project/</strong></div>
+      </div>
+      <svg className="ar-agent-lines" viewBox="0 0 1500 500" aria-hidden="true">
+        <path pathLength="1" d="M170 80 C250 260 600 260 680 410" />
+        <path pathLength="1" d="M550 80 C570 260 680 300 720 410" />
+        <path pathLength="1" d="M950 80 C930 260 820 300 780 410" />
+        <path pathLength="1" d="M1330 80 C1250 260 900 260 820 410" />
+      </svg>
+    </div>
+  );
+
+  if (step === 2) return (
+    <div className="ar-scene ar-conflict scene-pad">
+      <div className="ar-conflict-copy">
+        <p>COLLISION RESULT</p>
+        <h1>互相覆蓋，<br /><span>測試結果被污染。</span></h1>
+        <div className="ar-conflict-badges"><strong>same folder</strong><strong>mixed output</strong></div>
+      </div>
+      <img src={illustration("shared-folder-conflict.png")} alt="四位熊熊 coding agent 同時修改中央同一個專案資料夾，造成檔案覆蓋與測試混亂" />
+      <div className="ar-owner card"><span>OWNER</span><strong>unknown</strong><i /></div>
+    </div>
+  );
+
+  return null;
 }

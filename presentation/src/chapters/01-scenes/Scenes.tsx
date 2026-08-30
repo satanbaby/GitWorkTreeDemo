@@ -25,7 +25,7 @@ export default function Scenes({ step }: ChapterStepProps) {
             同時壓上來。
           </h1>
           <div className="sc-opening-count">
-            <strong className="hero-num">04</strong>
+            <strong className="hero-num">03</strong>
             <span>種切換情境<br />正在排隊</span>
           </div>
         </div>
@@ -79,43 +79,19 @@ export default function Scenes({ step }: ChapterStepProps) {
 
   if (step === 2) {
     return (
-      <div className="sc-scene sc-snapshot scene-pad">
-        <div className="sc-snapshot-heading">
+      <div className="sc-scene sc-uncommitted scene-pad">
+        <div className="sc-uncommitted-copy">
           <p className="sc-eyebrow">切走之前，這個現場還沒收完</p>
-          <h1>你不是只在切一條 branch。</h1>
+          <h1>本地還堆著<br /><span>未 commit 的修改。</span></h1>
+          <div className="sc-status-strip card">
+            <span>git status</span>
+            <strong>modified files</strong>
+            <i /><i /><i /><i /><i />
+          </div>
         </div>
-
-        <div className="sc-snapshot-frame">
-          <div className="sc-frame-corner sc-frame-tl" />
-          <div className="sc-frame-corner sc-frame-tr" />
-          <div className="sc-frame-corner sc-frame-bl" />
-          <div className="sc-frame-corner sc-frame-br" />
-          <div className="sc-snapshot-core">
-            <span>WORKING</span>
-            <strong>現場快照</strong>
-            <small>四樣狀態必須一起留下</small>
-          </div>
-
-          <div className="sc-state sc-state-code card">
-            <span className="sc-state-mark">01</span>
-            <strong>未 commit 的修改</strong>
-            <div className="sc-mini-lines"><i /><i /><i /></div>
-          </div>
-          <div className="sc-state sc-state-service card">
-            <span className="sc-state-mark">02</span>
-            <strong>跑到一半的服務</strong>
-            <div className="sc-wave"><i /><i /><i /><i /><i /></div>
-          </div>
-          <div className="sc-state sc-state-deps card">
-            <span className="sc-state-mark">03</span>
-            <strong>剛裝好的依賴</strong>
-            <div className="sc-dep-nodes"><i /><i /><i /><i /></div>
-          </div>
-          <div className="sc-state sc-state-ide card">
-            <span className="sc-state-mark">04</span>
-            <strong>IDE 追到一半的上下文</strong>
-            <div className="sc-tabs"><i /><i /><i /></div>
-          </div>
+        <div className="sc-uncommitted-visual">
+          <div className="sc-hotfix-badge"><span>URGENT</span><strong>hotfix</strong></div>
+          <img src={illustration("uncommitted-interruption.png")} alt="熊熊開發者正處理大量未提交修改，production hotfix 突然插入" />
         </div>
       </div>
     );
@@ -166,30 +142,21 @@ export default function Scenes({ step }: ChapterStepProps) {
           <h1>同一個專案，兩個版本長期並存。</h1>
         </div>
 
-        <div className="sc-version-stage">
-          <div className="sc-repo-spine">
-            <span>同一個專案</span>
-            <i /><i /><i />
-          </div>
-
-          <article className="sc-version-panel sc-version-live card">
-            <span className="hero-num">01</span>
-            <div>
-              <p>第一階段</p>
-              <h2>已經上線</h2>
-              <strong>持續維護</strong>
-            </div>
-            <div className="sc-pulse"><i /><i /><i /></div>
+        <div className="sc-branch-version-stage card">
+          <div className="sc-branch-repo"><span>same project</span><strong>Git branches</strong></div>
+          <svg viewBox="0 0 1300 520" aria-hidden="true">
+            <path className="sc-history-main" pathLength="1" d="M90 260 H1210" />
+            <path className="sc-history-live" pathLength="1" d="M340 260 C430 260 430 120 540 120 H1110" />
+            <path className="sc-history-next" pathLength="1" d="M620 260 C700 260 710 410 820 410 H1210" />
+            {[150,340,620,920,1210].map(x=><circle key={`m-${x}`} cx={x} cy="260" r="13" />)}
+            {[540,820,1110].map(x=><circle className="sc-live-node" key={`l-${x}`} cx={x} cy="120" r="13" />)}
+            {[820,1010,1210].map(x=><circle className="sc-next-node" key={`n-${x}`} cx={x} cy="410" r="13" />)}
+          </svg>
+          <article className="sc-branch-label sc-branch-label-live">
+            <span>release / v1</span><strong>已上線 · 持續維護</strong>
           </article>
-
-          <article className="sc-version-panel sc-version-build card">
-            <span className="hero-num">02</span>
-            <div>
-              <p>第二階段</p>
-              <h2>新合約</h2>
-              <strong>持續開發</strong>
-            </div>
-            <div className="sc-build-bars"><i /><i /><i /><i /></div>
+          <article className="sc-branch-label sc-branch-label-next">
+            <span>contract / v2</span><strong>新合約 · 持續開發</strong>
           </article>
         </div>
       </div>
@@ -197,49 +164,10 @@ export default function Scenes({ step }: ChapterStepProps) {
   }
 
   if (step === 5) {
-    return (
-      <div className="sc-scene sc-dual scene-pad">
-        <div className="sc-dual-heading">
-          <p className="sc-eyebrow">情境四</p>
-          <h1>前端 feature，後端 API，兩邊同時顧。</h1>
-        </div>
-
-        <div className="sc-dual-workspace">
-          <article className="sc-window sc-window-front card">
-            <div className="sc-window-bar"><i /><i /><i /><span>FRONTEND</span></div>
-            <div className="sc-browser-layout">
-              <aside><i /><i /><i /></aside>
-              <main><div /><div /><div /></main>
-            </div>
-            <strong>feature</strong>
-          </article>
-
-          <div className="sc-connection" aria-hidden="true">
-            <span className="sc-packet sc-packet-a" />
-            <span className="sc-packet sc-packet-b" />
-            <i />
-          </div>
-
-          <article className="sc-window sc-window-api card">
-            <div className="sc-window-bar"><i /><i /><i /><span>BACKEND</span></div>
-            <div className="sc-api-stack">
-              <div><span>GET</span><i /></div>
-              <div><span>POST</span><i /></div>
-              <div><span>PATCH</span><i /></div>
-            </div>
-            <strong>API</strong>
-          </article>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === 6) {
     const sites = [
       ["sc-site-a", "hotfix 插隊"],
       ["sc-site-b", "PR review"],
       ["sc-site-c", "雙版本維護"],
-      ["sc-site-d", "前端 / API"],
     ];
 
     return (
@@ -247,8 +175,7 @@ export default function Scenes({ step }: ChapterStepProps) {
         <svg className="sc-converge-lines" viewBox="0 0 1920 1080" aria-hidden="true">
           <path pathLength="1" d="M390 290 C610 290 650 470 850 490" />
           <path pathLength="1" d="M1530 290 C1310 290 1270 470 1070 490" />
-          <path pathLength="1" d="M390 800 C610 800 650 620 850 600" />
-          <path pathLength="1" d="M1530 800 C1310 800 1270 620 1070 600" />
+          <path pathLength="1" d="M390 790 C610 790 670 620 850 600" />
         </svg>
 
         {sites.map(([className, label], index) => (
@@ -259,7 +186,7 @@ export default function Scenes({ step }: ChapterStepProps) {
         ))}
 
         <div className="sc-person-core">
-          <strong className="hero-num">04</strong>
+          <strong className="hero-num">03</strong>
           <span>個工作現場</span>
           <i />
           <b>同一個人</b>

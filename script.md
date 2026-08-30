@@ -10,7 +10,7 @@ feature 寫到一半，production 出事。這時候你會怎麼做？
 
 ---
 
-但你手上有還沒 commit 的修改。服務跑到一半，依賴剛裝好，IDE 還開著一排在追的檔案。
+但你手上還有一堆未 commit 的修改。這個現場根本還沒收完。
 
 ---
 
@@ -22,27 +22,11 @@ feature 寫到一半，production 出事。這時候你會怎麼做？
 
 ---
 
-或者同時顧兩個分支，前端的 feature 一邊，後端的 API 一邊。
-
----
-
 這些不是偶發例外。是同一個人，同時背著好幾個工作現場。
 
 ---
 
 問題在哪？一個 working directory，一次只能呈現一個 checkout。
-
----
-
-你切分支，整批檔案就跟著換。
-
----
-
-build cache、產生出來的檔案、node_modules，很容易跟現在的分支對不上。
-
----
-
-還在跑的服務也一樣。切過去就不是原來那個環境了。
 
 ---
 
@@ -70,11 +54,7 @@ build cache、產生出來的檔案、node_modules，很容易跟現在的分支
 
 ---
 
-缺點是 repository 跟工作檔案都重複佔一份空間。
-
----
-
-而且兩份 clone 的歷史不會自動同步。
+每份 clone 都帶一套 repository。假設 Git repo 是 1GB，開三份就是 3GB，工作檔案還要另外算。
 
 ---
 
@@ -274,15 +254,11 @@ hotfix 那邊一提交，主視窗的 git graph 立刻就看到了。這就是�
 
 ---
 
-再來講一個現在很實際的用法。Coding Agent。
+再來講 Coding Agent。Codex、Claude、Copilot 都會遇到同一個並行問題。
 
 ---
 
-Agent 不只是讀程式碼。它會改檔案、跑格式化、跑測試、跑 build。
-
----
-
-兩個 agent 共用同一個工作目錄。就會同時改檔、同時切 branch、同時清輸出。
+Codex 一、Codex 二、Claude、Copilot，各自處理不同 work item，最後卻寫進同一個資料夾。
 
 ---
 
@@ -290,7 +266,7 @@ Agent 不只是讀程式碼。它會改檔案、跑格式化、跑測試、跑 b
 
 ---
 
-解法很簡單。一個 task 給一棵 worktree。
+解法很簡單。一個 task 給一棵 worktree，也就是一個獨立資料夾。
 
 ---
 
@@ -298,23 +274,11 @@ Agent 不只是讀程式碼。它會改檔案、跑格式化、跑測試、跑 b
 
 ---
 
-收尾的時候用 diff、commit、merge 檢查每個 task 的結果。
-
----
-
-失敗也好收。任務不要了就把那棵 worktree 移掉，主工作目錄完全不用動。
+失敗也好收。任務不要了，只移除那個 worktree 資料夾。branch 還留在 Git 裡，主工作目錄也不用動。
 
 ---
 
 Claude Code 現在建立任務的時候，就有一個 worktree 選項可以勾。
-
----
-
-但要注意，worktree 只隔離工作目錄，不隔離外部資源。
-
----
-
-資料庫、port、Docker container、cache 還是共用的。這些要另外命名跟管理。
 
 ---
 
@@ -330,7 +294,7 @@ worktree 不是每個任務都要用。
 
 ---
 
-又或者要讓 agent 並行跑不同 task。這時候它才真的有價值。
+又或者要讓 Codex、Claude、Copilot 並行跑不同 task。這時候它才真的有價值。
 
 ---
 

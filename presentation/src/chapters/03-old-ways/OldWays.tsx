@@ -1,6 +1,9 @@
 import type { ChapterStepProps } from "../../registry/types";
 import "./OldWays.css";
 
+const illustration = (name: string) =>
+  `${import.meta.env.BASE_URL}illustrations/old-ways/${name}`;
+
 function Title({ method, label, tone = "good" }: { method: string; label: string; tone?: "good" | "cost" }) {
   return <div className={`ow-title ow-${tone}`}><p>{method}</p><h1>{label}</h1></div>;
 }
@@ -41,16 +44,15 @@ export default function OldWays({ step }: ChapterStepProps) {
     </div>
   );
   if (step === 6) return (
-    <div className="ow-scene ow-method scene-pad"><Title method="做法三 · 代價一" label="repository 與檔案，全部重複。" tone="cost" />
-      <div className="ow-duplicate"><div className="ow-disk card"><span>A</span><div><b>objects</b><b>working files</b></div></div><div className="ow-plus">+</div><div className="ow-disk card"><span>B</span><div><b>objects</b><b>working files</b></div></div><div className="ow-meter"><i/><strong>× 2 空間</strong></div></div>
+    <div className="ow-scene ow-method scene-pad"><Title method="做法三 · 代價" label="每一份 clone，都帶整套 repository。" tone="cost" />
+      <div className="ow-repo-waste">
+        <img src={illustration("duplicate-repositories-v2.png")} alt="三個完整 repository 容器各自包住相同專案資料夾，重複占用磁碟空間" />
+        {["clone A","clone B","clone C"].map((name,index)=><div className={`ow-size-label ow-size-${index}`} key={name}><span>{name}</span><strong>1 GB</strong></div>)}
+        <div className="ow-space-total card"><span>GIT OBJECTS ONLY</span><strong className="hero-num">3 GB</strong><i /></div>
+      </div>
     </div>
   );
   if (step === 7) return (
-    <div className="ow-scene ow-method scene-pad"><Title method="做法三 · 代價二" label="歷史不會自動同步。" tone="cost" />
-      <div className="ow-diverge"><div className="ow-log"><span>clone A</span><i/><i/><i/><i className="ow-new"/></div><div className="ow-gap">≠</div><div className="ow-log"><span>clone B</span><i/><i/><i/></div></div>
-    </div>
-  );
-  if (step === 8) return (
     <div className="ow-scene ow-exchange scene-pad"><div className="ow-exchange-copy"><p className="ow-kicker">你在這邊 commit</p><h1>另一邊的 git log<br/><span>看不到。</span></h1></div>
       <div className="ow-exchange-demo"><div className="ow-terminal card"><span>clone A</span><code>$ git commit</code><strong>new commit</strong></div><div className="ow-bridge"><b>fetch</b><i/><b>push</b></div><div className="ow-terminal card"><span>clone B</span><code>$ git log</code><strong>still old</strong></div></div>
     </div>
