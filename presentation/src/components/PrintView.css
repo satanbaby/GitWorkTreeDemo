@@ -1,0 +1,84 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * PrintView.css — one 1920×1080 page per narration step.
+ *
+ * On screen the sheet is parked off-viewport (NOT display:none) so its
+ * CSS animations actually run and settle before print() is called.
+ * ───────────────────────────────────────────────────────────────────── */
+.print-root {
+  position: fixed;
+  top: 0;
+  left: -20000px;
+  width: 1920px;
+  z-index: -1;
+  pointer-events: none;
+}
+.print-page {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+}
+/* Freeze every chapter animation on its LAST frame — that's the state a slide
+   is meant to be read in, and it's what the live stage settles to.
+   A big negative delay puts each animation past its end at the very first
+   style resolution; `fill-mode: both` then holds the final keyframe. This is
+   not just a shortcut for waiting: Chrome throttles animations on off-screen
+   content, so the parked pages would otherwise print at their 0% frame
+   (i.e. blank) no matter how long we wait. Transitions are killed for the
+   same reason — a freshly mounted step is already at its end state. */
+.print-root *,
+.print-root *::before,
+.print-root *::after {
+  animation-delay: -10s !important;
+  animation-fill-mode: both !important;
+  transition: none !important;
+}
+/* .stage-frame is absolute + scaled + shadowed for the live stage; a print
+   page needs it back in normal flow with no chrome around it. */
+.print-frame {
+  position: relative;
+  transform: none;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  cursor: default;
+}
+
+@media print {
+  /* 1920×1080 px = 20in × 11.25in → exactly 16:9, and margin:0 + a page box
+     filled edge-to-edge means no white bleed anywhere. */
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+  /* print-color-adjust is inherited — one declaration forces backgrounds and
+     artwork to print regardless of the dialog's "Background graphics" box. */
+  html {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  html,
+  body,
+  #root {
+    height: auto;
+    overflow: visible;
+    background: #fff;
+  }
+  /* hide the live UI: Stage / ProgressBar / AutoToggle / AutoStartGate */
+  #root > *:not(.print-root) {
+    display: none !important;
+  }
+  .print-root {
+    position: static;
+    left: 0;
+    width: auto;
+    z-index: auto;
+  }
+  .print-page {
+    break-after: page;
+    page-break-after: always;
+  }
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}

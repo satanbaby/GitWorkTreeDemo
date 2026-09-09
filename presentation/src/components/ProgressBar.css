@@ -49,6 +49,9 @@
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
+  /* keeps a hovered (expanded) chapter pill off the track's edges when it
+     gets scrolled into view */
+  scroll-padding-inline: 12px;
 }
 .pb-track::-webkit-scrollbar {
   display: none;
@@ -310,10 +313,19 @@
 }
 .pb-chapter:nth-child(3n + 1) .pb-num { transform: rotate(-3deg); }
 .pb-chapter:nth-child(3n + 2) .pb-num { transform: rotate(2deg); }
+/* Titles are clamped so 13 chapters fit; hovering a pill grows it back to the
+   full name. A floating tooltip is not an option here — .pb-track is an
+   overflow scroll container and would clip anything above the pill. Growth is
+   rightward only, so the cursor stays inside the pill it's expanding. */
 .pb-title {
   max-width: 92px;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: max-width var(--dur-quick) var(--ease-quart);
+}
+.pb-chapter:hover .pb-title,
+.pb-chapter:focus-within .pb-title {
+  max-width: 320px;
 }
 
 .pb-pips {
@@ -351,10 +363,25 @@
   outline-offset: 2px;
 }
 
-.pb-github {
+/* ─── tool bar (export / source link) — rides the same hover reveal ─── */
+.pb-tools {
   position: absolute;
   right: 16px;
   bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(calc(100% + 16px));
+  transition: opacity var(--dur-base) var(--ease-quart),
+    transform var(--dur-base) var(--ease-quart);
+}
+.pb-hover:hover .pb-tools,
+.pb-hover:focus-within .pb-tools {
+  opacity: 1;
+  transform: translateY(0);
+}
+.pb-tool {
   width: 42px;
   height: 42px;
   display: flex;
@@ -366,21 +393,29 @@
   box-shadow: 4px 4px 0 var(--accent-soft);
   color: var(--text);
   text-decoration: none;
-  opacity: 0;
-  transform: translateY(calc(100% + 16px));
-  transition: opacity var(--dur-base) var(--ease-quart),
-    transform var(--dur-base) var(--ease-quart),
-    color var(--dur-quick), background var(--dur-quick);
+  cursor: pointer;
+  transition: color var(--dur-quick), background var(--dur-quick),
+    transform var(--dur-quick);
 }
-.pb-github:hover {
+.pb-tool:hover,
+.pb-tool:focus-visible {
   color: var(--surface-2);
   background: var(--accent);
+  outline: none;
+  transform: translateY(-2px);
 }
-.pb-hover:hover .pb-github,
-.pb-hover:focus-within .pb-github {
-  opacity: 1;
-  transform: translateY(0);
-}
-.pb-github svg {
+.pb-tool svg {
   display: block;
+}
+.pb-export.is-busy,
+.pb-export:disabled {
+  opacity: 0.55;
+  cursor: progress;
+  transform: none;
+}
+.pb-export.is-busy:hover,
+.pb-export:disabled:hover {
+  color: var(--text);
+  background: var(--surface-2);
+  transform: none;
 }

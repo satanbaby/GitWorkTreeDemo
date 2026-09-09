@@ -19,55 +19,32 @@
 /* step 0 · overloaded opening */
 .sc-opening {
   padding: 108px 96px 76px;
-  display: grid;
-  grid-template-columns: 48% 52%;
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-.sc-branch-canvas {
+.sc-opening-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  color: var(--rule);
-  opacity: 0.2;
-}
-
-.sc-branch-canvas path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 7;
-  stroke-linecap: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: sc-line-draw 1.2s var(--ease-quart) forwards;
-}
-
-.sc-branch-canvas .sc-branch-side {
-  stroke: var(--accent);
-  animation-delay: 180ms;
-}
-
-.sc-branch-canvas .sc-branch-side-b {
-  animation-delay: 340ms;
-}
-
-.sc-branch-canvas circle {
-  fill: var(--surface);
-  stroke: currentColor;
-  stroke-width: 5;
+  object-fit: cover;
+  object-position: center;
+  animation: sc-backdrop-in 980ms var(--ease-quart) both;
 }
 
 .sc-opening-copy {
   position: relative;
   z-index: 4;
+  width: 650px;
   align-self: center;
 }
 
 .sc-opening-copy h1 {
   margin: 0;
-  max-width: 760px;
-  font-size: 92px;
+  max-width: 650px;
+  font-size: 82px;
   font-weight: 900;
   line-height: 1.12;
   letter-spacing: -0.045em;
@@ -100,50 +77,6 @@
   font-weight: 750;
   line-height: 1.35;
   color: var(--text-2);
-}
-
-.sc-opening-visual {
-  position: absolute;
-  z-index: 3;
-  right: -42px;
-  bottom: 48px;
-  width: 1160px;
-  height: 900px;
-}
-
-.sc-opening-visual img {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0;
-  width: 1120px;
-  max-width: none;
-  animation: sc-illustration-land 980ms 140ms var(--ease-overshoot) both;
-}
-
-.sc-pressure-ring {
-  position: absolute;
-  z-index: 1;
-  border: 4px dashed var(--accent);
-  border-radius: 50%;
-  opacity: 0.22;
-  animation: sc-ring 1.1s var(--ease-overshoot) both;
-}
-
-.sc-pressure-ring-a {
-  width: 620px;
-  height: 620px;
-  right: 145px;
-  top: 70px;
-}
-
-.sc-pressure-ring-b {
-  width: 370px;
-  height: 370px;
-  right: 60px;
-  top: 245px;
-  border-color: var(--rule);
-  animation-delay: 220ms;
 }
 
 /* step 1 · hotfix interrupts */
@@ -1135,6 +1068,11 @@
 @keyframes sc-rise-center {
   from { opacity: 0; transform: translate(-50%, 24px); }
   to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes sc-backdrop-in {
+  from { opacity: 0; transform: scale(1.025); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes sc-line-draw {

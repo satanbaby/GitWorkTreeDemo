@@ -322,7 +322,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - 收束論點：這些不是偶發例外，而是同一位開發者同時背著多個工作現場 —— 來源 article §典型困境 / L13
 
 **插圖描述**（寫了就必須在開發本章前生成素材）:
-- [step 1] 主角坐在自己的工作桌前同時被塞進好幾件工作，桌面散落沒收完的資料夾、工具與紙張，一手還按在鍵盤上、另一手抱著東西，表情忙亂，背景是 Git 多個分支，要頻繁切換的示意圖；構圖把主角安排在畫面右半，左半留白給標題 → `illustrations/scenes/overloaded-dev.png`
+- [step 1] 主角坐在自己的工作桌前，被 stash、commit、switch branch 與多條帶 commit 節點的 Git branch 包圍；完整 16:9 場景置於畫面右側，左半保留標題留白，不再另外疊加自畫 SVG 線條 → `illustrations/scenes/overloaded-dev-git-scene.png`
 - [step 3] 主角正在桌前處理 feature，本地資料夾裡堆著大量未提交變更，production hotfix 突然從旁插入；主角與工作桌偏右，左側保留標題空間 → `illustrations/scenes/uncommitted-interruption.png`
 
 **開發計劃**：
@@ -639,7 +639,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - ✓ 講者：莊詠翔／分享日期：2026.08.29
 
 ### 1. 01-scenes
-- ✓ 主角被多個工作壓住、手忙腳亂的場景（`illustrations/scenes/overloaded-dev.png`）
+- ✓ 主角被多個 Git branch 與切換工作壓住、手忙腳亂的完整場景（`illustrations/scenes/overloaded-dev-git-scene.png`）
 - ✓ 主角工作到一半、未 commit 變更堆滿本地，hotfix 臨時插入（`illustrations/scenes/uncommitted-interruption.png`）
 - ✓ 情境切換的視覺演示由章節自己用 CSS / SVG 畫
 

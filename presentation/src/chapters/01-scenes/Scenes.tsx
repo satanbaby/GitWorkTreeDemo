@@ -8,14 +8,11 @@ export default function Scenes({ step }: ChapterStepProps) {
   if (step === 0) {
     return (
       <div className="sc-scene sc-opening scene-pad">
-        <svg className="sc-branch-canvas" viewBox="0 0 1920 1080" aria-hidden="true">
-          <path className="sc-branch-main" pathLength="1" d="M120 900 C430 900 455 770 760 770 C1010 770 1130 930 1440 930 H1810" />
-          <path className="sc-branch-side" pathLength="1" d="M500 840 C650 840 650 590 890 590 H1240" />
-          <path className="sc-branch-side sc-branch-side-b" pathLength="1" d="M970 790 C1110 790 1120 665 1355 665 H1740" />
-          {[260, 500, 760, 970, 1240, 1440, 1740].map((x, index) => (
-            <circle key={x} cx={x} cy={index < 2 ? 900 : index === 2 ? 770 : index === 3 ? 790 : index === 4 ? 590 : index === 5 ? 930 : 665} r="11" />
-          ))}
-        </svg>
+        <img
+          className="sc-opening-backdrop"
+          src={illustration("overloaded-dev-git-scene.png")}
+          alt="熊熊開發者被多個 Git branch、stash、commit 與切換工作壓得手忙腳亂"
+        />
 
         <div className="sc-opening-copy">
           <p className="sc-eyebrow">日常開發的真實畫面</p>
@@ -30,14 +27,6 @@ export default function Scenes({ step }: ChapterStepProps) {
           </div>
         </div>
 
-        <div className="sc-opening-visual">
-          <div className="sc-pressure-ring sc-pressure-ring-a" />
-          <div className="sc-pressure-ring sc-pressure-ring-b" />
-          <img
-            src={illustration("overloaded-dev.png")}
-            alt="熊熊開發者在桌前同時抱著多份工作，神情忙亂"
-          />
-        </div>
       </div>
     );
   }
