@@ -2,10 +2,6 @@ feature 寫到一半，production 出事。這時候你會怎麼做？
 
 ---
 
-先看幾個你一定遇過的狀況。一個人手上同時壓著好幾個工作。
-
----
-
 你在 feature 分支寫到一半。production 出事，hotfix 插隊進來。
 
 ---
@@ -22,7 +18,7 @@ feature 寫到一半，production 出事。這時候你會怎麼做？
 
 ---
 
-這些不是偶發例外。是同一個人，同時背著好幾個工作現場。
+你一定遇過這些狀況。一個人手上，同時壓著好幾個工作。
 
 ---
 
@@ -70,15 +66,7 @@ Git 官方的定義是，同一個 repository 可以管理多個 working tree。
 
 ---
 
-clone 出來的那個是 main worktree，add 開出來的是 linked worktree。
-
----
-
-每個 linked worktree 有自己的目錄、HEAD 跟 index。所以能同時 checkout 不同分支。
-
----
-
-但它們共用同一套 object database，還有大部分的 refs。
+clone 出來的是 main worktree，add 開出來的是 linked worktree；它們各自 checkout 不同分支，但共用同一套 object database 與大部分 refs。
 
 ---
 

@@ -157,58 +157,16 @@
   min-height: 845px;
 }
 
-.cv-orbit {
+.cv-bear-group {
   position: absolute;
-  border-radius: 50%;
-  border: 3px dashed var(--accent);
-  opacity: 0.24;
-}
-
-.cv-orbit-a {
-  width: 470px;
-  height: 470px;
-  right: 20px;
-  top: 58px;
-}
-
-.cv-orbit-b {
-  width: 300px;
-  height: 300px;
-  right: 240px;
-  top: 220px;
-  border-color: var(--rule);
-  animation: cv-turn 18s linear infinite;
-}
-
-.cv-bear {
-  position: absolute;
+  z-index: 3;
+  width: 980px;
+  max-width: none;
+  right: -32px;
+  top: 32px;
   object-fit: contain;
   transform-origin: center bottom;
   animation: cv-land 980ms var(--ease-overshoot) both;
-}
-
-.cv-bear-grizzly {
-  width: 345px;
-  left: 48px;
-  top: 126px;
-  z-index: 2;
-  animation-delay: 220ms;
-}
-
-.cv-bear-ice {
-  width: 385px;
-  left: 282px;
-  top: 154px;
-  z-index: 3;
-  animation-delay: 360ms;
-}
-
-.cv-bear-panda {
-  width: 330px;
-  right: -8px;
-  top: 212px;
-  z-index: 4;
-  animation-delay: 500ms;
 }
 
 .cv-desk {
@@ -314,10 +272,6 @@
 
 @keyframes cv-git-draw {
   to { stroke-dashoffset: 0; }
-}
-
-@keyframes cv-turn {
-  to { transform: rotate(360deg); }
 }
 
 /* base.css 的 .scene-pad 用 justify-content:center 把 flex 直列內容垂直置中。

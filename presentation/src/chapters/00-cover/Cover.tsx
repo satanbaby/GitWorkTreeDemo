@@ -1,9 +1,6 @@
 import type { ChapterStepProps } from "../../registry/types";
 import "./Cover.css";
 
-const themeAsset = (name: string) =>
-  `${import.meta.env.BASE_URL}theme-assets/${name}`;
-
 export default function Cover({ step }: ChapterStepProps) {
   if (step === 0) {
     return (
@@ -23,7 +20,7 @@ export default function Cover({ step }: ChapterStepProps) {
           <div className="cv-meta" aria-label="講者與日期">
             <span>莊詠翔</span>
             <span className="cv-meta-rule" />
-            <span>2026.08.29</span>
+            <span>2026.09.12</span>
           </div>
 
           <div className="cv-preview card">
@@ -47,22 +44,10 @@ export default function Cover({ step }: ChapterStepProps) {
         </section>
 
         <section className="cv-visual" aria-label="三隻熊在同一份 Git 歷史上協作">
-          <div className="cv-orbit cv-orbit-a" />
-          <div className="cv-orbit cv-orbit-b" />
           <img
-            className="cv-bear cv-bear-grizzly"
-            src={themeAsset("grizzly-presenting.png")}
-            alt="灰熊開心講解"
-          />
-          <img
-            className="cv-bear cv-bear-ice"
-            src={themeAsset("ice-bear-coding.png")}
-            alt="白熊專注使用筆電"
-          />
-          <img
-            className="cv-bear cv-bear-panda"
-            src={themeAsset("panda-reviewing.png")}
-            alt="熊貓閱讀筆記"
+            className="cv-bear-group"
+            src={`${import.meta.env.BASE_URL}illustrations/cover/bears-discussing-transparent-v3.png`}
+            alt="灰熊、白熊與熊貓靠近討論工作分支"
           />
           <div className="cv-desk">
             <svg className="cv-git" viewBox="0 0 760 150" role="img" aria-label="多條分支共用同一份歷史">

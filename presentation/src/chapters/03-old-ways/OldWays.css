@@ -50,6 +50,12 @@
    既有的 align-items。 */
 .ow-exchange{justify-content:normal}
 
+/* step 7 · 使用已完成的 16:9 場景圖，圖內已有標題、三份 clone 與空間成本；
+   不再疊加 HTML 容量標籤，避免同一訊息重複兩次。 */
+.ow-clone-cost{padding:0}
+.ow-clone-cost-art{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;animation:ow-clone-cost-in 850ms var(--ease-quart) both}
+@keyframes ow-clone-cost-in{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
+
 
 /* ── step 4「stash」：圖示化 git 節點 + 變更被包進隱藏的 stash ──────────
    要演的是「機制」而不是「log」：分支上的 commit 節點維持不動，working tree

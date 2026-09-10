@@ -1,8 +1,8 @@
 # Video Outline — Git Worktree 團隊分享
 
 > **主題**：`we-bare-bears`（熊熊遇見你）—— 奶油紙張 + 天空藍強調色 + 圓潤手繪輪廓的親切協作感（CP-1 已確認）
-> **總時長**：約 11 分 12 秒（口播 2821 字 ÷ 4.2 字/秒 = 672 秒）
-> **章節數**：封面 + 12 章 / 74 步
+> **總時長**：約 11 分鐘
+> **章節數**：封面 + 12 章 / 71 步
 
 ---
 
@@ -14,18 +14,18 @@
 |---|---|---|---|
 | CP-0 | 內容自檢（script.md / outline.md） | ✅ | 依用戶指定流程重排後重跑自檢並修復 |
 | CP-1 | Checkpoint Plan（稿子 / outline / 主題 / 素材 / 模式） | ✅ | 主題：we-bare-bears ／ 講者：莊詠翔 ／ 開發模式：B |
-| CP-2 | 封面 + 第 1 章驗收（硬節點） | ✅ | 用戶已回覆「繼續」 |
+| CP-2 | 封面 + 第 1 章驗收（硬節點） | 🔵 | 封面三角色透明背景群像已放大重製，待用戶再次驗收 |
 | CP-3 | 第 2~N 章驗收 | 🔵 | 模式 B；已完成一輪全片版型自檢（76 步逐步量測 + 目視），修正見下方「版型自檢紀錄」 |
 | CP-4 | Checkpoint Audio（是否合成音訊） | ⬜ | |
 | CP-5 | Phase 4 錄屏路徑確認 | ⬜ | |
 
 | 章節 | 狀態 | 備註 |
 |---|---|---|
-| 00-cover | ✅ | 講者：莊詠翔 ／ 日期：2026.08.29 |
-| 01-scenes | 🔵 | 6 steps 完成；未 commit 插圖與多 branch 圖已逐畫面驗收 |
+| 00-cover | 🔵 | 講者：莊詠翔 ／ 日期：2026.09.12 ／ 三角色討論群像已改為真正透明 PNG，待驗收 |
+| 01-scenes | 🔵 | 5 steps；原 2-6 已移除，原 2-1 群像頁移至章末，待驗收 |
 | 02-switch-cost | 🔵 | 1 step 完成；feature / hotfix 循環切換已驗收 |
 | 03-old-ways | 🔵 | 8 steps 完成；重複 repo 容量插圖與 git log 頁已驗收 |
-| 04-concept | 🔵 | repository → 三個資料夾橫向圖已驗收 |
+| 04-concept | ✅ | 5 steps；最新 5-4 亦已移除，共享 `.git` 重點併入 5-3 旁白，於 5174 驗收通過 |
 | 05-vs-clone | 🔵 | 12 steps；原 06-esim 章整段併入，型別與逐畫面驗收通過 |
 | 07-cmd-create | 🔵 | 5 steps 完成；型別與逐畫面驗收通過 |
 | 08-cmd-manage | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
@@ -147,8 +147,8 @@
 - `8-1` 背景那個 430px 的裝飾 `# Video Outline — Git Worktree 團隊分享
 
 > **主題**：`we-bare-bears`（熊熊遇見你）—— 奶油紙張 + 天空藍強調色 + 圓潤手繪輪廓的親切協作感（CP-1 已確認）
-> **總時長**：約 11 分 12 秒（口播 2821 字 ÷ 4.2 字/秒 = 672 秒）
-> **章節數**：封面 + 12 章 / 74 步
+> **總時長**：約 11 分鐘
+> **章節數**：封面 + 12 章 / 71 步
 
 ---
 
@@ -160,18 +160,18 @@
 |---|---|---|---|
 | CP-0 | 內容自檢（script.md / outline.md） | ✅ | 依用戶指定流程重排後重跑自檢並修復 |
 | CP-1 | Checkpoint Plan（稿子 / outline / 主題 / 素材 / 模式） | ✅ | 主題：we-bare-bears ／ 講者：莊詠翔 ／ 開發模式：B |
-| CP-2 | 封面 + 第 1 章驗收（硬節點） | ✅ | 用戶已回覆「繼續」 |
+| CP-2 | 封面 + 第 1 章驗收（硬節點） | 🔵 | 封面三角色透明背景群像已放大重製，待用戶再次驗收 |
 | CP-3 | 第 2~N 章驗收 | 🔵 | 模式 B；已完成一輪全片版型自檢（76 步逐步量測 + 目視），修正見下方「版型自檢紀錄」 |
 | CP-4 | Checkpoint Audio（是否合成音訊） | ⬜ | |
 | CP-5 | Phase 4 錄屏路徑確認 | ⬜ | |
 
 | 章節 | 狀態 | 備註 |
 |---|---|---|
-| 00-cover | ✅ | 講者：莊詠翔 ／ 日期：2026.08.29 |
-| 01-scenes | 🔵 | 6 steps 完成；未 commit 插圖與多 branch 圖已逐畫面驗收 |
+| 00-cover | 🔵 | 講者：莊詠翔 ／ 日期：2026.09.12 ／ 三角色討論群像已改為真正透明 PNG，待驗收 |
+| 01-scenes | 🔵 | 5 steps；原 2-6 已移除，原 2-1 群像頁移至章末，待驗收 |
 | 02-switch-cost | 🔵 | 1 step 完成；feature / hotfix 循環切換已驗收 |
 | 03-old-ways | 🔵 | 8 steps 完成；重複 repo 容量插圖與 git log 頁已驗收 |
-| 04-concept | 🔵 | repository → 三個資料夾橫向圖已驗收 |
+| 04-concept | ✅ | 5 steps；最新 5-4 亦已移除，共享 `.git` 重點併入 5-3 旁白，於 5174 驗收通過 |
 | 05-vs-clone | 🔵 | 12 steps；原 06-esim 章整段併入，型別與逐畫面驗收通過 |
 | 07-cmd-create | 🔵 | 5 steps 完成；型別與逐畫面驗收通過 |
 | 08-cmd-manage | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
@@ -298,10 +298,14 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 **信息池**：
 - 標題：Git Worktree ／ 副標題：一個 repo，同時開好幾個工作現場
-- 講者或出處：莊詠翔（分享日期：2026.08.29）
+- 講者或出處：莊詠翔（分享日期：2026.09.12）
 - 重點清單預告：卡住的現場 → 舊做法的代價 → worktree 概念 → 指令 → VS Code → Coding Agent —— 來源 本 outline 章節結構
 - 分享目標：看完能自己建立、切換、檢查與移除 worktree，也知道哪些情況不適合 —— 來源 article §分享目標 / L5
 - 可用的一句話定義：同一個 repository 管理的多個 working trees —— 來源 article §Worktree 的心智模型 / L19
+
+**插圖描述**：
+
+- [step 1] 灰熊、白熊與熊貓三位主角靠近成一組討論，灰熊主動說明，白熊與熊貓面向他回應；真正透明背景、無文字，作為封面右側的大型群像 → `illustrations/cover/bears-discussing-transparent-v3.png`
 
 **開發計劃**：
 
@@ -312,7 +316,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ---
 
-## 1. 01-scenes — 日常就有這麼多切換現場（6 steps · ~52s）
+## 1. 01-scenes — 日常就有這麼多切換現場（5 steps · ~44s）
 
 **信息池**：
 - 情境一（hotfix 插隊）現場細節：feature 尚有一批未提交修改，工作現場還沒收完 —— 來源 article §典型困境 / L9
@@ -322,20 +326,19 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - 收束論點：這些不是偶發例外，而是同一位開發者同時背著多個工作現場 —— 來源 article §典型困境 / L13
 
 **插圖描述**（寫了就必須在開發本章前生成素材）:
-- [step 1] 主角坐在自己的工作桌前，被 stash、commit、switch branch 與多條帶 commit 節點的 Git branch 包圍；完整 16:9 場景置於畫面右側，左半保留標題留白，不再另外疊加自畫 SVG 線條 → `illustrations/scenes/overloaded-dev-git-scene.png`
-- [step 3] 主角正在桌前處理 feature，本地資料夾裡堆著大量未提交變更，production hotfix 突然從旁插入；主角與工作桌偏右，左側保留標題空間 → `illustrations/scenes/uncommitted-interruption.png`
+- [step 2] 主角正在桌前處理 feature，本地資料夾裡堆著大量未提交變更，production hotfix 突然從旁插入；主角與工作桌偏右，左側保留標題空間 → `illustrations/scenes/uncommitted-interruption.png`
+- [step 5] 主角坐在自己的工作桌前，被 stash、commit、switch branch 與多條帶 commit 節點的 Git branch 包圍；完整 16:9 場景置於畫面右側，左半保留標題留白，不再另外疊加自畫 SVG 線條 → `illustrations/scenes/overloaded-dev-git-scene.png`
 
 **開發計劃**：
 
-- step 1 (~7s) — 章節開場：一個人手上同時壓著好幾個工作（插圖 + 標題，情境內容還沒展開）
-- step 2 (~10s) — 情境一登場：feature 分支寫到一半，production 出事，hotfix 插隊
-- step 3 (~8s) — 切走前只聚焦一個原因：本地堆著大量未 commit 修改，現場還沒收完
-- step 4 (~10s) — 情境二：PR 送審中，review 未結束，人不能停在原地
-- step 5 (~9s) — 情境三：同一專案衍生多個 branch 節點，第一階段維護與第二階段開發長期並存
-- step 6 (~8s) — 收束：hotfix、PR review、雙版本三個現場疊在同一個人身上
+- step 1 (~10s) — 情境一登場：feature 分支寫到一半，production 出事，hotfix 插隊
+- step 2 (~8s) — 切走前只聚焦一個原因：本地堆著大量未 commit 修改，現場還沒收完
+- step 3 (~10s) — 情境二：PR 送審中，review 未結束，人不能停在原地
+- step 4 (~9s) — 情境三：同一專案衍生多個 branch 節點，第一階段維護與第二階段開發長期並存
+- step 5 (~7s) — 原章節群像頁移至最後：用一個人同時壓著好幾個工作，收束前述切換情境
 
 口播節選：
-> 這些不是偶發例外。是同一個人，同時背著好幾個工作現場。
+> 你一定遇過這些狀況。一個人手上，同時壓著好幾個工作。
 
 ---
 
@@ -369,7 +372,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - 做法三代價續：clone A 的新 commit 不會直接出現在 clone B 的 git log，仍要透過 fetch、push 交換 —— 來源 article §典型困境 / L15
 
 **插圖描述**（寫了就必須在開發本章前生成素材）:
-- [step 7] 三個巨大 Git repository 容器各自包住一套相同專案資料夾，並排擠滿儲存空間，清楚呈現重複實體的浪費；畫面不含文字 → `illustrations/old-ways/duplicate-repositories-v2.png`
+- [step 7] 完整 16:9 場景直接呈現 Clone A／B／C 各自帶一份工作目錄與 `.git`（history、objects、refs），並以三隻熊與空間成本總結重複 clone 的問題；圖內已含標題與說明，不再疊加 HTML 標籤 → `illustrations/old-ways/duplicate-git-clone-problem.png`
 
 **開發計劃**：
 
@@ -379,7 +382,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - step 4 (~10s) — 做法二佔畫面：stash，優點欄亮（working tree 立刻乾淨、不留半成品 commit）
 - step 5 (~7s) — 做法二的缺點欄亮起：套回衝突、多筆容易取錯
 - step 6 (~8s) — 做法三佔畫面：再 clone 一份，優點欄亮（隔離最完整、互不影響）
-- step 7 (~8s) — 做法三的缺點欄亮起：三份完整 Git repo 並排，每份以 HTML 標示 1 GB，工作檔案仍另計
+- step 7 (~8s) — 做法三的缺點：完整場景圖呈現三份 clone 各自複製工作目錄與 `.git`，空間與維護成本隨份數增加
 - step 8 (~8s) — 具體演示：這邊 commit，那邊 git log 看不到，要 fetch / push 才交換得到
 
 口播節選：
@@ -387,7 +390,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ---
 
-## 4. 04-concept — worktree 的概念（7 steps · ~62s）
+## 4. 04-concept — worktree 的概念（5 steps · ~50s）
 
 **信息池**：
 - 官方定義：同一個 repository 所管理的多個 working trees —— 來源 article §Worktree 的心智模型 / L19
@@ -397,18 +400,20 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - 心智模型與其邊界：把分支實體化成另一個資料夾；branch 本身仍只是一個 ref，worktree 是該版本內容的工作目錄加上 Git 為它保存的獨立狀態 —— 來源 article §心智模型 / L21
 - 官方文件出處：git-scm.com/docs/git-worktree —— 來源 article §查證來源 / L107
 
+**插圖描述**：
+
+- [step 3] 一份共享 `.git`（history、objects、refs）向上延伸 main、feature/login、hotfix 三個獨立工作目錄，以三隻熊呈現同一專案並行開發；完整 16:9 圖內已含標題與說明 → `illustrations/concept/worktree-concept-overview.png`
+
 **開發計劃**：
 
 - step 1 (~4s) — 轉場句佔屏：worktree 就是為了這件事做的
 - step 2 (~10s) — 官方定義卡：帶 Git icon 的 repository 橫向衍生 main、feature、hotfix 三個資料夾，附文件出處小字
-- step 3 (~11s) — 兩種 worktree 的對照：main worktree 與 linked worktree
-- step 4 (~12s) — 每棵 linked worktree 各自的目錄 / HEAD / index，兩棵同時停在不同分支
-- step 5 (~8s) — 底層共享區浮現：object database 與大部分 refs
-- step 6 (~5s) — 心智模型一句話：把分支實體化成另一個資料夾
-- step 7 (~12s) — 修正誤解：branch 仍是 ref，worktree 是工作目錄加上獨立狀態
+- step 3 (~19s) — 完整概念場景：main worktree 與 linked worktree 各自 checkout 不同分支，並共用一份 `.git`、object database 與大部分 refs
+- step 4 (~5s) — 心智模型一句話：把分支實體化成另一個資料夾
+- step 5 (~12s) — 修正誤解：branch 仍是 ref，worktree 是工作目錄加上獨立狀態
 
 口播節選：
-> 每個 linked worktree 有自己的目錄、HEAD 跟 index。所以能同時 checkout 不同分支。
+> clone 出來的是 main worktree，add 開出來的是 linked worktree；它們各自 checkout 不同分支，但共用同一套 object database 與大部分 refs。
 
 ---
 
@@ -636,7 +641,8 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ### 0. 00-cover
 - ✓ 主題封面版式參考圖（脚手架自動複製到 `public/theme-assets/title-page-style-reference.png`）
-- ✓ 講者：莊詠翔／分享日期：2026.08.29
+- ✓ 講者：莊詠翔／分享日期：2026.09.12
+- ✓ 三位主角靠近討論的透明背景大型群像（`illustrations/cover/bears-discussing-transparent-v3.png`）
 
 ### 1. 01-scenes
 - ✓ 主角被多個 Git branch 與切換工作壓住、手忙腳亂的完整場景（`illustrations/scenes/overloaded-dev-git-scene.png`）
@@ -647,11 +653,11 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - ✓ 純 CSS / SVG 演示，無外部素材
 
 ### 3. 03-old-ways
-- ✓ 三份完整 Git repository 重複占用實體空間（`illustrations/old-ways/duplicate-repositories-v2.png`）
+- ✓ 三份完整 Git clone 重複工作目錄與 `.git` 的全頁場景（`illustrations/old-ways/duplicate-git-clone-problem.png`）
 - ✓ Git log 不同步仍以 CSS / SVG 演示
 
 ### 4. 04-concept
-- ✓ 純 CSS / SVG 演示，無外部素材
+- ✓ 一份共享 `.git` 延伸三個獨立 worktree 的全頁場景（`illustrations/concept/worktree-concept-overview.png`）
 - ✓ 主題角色圖 `grizzly-presenting`（可選，用在心智模型那一步）
 - ✓ Git 與資料夾 icon 使用專案內品牌圖示素材
 

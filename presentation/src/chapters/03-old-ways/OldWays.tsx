@@ -103,12 +103,12 @@ export default function OldWays({ step }: ChapterStepProps) {
     </div>
   );
   if (step === 6) return (
-    <div className="ow-scene ow-method scene-pad"><Title method="做法三 · 代價" label="每一份 clone，都帶整套 repository。" tone="cost" />
-      <div className="ow-repo-waste">
-        <img src={illustration("duplicate-repositories-v2.png")} alt="三個完整 repository 容器各自包住相同專案資料夾，重複占用磁碟空間" />
-        {["clone A","clone B","clone C"].map((name,index)=><div className={`ow-size-label ow-size-${index}`} key={name}><span>{name}</span><strong>1 GB</strong></div>)}
-        <div className="ow-space-total card"><span>GIT OBJECTS ONLY</span><strong className="hero-num">3 GB</strong><i /></div>
-      </div>
+    <div className="ow-scene ow-clone-cost scene-pad">
+      <img
+        className="ow-clone-cost-art"
+        src={illustration("duplicate-git-clone-problem.png")}
+        alt="三份 Git clone 各自擁有完整工作目錄與 .git 資料，導致儲存空間和維護成本增加"
+      />
     </div>
   );
   if (step === 7) return (

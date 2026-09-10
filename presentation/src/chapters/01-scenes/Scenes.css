@@ -934,140 +934,10 @@
   opacity: 0.28;
 }
 
-/* step 6 · four sites converge */
-.sc-converge {
-  padding: 0;
-}
-
-.sc-converge-lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--accent);
-}
-
-.sc-converge-lines path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: sc-line-draw 900ms 220ms var(--ease-quart) forwards;
-}
-
-.sc-site {
-  position: absolute;
-  z-index: 3;
-  width: 340px;
-  min-height: 150px;
-  justify-content: center;
-  padding: 28px 32px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: var(--surface-2);
-  animation: sc-site-in 680ms var(--ease-overshoot) both;
-}
-
-.sc-site span {
-  font-family: var(--font-display-en);
-  font-size: 40px;
-  font-weight: 900;
-  color: var(--accent);
-}
-
-.sc-site strong {
-  font-size: 30px;
-  line-height: 1.15;
-}
-
-/* 原本是四象限放射，但只有三個現場，右下角永遠空一塊，收尾句只好被塞進
-   那個洞裡。改成對稱的三輻條：左 / 上 / 右各一個現場，正下方留給收尾句，
-   四個方位都有東西，中心的人也真的被「圍住」。
-   注意：.sc-site 的進場動畫用 transform，所以定位只能用 left/top，
-   不能再用 translate。 */
-.sc-site-left  { left: 130px;  top: 425px; }
-.sc-site-top   { left: 790px;  top: 70px;  animation-delay: 100ms; }
-.sc-site-right { right: 130px; top: 425px; animation-delay: 200ms; }
-
-.sc-person-core {
-  position: absolute;
-  z-index: 4;
-  left: 50%;
-  top: 500px;
-  width: 430px;
-  height: 430px;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 6px solid var(--rule);
-  border-radius: 50%;
-  background: var(--surface-3);
-  box-shadow: 20px 22px 0 var(--accent-soft);
-  animation: sc-core-pop 820ms 360ms var(--ease-overshoot) both;
-}
-
-.sc-person-core strong {
-  font-size: 172px;
-  line-height: 0.82;
-  color: var(--accent);
-}
-
-.sc-person-core span {
-  margin-top: 18px;
-  font-size: 31px;
-  font-weight: 850;
-}
-
-.sc-person-core i {
-  width: 140px;
-  height: 4px;
-  margin: 18px 0;
-  background: var(--rule);
-}
-
-.sc-person-core b {
-  font-size: 46px;
-}
-
-.sc-converge-copy {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  bottom: 92px;
-  transform: translateX(-50%);
-  width: 850px;
-  text-align: center;
-  animation: sc-rise-center 720ms 750ms var(--ease-quart) both;
-}
-
-.sc-converge-copy p {
-  margin: 0;
-  font-size: 30px;
-  font-weight: 750;
-  color: var(--text-2);
-}
-
-.sc-converge-copy h1 {
-  margin: 4px 0 0;
-  font-size: 64px;
-  line-height: 1;
-  color: var(--accent);
-}
-
 /* chapter animations */
 @keyframes sc-rise {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes sc-rise-center {
-  from { opacity: 0; transform: translate(-50%, 24px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 @keyframes sc-backdrop-in {
@@ -1179,11 +1049,6 @@
 @keyframes sc-site-in {
   from { opacity: 0; transform: scale(0.88) rotate(-2deg); }
   to { opacity: 1; transform: scale(1) rotate(0); }
-}
-
-@keyframes sc-core-pop {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 /* revised step 2 · one unfinished cause, illustrated */

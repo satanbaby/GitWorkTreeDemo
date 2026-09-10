@@ -5,7 +5,7 @@ const illustration = (name: string) =>
   `${import.meta.env.BASE_URL}illustrations/scenes/${name}`;
 
 export default function Scenes({ step }: ChapterStepProps) {
-  if (step === 0) {
+  if (step === 4) {
     return (
       <div className="sc-scene sc-opening scene-pad">
         <img
@@ -31,7 +31,7 @@ export default function Scenes({ step }: ChapterStepProps) {
     );
   }
 
-  if (step === 1) {
+  if (step === 0) {
     return (
       <div className="sc-scene sc-hotfix scene-pad">
         <div className="sc-hotfix-copy">
@@ -66,7 +66,7 @@ export default function Scenes({ step }: ChapterStepProps) {
     );
   }
 
-  if (step === 2) {
+  if (step === 1) {
     return (
       <div className="sc-scene sc-uncommitted scene-pad">
         <div className="sc-uncommitted-copy">
@@ -86,7 +86,7 @@ export default function Scenes({ step }: ChapterStepProps) {
     );
   }
 
-  if (step === 3) {
+  if (step === 2) {
     return (
       <div className="sc-scene sc-review scene-pad">
         <div className="sc-review-copy">
@@ -123,7 +123,7 @@ export default function Scenes({ step }: ChapterStepProps) {
     );
   }
 
-  if (step === 4) {
+  if (step === 3) {
     return (
       <div className="sc-scene sc-versions scene-pad">
         <div className="sc-versions-heading">
@@ -147,45 +147,6 @@ export default function Scenes({ step }: ChapterStepProps) {
           <article className="sc-branch-label sc-branch-label-next">
             <span>contract / v2</span><strong>新合約 · 持續開發</strong>
           </article>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === 5) {
-    // 三個工作現場等距圍住中心的人：左 / 上 / 右三根輻條，
-    // 下方留給收尾句 —— 四個方位都有內容，不會空一角。
-    const sites = [
-      ["sc-site-left", "hotfix 插隊"],
-      ["sc-site-top", "PR review"],
-      ["sc-site-right", "雙版本維護"],
-    ];
-
-    return (
-      <div className="sc-scene sc-converge scene-pad">
-        <svg className="sc-converge-lines" viewBox="0 0 1920 1080" aria-hidden="true">
-          <path pathLength="1" d="M478 500 H726" />
-          <path pathLength="1" d="M960 226 V266" />
-          <path pathLength="1" d="M1194 500 H1442" />
-        </svg>
-
-        {sites.map(([className, label], index) => (
-          <div className={`sc-site card ${className}`} key={label}>
-            <span>0{index + 1}</span>
-            <strong>{label}</strong>
-          </div>
-        ))}
-
-        <div className="sc-person-core">
-          <strong className="hero-num">03</strong>
-          <span>個工作現場</span>
-          <i />
-          <b>同一個人</b>
-        </div>
-
-        <div className="sc-converge-copy">
-          <p>這些不是偶發例外。</p>
-          <h1>是日常。</h1>
         </div>
       </div>
     );
