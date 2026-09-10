@@ -18,7 +18,7 @@ interface Props {
 }
 
 const DEFAULT_GITHUB_URL =
-  "https://github.com/ConardLi/garden-skills";
+  "https://github.com/satanbaby/GitWorkTreeDemo";
 
 /**
  * Hidden-on-hover progress bar, fixed to the bottom of the viewport.
