@@ -2,7 +2,7 @@
 
 > **主題**：`we-bare-bears`（熊熊遇見你）—— 奶油紙張 + 天空藍強調色 + 圓潤手繪輪廓的親切協作感（CP-1 已確認）
 > **總時長**：約 11 分鐘
-> **章節數**：封面 + 12 章 / 71 步
+> **章節數**：封面 + 11 章 / 57 步
 
 ---
 
@@ -25,11 +25,10 @@
 | 01-scenes | 🔵 | 5 steps；原 2-6 已移除，原 2-1 群像頁移至章末，待驗收 |
 | 02-switch-cost | 🔵 | 1 step 完成；feature / hotfix 循環切換已驗收 |
 | 03-old-ways | 🔵 | 8 steps 完成；重複 repo 容量插圖與 git log 頁已驗收 |
-| 04-concept | ✅ | 5 steps；最新 5-4 亦已移除，共享 `.git` 重點併入 5-3 旁白，於 5174 驗收通過 |
-| 05-vs-clone | 🔵 | 12 steps；原 06-esim 章整段併入，型別與逐畫面驗收通過 |
+| 04-concept | ✅ | 4 steps；5-5「修正誤解」依用戶指示移除 |
+| 05-vs-clone | 🔵 | 10 steps；原 06-esim 章整段併入；6-1 / 6-2 依用戶指示移除，eSIM 比喻成為本章開場 |
 | 07-cmd-create | 🔵 | 5 steps 完成；型別與逐畫面驗收通過 |
-| 08-cmd-manage | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
-| 09-traps | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 08-cmd-manage | 🔵 | 3 steps；8-4~8-7（move / repair / prune / lock）依用戶指示移除，本章只留移除相關 |
 | 10-vscode | 🔵 | 8 steps 完成；10-1、10-5 的 VS Code icon 已逐畫面驗收 |
 | 11-agent-risk | 🔵 | 3 steps 完成；品牌 icon、workitem 對應與衝突插圖已驗收 |
 | 12-agent-isolation | 🔵 | 4 steps 完成；資料夾 / branch 區別動畫與 Git icon 已驗收 |
@@ -148,7 +147,7 @@
 
 > **主題**：`we-bare-bears`（熊熊遇見你）—— 奶油紙張 + 天空藍強調色 + 圓潤手繪輪廓的親切協作感（CP-1 已確認）
 > **總時長**：約 11 分鐘
-> **章節數**：封面 + 12 章 / 71 步
+> **章節數**：封面 + 11 章 / 57 步
 
 ---
 
@@ -171,11 +170,10 @@
 | 01-scenes | 🔵 | 5 steps；原 2-6 已移除，原 2-1 群像頁移至章末，待驗收 |
 | 02-switch-cost | 🔵 | 1 step 完成；feature / hotfix 循環切換已驗收 |
 | 03-old-ways | 🔵 | 8 steps 完成；重複 repo 容量插圖與 git log 頁已驗收 |
-| 04-concept | ✅ | 5 steps；最新 5-4 亦已移除，共享 `.git` 重點併入 5-3 旁白，於 5174 驗收通過 |
-| 05-vs-clone | 🔵 | 12 steps；原 06-esim 章整段併入，型別與逐畫面驗收通過 |
+| 04-concept | ✅ | 4 steps；5-5「修正誤解」依用戶指示移除 |
+| 05-vs-clone | 🔵 | 10 steps；原 06-esim 章整段併入；6-1 / 6-2 依用戶指示移除，eSIM 比喻成為本章開場 |
 | 07-cmd-create | 🔵 | 5 steps 完成；型別與逐畫面驗收通過 |
-| 08-cmd-manage | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
-| 09-traps | 🔵 | 7 steps 完成；型別與逐畫面驗收通過 |
+| 08-cmd-manage | 🔵 | 3 steps；8-4~8-7（move / repair / prune / lock）依用戶指示移除，本章只留移除相關 |
 | 10-vscode | 🔵 | 8 steps 完成；10-1、10-5 的 VS Code icon 已逐畫面驗收 |
 | 11-agent-risk | 🔵 | 3 steps 完成；品牌 icon、workitem 對應與衝突插圖已驗收 |
 | 12-agent-isolation | 🔵 | 4 steps 完成；資料夾 / branch 區別動畫與 Git icon 已驗收 |
@@ -264,6 +262,40 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - `chapters.ts` 移除該章、`useStepper.ts` 的 `STORAGE_KEY` bump 到 v19。
 - 章節序號刻意留下 06 的缺口（`05` → `07`），缺口本身就是「這一章被併走」的
   紀錄，比把 07~13 七個資料夾全部改名安全。
+
+### 章節刪減：依用戶指示移除 7 步 + 整章 09-traps（71 步 → 57 步）
+
+用戶指定移除的段落，編號依簡報進度列（1-based 章 / 段，與 UI 顯示一致）：
+
+| 指定 | 對應檔案位置 | 內容 |
+|---|---|---|
+| 5-5 | `04-concept` step 5 | 修正誤解：branch 仍是 ref，worktree 是工作目錄加上獨立狀態 |
+| 6-1 | `05-vs-clone` step 1 | 「那它跟剛剛說的多 clone 一份，差在哪？」 |
+| 6-2 | `05-vs-clone` step 2 | 「多 clone 會得到好幾個彼此獨立的 repository。」 |
+| 8-4 | `08-cmd-manage` step 4 | `git worktree move` |
+| 8-5 | `08-cmd-manage` step 5 | `git worktree repair` |
+| 8-6 | `08-cmd-manage` step 6 | `git worktree prune` |
+| 8-7 | `08-cmd-manage` step 7 | `git worktree lock --reason` |
+| 第 9 章 | `09-traps` 整章 7 步 | 共用帶來的坑（同 branch 雙 checkout、共享 refs、`refs/stash`、submodule 實測） |
+
+連帶調整（刪掉步驟後不改就會變成假訊息的地方）：
+
+- `05-vs-clone` 的 eSIM 比喻升格成本章開場 —— 原本比喻是接在「多 clone 是什麼」
+  之後登場，那兩步被移除後，`es-intro` 直接開場，旁白「講到這裡」仍接得上第 4 章
+  的第三種舊做法。
+- `08-cmd-manage` 的開場輪盤原本刻著五個指令（remove / move / repair / prune /
+  lock），只留 remove 會變成宣告了四個沒登場的指令 —— 輪盤改成
+  `worktree remove` / `branch -d` 兩顆、旁白由「這幾個指令一樣一個一個看」改成
+  「移除相關的兩個動作，一個一個看」，章名由「指令：移除與維護」改成
+  「指令：移除 worktree」。
+- 被移除步驟專屬的 CSS 規則與 keyframes 一併刪除（`.ct-correction*`、
+  `.vc-question` / `.vc-islands` / `.vc-repo` 一族、`.cm-move-demo` /
+  `.cm-repair-demo` / `.cm-prune-demo` / `.cm-lock-demo` 及其動畫），
+  `05-vs-clone` 不再使用的 `<Repo>` 元件也移除。
+- `script.md` 由各章 `narrations.ts` 重新產生，71 段 → 57 段。
+
+驗收：`tsc -b` 與 `vite build` 皆通過，dev server 逐章逐段走完 57 步，
+每一步都有畫面（`5-3`、`4-7` 為純插圖頁，本身無文字），console 無錯誤。
 
 ### 比喻家族收斂（05-vs-clone × 06-esim）
 
@@ -390,7 +422,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ---
 
-## 4. 04-concept — worktree 的概念（5 steps · ~50s）
+## 4. 04-concept — worktree 的概念（4 steps · ~38s）
 
 **信息池**：
 - 官方定義：同一個 repository 所管理的多個 working trees —— 來源 article §Worktree 的心智模型 / L19
@@ -410,14 +442,13 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - step 2 (~10s) — 官方定義卡：帶 Git icon 的 repository 橫向衍生 main、feature、hotfix 三個資料夾，附文件出處小字
 - step 3 (~19s) — 完整概念場景：main worktree 與 linked worktree 各自 checkout 不同分支，並共用一份 `.git`、object database 與大部分 refs
 - step 4 (~5s) — 心智模型一句話：把分支實體化成另一個資料夾
-- step 5 (~12s) — 修正誤解：branch 仍是 ref，worktree 是工作目錄加上獨立狀態
 
 口播節選：
 > clone 出來的是 main worktree，add 開出來的是 linked worktree；它們各自 checkout 不同分支，但共用同一套 object database 與大部分 refs。
 
 ---
 
-## 5. 05-vs-clone — 跟多 clone 的差異（含手機 / eSIM 比喻）（12 steps · ~78s）
+## 5. 05-vs-clone — 跟多 clone 的差異（含手機 / eSIM 比喻）（10 steps · ~68s）
 
 > **原第 6 章 `06-esim` 已整段併入這一章，全片 13 章 → 12 章、76 步 → 74 步。**
 > 兩章講的是同一個論點：「多 clone 各自一整套 vs worktree 共用底層」，本章用 Git
@@ -448,18 +479,16 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 **開發計劃**：
 
-- step 1 (~5s) — 回扣第 3 章的第三種舊做法，提出比較問題
-- step 2 (~5s) — 多 clone 等於好幾個彼此獨立的 repository
-- step 3 (~5s) — 比喻登場：一支手機的輪廓進畫面
-- step 4 (~10s) — 多 clone 側：一個門號配一支手機，手機逐支增加；每支螢幕裡刻著 objects / remote / refs（承接被收掉的那句旁白）
-- step 5 (~5s) — worktree 側：一支手機，多張 eSIM 設定
-- step 6 (~5s) — 底層裝置只有一套，不同門號各自使用
-- step 7 (~6s) — 比喻對應回 Git：共用的是 repository 的歷史與物件
-- step 8 (~6s) — 建立速度差：不用再抓一次完整歷史
-- step 9 (~5s) — 決定性差異演示：一棵做的 commit，另一棵立刻出現
-- step 10 (~5s) — 比喻的邊界警示：實體檔案還是各有一份
-- step 11 (~11s) — 各自要準備的清單：node_modules、build output、.env、port，不是零磁碟成本
-- step 12 (~10s) — 收束對照：各過各的，對上同一份歷史開多個現場
+- step 1 (~5s) — 比喻登場：一支手機的輪廓進畫面（原 step 1 / 2 的「差在哪」與「彼此獨立的 repository」依用戶指示移除，比喻直接當開場）
+- step 2 (~10s) — 多 clone 側：一個門號配一支手機，手機逐支增加；每支螢幕裡刻著 objects / remote / refs（承接被收掉的那句旁白）
+- step 3 (~5s) — worktree 側：一支手機，多張 eSIM 設定
+- step 4 (~5s) — 底層裝置只有一套，不同門號各自使用
+- step 5 (~6s) — 比喻對應回 Git：共用的是 repository 的歷史與物件
+- step 6 (~6s) — 建立速度差：不用再抓一次完整歷史
+- step 7 (~5s) — 決定性差異演示：一棵做的 commit，另一棵立刻出現
+- step 8 (~5s) — 比喻的邊界警示：實體檔案還是各有一份
+- step 9 (~11s) — 各自要準備的清單：node_modules、build output、.env、port，不是零磁碟成本
+- step 10 (~10s) — 收束對照：各過各的，對上同一份歷史開多個現場
 
 口播節選：
 > 多 clone 像是每多一個門號，就再買一支手機。每支都有一整套自己的系統跟資料。
@@ -491,56 +520,27 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ---
 
-## 8. 08-cmd-manage — 指令：移除與維護（7 steps · ~69s）
+## 8. 08-cmd-manage — 指令：移除 worktree（3 steps · ~30s）
 
-> 依指示：**一個指令佔一步**，每一步都要有動畫演示（資料夾消失 / 關聯線修復 / 過期節點被清掉 / 鎖扣上等）。
+> 依指示：**一個指令佔一步**，每一步都要有動畫演示（資料夾消失 / branch 線仍在等）。
+>
+> 原 step 4~7（`move` / `repair` / `prune` / `lock`）依用戶指示移除，本章只留
+> 「移除 worktree」與「移除 worktree ≠ 刪 branch」這組對照；開場的輪盤也從五個
+> 指令收成這兩個動作。
 
 **信息池**：
 - 移除前提：先確認變更已提交或已妥善保存，再 `git worktree remove ../project-hotfix` —— 來源 article §基本操作 / L57-60
 - remove 的保護：linked worktree 有未提交或未追蹤檔案時會拒絕，不要習慣用 `--force` —— 來源 article §限制 / L93
 - 關鍵區分：移除 worktree 不等於刪除 branch；確認已合併後才 `git branch -d hotfix/payment-timeout` —— 來源 article §基本操作 / L63-66
-- `git worktree move`：平常搬家用它，不要直接拖曳資料夾 —— 來源 article §基本操作 / L69
-- `git worktree repair`：曾手動移動過，優先用它修復關聯 —— 來源 article §基本操作 / L69
-- `git worktree prune`：曾手動刪除資料夾，用它清掉過期管理資訊 —— 來源 article §基本操作 / L69
-- `git worktree lock --reason`：放在隨身碟或偶爾離線的網路磁碟時防止被 prune —— 來源 article §限制 / L96
 
 **開發計劃**：
 
-- step 1 (~4s) — 維護指令清單登場，位置先留空
+- step 1 (~4s) — 兩個動作登場，位置先留空
 - step 2 (~13s) — `git worktree remove`：資料夾被移除；有未提交或未追蹤檔案時被擋下
 - step 3 (~13s) — 對照演示：worktree 消失了但 branch 還在，`git branch -d` 是另一個獨立動作
-- step 4 (~8s) — `git worktree move`：資料夾整個搬位置，關聯跟著更新
-- step 5 (~8s) — `git worktree repair`：斷掉的關聯線被接回去
-- step 6 (~10s) — `git worktree prune`：過期的管理資訊節點被清掉
-- step 7 (~13s) — `git worktree lock --reason`：鎖扣上，prune 掃過去也不會動它
 
 口播節選：
 > 注意，移除 worktree 不等於刪掉 branch。branch 要另外確認合併過，才用 git branch -d。
-
----
-
-## 9. 09-traps — 共用帶來的坑（7 steps · ~60s）
-
-**信息池**：
-- 坑一：Git 預設不允許同一個 local branch 同時 checkout 到兩棵 worktree，避免兩邊同時推進同一 ref —— 來源 article §限制與注意事項 / L90
-- 坑二：refs 與 object database 是共享的，刪 branch、改 tag、fetch、commit 等動作會被其他 worktree 看見 —— 來源 article §限制 / L91
-- 坑二的誤解：不要把它誤認成完全獨立的 clone —— 來源 article §限制 / L91
-- 坑三：stash 通常也是 repository 共用的 `refs/stash`，命名與取用要小心避免拿錯 —— 來源 article §限制 / L92
-- 導入前提：submodule 與特殊工具鏈對多 worktree 的支援程度不一，導入前要用團隊專案實測 —— 來源 article §限制 / L97
-- 反向佐證：移除 worktree 之後，它做的 commit 仍留在共享歷史裡 —— 來源 素材/vscode新增worktree_step9.png
-
-**開發計劃**：
-
-- step 1 (~4s) — 坑的清單登場，位置先留空
-- step 2 (~11s) — 坑一：同一個 local branch 被兩棵 worktree 同時 checkout 時被擋下
-- step 3 (~5s) — 擋下的理由：避免兩邊同時推進同一個 ref
-- step 4 (~6s) — 坑二：refs 與 object database 的共享區被點亮
-- step 5 (~13s) — 會被其他 worktree 看見的動作逐個亮起：刪 branch、改 tag、fetch、commit
-- step 6 (~11s) — 坑三：refs/stash 也是整個 repository 共用，命名與取用要小心
-- step 7 (~10s) — 導入前提：submodule 與特殊工具鏈支援程度不一，要用團隊專案實測
-
-口播節選：
-> 刪 branch、改 tag、fetch、commit，其他 worktree 都看得到。它不是完全獨立的 clone。
 
 ---
 
@@ -669,9 +669,6 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ### 8. 08-cmd-manage
 - ✓ 純 CSS / SVG 模擬終端機與目錄樹，無外部素材
-
-### 9. 09-traps
-- ✓ 移除後歷史仍在（`素材/vscode新增worktree_step9.png`，可選佐證）
 
 ### 10. 10-vscode
 - ✓ 10-1、10-5 使用 VS Code icon 標示編輯器與新視窗

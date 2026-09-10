@@ -74,18 +74,6 @@ clone 出來的是 main worktree，add 開出來的是 linked worktree；它們�
 
 ---
 
-這是心智模型，不是嚴格定義。branch 還是那個 ref，worktree 是它的工作目錄加上獨立狀態。
-
----
-
-那它跟剛剛說的多 clone 一份，差在哪？
-
----
-
-多 clone 會得到好幾個彼此獨立的 repository。
-
----
-
 講到這裡，用手機跟 eSIM 來比喻會更好懂。
 
 ---
@@ -146,7 +134,7 @@ git worktree add 加上 -b。從 main 開一個新分支，放到隔壁的資料
 
 ---
 
-用完要收。這幾個指令一樣一個一個看。
+用完要收。移除相關的兩個動作，一個一個看。
 
 ---
 
@@ -155,50 +143,6 @@ git worktree remove。移除之前先確認變更都提交或妥善保存了。�
 ---
 
 注意，移除 worktree 不等於刪掉 branch。branch 要另外確認合併過，才用 git branch -d。
-
----
-
-git worktree move。要搬位置就用它，不要直接拖資料夾。
-
----
-
-git worktree repair。已經手動搬過的，用它修復關聯。
-
----
-
-git worktree prune。已經手動把資料夾刪掉的，用它清掉過期的管理資訊。
-
----
-
-git worktree lock，加上 reason。放在隨身碟或會離線的網路磁碟時，防止管理資訊被 prune 掉。
-
----
-
-開始用之前，有幾個坑要先知道。
-
----
-
-同一個 local branch，Git 預設不讓你同時 checkout 到兩棵 worktree。
-
----
-
-這是為了避免兩邊同時推進同一個 ref。
-
----
-
-refs 跟 object database 是共享的。
-
----
-
-刪 branch、改 tag、fetch、commit，其他 worktree 都看得到。它不是完全獨立的 clone。
-
----
-
-stash 通常也是整個 repository 共用的 refs/stash。命名跟取用都要小心。
-
----
-
-submodule 跟一些特殊工具鏈的支援程度不一樣。導入前用團隊自己的專案實測一次。
 
 ---
 

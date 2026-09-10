@@ -15,8 +15,6 @@ import CmdCreate from "../chapters/07-cmd-create/CmdCreate";
 import { narrations as cmdCreateNarrations } from "../chapters/07-cmd-create/narrations";
 import CmdManage from "../chapters/08-cmd-manage/CmdManage";
 import { narrations as cmdManageNarrations } from "../chapters/08-cmd-manage/narrations";
-import Traps from "../chapters/09-traps/Traps";
-import { narrations as trapsNarrations } from "../chapters/09-traps/narrations";
 import Vscode from "../chapters/10-vscode/Vscode";
 import { narrations as vscodeNarrations } from "../chapters/10-vscode/narrations";
 import AgentRisk from "../chapters/11-agent-risk/AgentRisk";
@@ -84,15 +82,9 @@ export const CHAPTERS: ChapterDef[] = [
   },
   {
     id: "cmd-manage",
-    title: "指令：移除與維護",
+    title: "指令：移除 worktree",
     narrations: cmdManageNarrations,
     Component: CmdManage,
-  },
-  {
-    id: "traps",
-    title: "共用帶來的坑",
-    narrations: trapsNarrations,
-    Component: Traps,
   },
   {
     id: "vscode",
