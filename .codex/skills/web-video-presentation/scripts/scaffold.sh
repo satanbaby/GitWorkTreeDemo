@@ -227,6 +227,7 @@ cp "$TEMPLATES/src/components/AutoStartGate.tsx"  src/components/AutoStartGate.t
 cp "$TEMPLATES/src/components/AutoStartGate.css"  src/components/AutoStartGate.css
 cp "$TEMPLATES/src/components/AutoToggle.tsx"     src/components/AutoToggle.tsx
 cp "$TEMPLATES/src/components/AutoToggle.css"     src/components/AutoToggle.css
+cp "$TEMPLATES/src/components/PrefetchAhead.tsx"  src/components/PrefetchAhead.tsx
 
 cp "$TEMPLATES/src/registry/types.ts"    src/registry/types.ts
 cp "$TEMPLATES/src/registry/chapters.ts" src/registry/chapters.ts

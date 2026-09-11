@@ -1,6 +1,6 @@
 {
   "name": "web-video-presentation",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "category": "Web Video / Presentation",
   "description": "Turn scripts, articles, lessons, product demos, and talks into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos. Ships a Vite + React + TypeScript scaffold (pnpm-first, npm fallback), a (chapter, step) cursor model, a mandatory 00-cover chapter, hard collaboration checkpoints tracked in an outline.md progress board so work can resume across agents, optional AI-generated illustrations anchored to the theme's style reference, and a theme-token architecture.",
   "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/web-video-presentation",

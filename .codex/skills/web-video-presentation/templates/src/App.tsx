@@ -6,6 +6,7 @@ import "./styles/animations.css";
 import { useCallback } from "react";
 import { AutoStartGate } from "./components/AutoStartGate";
 import { AutoToggle } from "./components/AutoToggle";
+import { PrefetchAhead } from "./components/PrefetchAhead";
 import { ProgressBar } from "./components/ProgressBar";
 import { Stage } from "./components/Stage";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
@@ -68,6 +69,8 @@ export default function App() {
         visible={mode === "auto" && !autoStarted}
         onStart={() => setAutoStarted(true)}
       />
+      {/* 提前抓接下來幾個 step 的圖，切頁時才不會現場等下載。不渲染任何東西。 */}
+      <PrefetchAhead chapters={CHAPTERS} cursor={stepper.cursor} />
     </>
   );
 }
