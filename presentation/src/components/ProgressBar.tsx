@@ -15,6 +15,12 @@ interface Props {
   onExport?: () => void;
   /** True while the print sheet is mounting — disables the export button. */
   exporting?: boolean;
+  /** Whether the browser exposes the standard Fullscreen API. */
+  fullscreenSupported: boolean;
+  /** True when any element in this document currently owns fullscreen. */
+  isFullscreen: boolean;
+  /** Toggle fullscreen for the whole presentation document. */
+  onToggleFullscreen(): void;
 }
 
 const DEFAULT_GITHUB_URL =
@@ -39,6 +45,9 @@ export function ProgressBar({
   githubUrl = DEFAULT_GITHUB_URL,
   onExport,
   exporting = false,
+  fullscreenSupported,
+  isFullscreen,
+  onToggleFullscreen,
 }: Props) {
   const activeRef = useRef<HTMLButtonElement | null>(null);
 
@@ -215,6 +224,52 @@ export function ProgressBar({
               <path d="m7.5 10 4.5 4.5 4.5-4.5" />
               <path d="M4.5 18.5h15" />
             </svg>
+          </button>
+        )}
+        {fullscreenSupported && (
+          <button
+            className="pb-tool pb-fullscreen"
+            type="button"
+            aria-label={isFullscreen ? "退出全螢幕" : "進入全螢幕"}
+            aria-pressed={isFullscreen}
+            title={isFullscreen ? "退出全螢幕" : "進入全螢幕"}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFullscreen();
+              e.currentTarget.blur();
+            }}
+          >
+            {isFullscreen ? (
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                aria-hidden="true"
+                focusable="false"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" />
+              </svg>
+            ) : (
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                aria-hidden="true"
+                focusable="false"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" />
+              </svg>
+            )}
           </button>
         )}
         {githubUrl && (

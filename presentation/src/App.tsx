@@ -12,6 +12,7 @@ import { ProgressBar } from "./components/ProgressBar";
 import { Stage } from "./components/Stage";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
 import { useAutoMode } from "./hooks/useAutoMode";
+import { useFullscreen } from "./hooks/useFullscreen";
 import { useStepper } from "./hooks/useStepper";
 import { CHAPTERS } from "./registry/chapters";
 
@@ -33,6 +34,8 @@ export default function App() {
   const stepText = ch.narrations[stepper.cursor.step] ?? "";
 
   const { mode, cycleMode, autoStarted, setAutoStarted } = useAutoMode();
+  const { isFullscreen, fullscreenSupported, toggleFullscreen } =
+    useFullscreen();
   // PDF export: mount the off-screen print sheet, which prints itself.
   const [exporting, setExporting] = useState(false);
   const endExport = useCallback(() => setExporting(false), []);
@@ -69,6 +72,9 @@ export default function App() {
         onJumpChapter={stepper.jumpToChapter}
         onExport={() => setExporting(true)}
         exporting={exporting}
+        isFullscreen={isFullscreen}
+        fullscreenSupported={fullscreenSupported}
+        onToggleFullscreen={toggleFullscreen}
       />
       <AutoToggle mode={mode} onCycle={cycleMode} />
       <AutoStartGate
