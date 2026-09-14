@@ -120,12 +120,14 @@ body {
   position: fixed;
   inset: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: safe center;
+  justify-content: safe center;
+  overflow: auto;
   background: var(--shell);
 }
 .stage-fitter {
   position: relative;
+  flex: 0 0 auto;
   /* width / height are set inline by Stage.tsx (1920*scale × 1080*scale) */
   isolation: isolate;
 }
