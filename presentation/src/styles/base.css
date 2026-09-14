@@ -113,7 +113,7 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 3. Stage chrome — letterbox + 16:9 fitter + raw 1920×1080 frame.
+ * 3. Stage chrome — letterbox + 16:9 fitter + zoomed 1920×1080 frame.
  *    The fitter is sized to ACTUAL visible px so flex-centering is exact.
  * ───────────────────────────────────────────────────────────────────── */
 .app-shell {
@@ -135,7 +135,6 @@ body {
   left: 0;
   width: 1920px;
   height: 1080px;
-  transform-origin: top left;
   background: var(--surface);
   overflow: hidden;
   cursor: pointer;

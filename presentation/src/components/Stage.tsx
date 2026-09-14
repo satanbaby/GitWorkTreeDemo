@@ -14,7 +14,9 @@ interface Props {
  *   .stage-fitter ← sized to ACTUAL VISIBLE px (1920*scale × 1080*scale)
  *                   so the layout system honestly sees what's on screen
  *                   and centers it bulletproof on every viewport / DPR.
- *   .stage-frame  ← raw 1920×1080 box, scaled from top-left into the fitter.
+ *   .stage-frame  ← raw 1920×1080 box, layout-scaled with CSS zoom into the
+ *                   fitter. Using zoom avoids compositor resampling blur on
+ *                   screenshots caused by an ancestor transform: scale().
  *
  * Surface colors come from the active theme's CSS custom properties
  * (var(--shell), var(--surface)) — see themes/<id>/tokens.css.
@@ -26,7 +28,7 @@ export function Stage({ onAdvance, children }: Props) {
     height: 1080 * scale,
   };
   const frameStyle: CSSProperties = {
-    transform: `scale(${scale})`,
+    zoom: scale,
   };
   return (
     <div className="app-shell">
