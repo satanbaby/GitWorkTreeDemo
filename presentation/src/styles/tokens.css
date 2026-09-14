@@ -12,6 +12,7 @@
  *     • hero numbers — rounded sans, friendly heavy weight
  *     • rule         — 2px charcoal ink line
  *     • card         — rounded paper with drawn outline + offset shadow
+ *     • navigation   — translucent coffee-brown bear-head paper buttons
  *     • surface      — clean warm paper; no competing decoration layer
  *     • motion       — gentle, buoyant, unhurried
  * ───────────────────────────────────────────────────────────────────── */
@@ -53,6 +54,14 @@
     7px 8px 0 rgba(78, 134, 181, 0.14);
   --card-glass-bg:     rgba(255, 253, 248, 0.94);
   --card-glass-border: rgba(74, 73, 71, 0.48);
+  --nav-face-bg:            rgba(132, 96, 67, 0.78);
+  --nav-face-bg-hover:      rgba(122, 86, 58, 0.86);
+  --nav-face-bg-active:     rgba(112, 76, 50, 0.9);
+  --nav-arrow:              var(--surface-2);
+  --nav-arrow-hover:        var(--surface-2);
+  --nav-face-shadow:        7px 8px 0 rgba(93, 61, 38, 0.16);
+  --nav-face-shadow-hover:  3px 4px 0 rgba(93, 61, 38, 0.2);
+  --nav-face-shadow-active: 1px 2px 0 rgba(93, 61, 38, 0.22);
   --shadow-stage:
     0 56px 150px rgba(75, 105, 125, 0.24),
     0 0 0 1px rgba(41, 39, 37, 0.08);

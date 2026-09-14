@@ -113,19 +113,21 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 3. Stage chrome — letterbox + 16:9 fitter + raw 1920×1080 frame.
+ * 3. Stage chrome — letterbox + 16:9 fitter + zoomed 1920×1080 frame.
  *    The fitter is sized to ACTUAL visible px so flex-centering is exact.
  * ───────────────────────────────────────────────────────────────────── */
 .app-shell {
   position: fixed;
   inset: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: safe center;
+  justify-content: safe center;
+  overflow: auto;
   background: var(--shell);
 }
 .stage-fitter {
   position: relative;
+  flex: 0 0 auto;
   /* width / height are set inline by Stage.tsx (1920*scale × 1080*scale) */
   isolation: isolate;
 }
@@ -135,7 +137,6 @@ body {
   left: 0;
   width: 1920px;
   height: 1080px;
-  transform-origin: top left;
   background: var(--surface);
   overflow: hidden;
   cursor: pointer;

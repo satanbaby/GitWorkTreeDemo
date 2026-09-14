@@ -221,6 +221,7 @@ cp "$TEMPLATES/src/hooks/useAutoMode.ts"     src/hooks/useAutoMode.ts
 cp "$TEMPLATES/src/hooks/useFullscreen.ts"   src/hooks/useFullscreen.ts
 
 cp "$TEMPLATES/src/components/Stage.tsx"          src/components/Stage.tsx
+cp "$TEMPLATES/src/components/Stage.css"          src/components/Stage.css
 cp "$TEMPLATES/src/components/MaskReveal.tsx"     src/components/MaskReveal.tsx
 cp "$TEMPLATES/src/components/ProgressBar.tsx"    src/components/ProgressBar.tsx
 cp "$TEMPLATES/src/components/ProgressBar.css"    src/components/ProgressBar.css
@@ -296,8 +297,8 @@ cat <<EOF
 然後：
 
   • 點舞台任意位置推進全域 step 計數器。
-  • 滑鼠移到底部邊緣可顯示進度條、全螢幕與原始碼按鈕；
-    滑鼠移到右上角可顯示播放模式切換。
+  • 左右側全高度感應帶可用滑鼠返回 / 前進；移入側邊才顯示主題化箭頭。
+  • 滑鼠移到底部邊緣可顯示進度條；滑鼠移到右上角可顯示播放模式切換。
   • 第一個章節固定是封面 src/chapters/00-cover/，內容章節從 01- 起。
   • 把 src/chapters/01-example/ 換成你自己的章節
     （流程見 SKILL.md "Phase 2.4 實作單章" —— 每章一次到位完整版本，

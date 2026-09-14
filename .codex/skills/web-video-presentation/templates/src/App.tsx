@@ -57,7 +57,13 @@ export default function App() {
 
   return (
     <>
-      <Stage onAdvance={stepper.next}>
+      <Stage
+        onAdvance={stepper.next}
+        onBack={stepper.prev}
+        canGoBack={stepper.globalIndex > 0}
+        canGoForward={stepper.globalIndex < stepper.totalGlobal - 1}
+        showNavigation={mode !== "auto"}
+      >
         <div key={ch.id} className="scene">
           <Cmp step={stepper.cursor.step} />
         </div>
