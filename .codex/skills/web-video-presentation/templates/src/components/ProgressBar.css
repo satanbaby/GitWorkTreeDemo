@@ -351,10 +351,24 @@
   outline-offset: 2px;
 }
 
-.pb-github {
+.pb-tools {
   position: absolute;
   right: 16px;
   bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(calc(100% + 16px));
+  transition: opacity var(--dur-base) var(--ease-quart),
+    transform var(--dur-base) var(--ease-quart);
+}
+.pb-hover:hover .pb-tools,
+.pb-hover:focus-within .pb-tools {
+  opacity: 1;
+  transform: translateY(0);
+}
+.pb-tool {
   width: 42px;
   height: 42px;
   display: flex;
@@ -366,21 +380,21 @@
   box-shadow: 4px 4px 0 var(--accent-soft);
   color: var(--text);
   text-decoration: none;
-  opacity: 0;
-  transform: translateY(calc(100% + 16px));
-  transition: opacity var(--dur-base) var(--ease-quart),
-    transform var(--dur-base) var(--ease-quart),
-    color var(--dur-quick), background var(--dur-quick);
+  cursor: pointer;
+  transition: color var(--dur-quick), background var(--dur-quick),
+    transform var(--dur-quick);
 }
-.pb-github:hover {
+.pb-tool:hover,
+.pb-tool:focus-visible {
   color: var(--surface-2);
   background: var(--accent);
+  outline: none;
+  transform: translateY(-2px);
 }
-.pb-hover:hover .pb-github,
-.pb-hover:focus-within .pb-github {
-  opacity: 1;
-  transform: translateY(0);
-}
-.pb-github svg {
+.pb-tool svg {
   display: block;
+}
+.pb-fullscreen[aria-pressed="true"] {
+  color: var(--surface-2);
+  background: var(--accent);
 }

@@ -218,6 +218,7 @@ cp "$TEMPLATES/src/hooks/useStageScale.ts"   src/hooks/useStageScale.ts
 cp "$TEMPLATES/src/hooks/useStepper.ts"      src/hooks/useStepper.ts
 cp "$TEMPLATES/src/hooks/useAudioPlayer.ts"  src/hooks/useAudioPlayer.ts
 cp "$TEMPLATES/src/hooks/useAutoMode.ts"     src/hooks/useAutoMode.ts
+cp "$TEMPLATES/src/hooks/useFullscreen.ts"   src/hooks/useFullscreen.ts
 
 cp "$TEMPLATES/src/components/Stage.tsx"          src/components/Stage.tsx
 cp "$TEMPLATES/src/components/Stage.css"          src/components/Stage.css

@@ -419,3 +419,7 @@
   background: var(--surface-2);
   transform: none;
 }
+.pb-fullscreen[aria-pressed="true"] {
+  color: var(--surface-2);
+  background: var(--accent);
+}

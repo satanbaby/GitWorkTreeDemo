@@ -11,6 +11,7 @@ import { ProgressBar } from "./components/ProgressBar";
 import { Stage } from "./components/Stage";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
 import { useAutoMode } from "./hooks/useAutoMode";
+import { useFullscreen } from "./hooks/useFullscreen";
 import { useStepper } from "./hooks/useStepper";
 import { CHAPTERS } from "./registry/chapters";
 
@@ -32,6 +33,8 @@ export default function App() {
   const stepText = ch.narrations[stepper.cursor.step] ?? "";
 
   const { mode, cycleMode, autoStarted, setAutoStarted } = useAutoMode();
+  const { isFullscreen, fullscreenSupported, toggleFullscreen } =
+    useFullscreen();
 
   // Audio path follows the convention: /audio/<chapter-id>/<step+1>.mp3
   // (1-indexed file names match what `extract-narrations.ts` outputs.)
@@ -69,6 +72,9 @@ export default function App() {
         chapters={CHAPTERS}
         cursor={stepper.cursor}
         onJumpChapter={stepper.jumpToChapter}
+        isFullscreen={isFullscreen}
+        fullscreenSupported={fullscreenSupported}
+        onToggleFullscreen={toggleFullscreen}
       />
       <AutoToggle mode={mode} onCycle={cycleMode} />
       <AutoStartGate
