@@ -1,0 +1,138 @@
+/*
+ * Theme-aware mouse navigation for the live 1920x1080 stage.
+ * Each transparent side rail spans the full canvas height; the visible
+ * theme-shaped control stays centered and quiet until hover or focus.
+ */
+.stage-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 8;
+  width: 104px;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity var(--dur-quick) var(--ease-quart);
+}
+
+.stage-nav--back {
+  left: 0;
+}
+
+.stage-nav--forward {
+  right: 0;
+}
+
+.stage-nav:hover,
+.stage-nav:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+.stage-nav-face {
+  position: relative;
+  isolation: isolate;
+  width: 72px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--rule);
+  border-radius: 48% 48% 43% 43%;
+  background: var(--nav-face-bg, var(--surface-3));
+  box-shadow: var(--nav-face-shadow, 7px 8px 0 var(--accent-soft));
+  color: var(--nav-arrow, var(--surface-2));
+  transition:
+    color var(--dur-quick) var(--ease-quart),
+    background var(--dur-quick) var(--ease-quart),
+    box-shadow var(--dur-quick) var(--ease-quart),
+    transform var(--dur-quick) var(--ease-overshoot);
+}
+
+.stage-nav-face::before,
+.stage-nav-face::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -10px;
+  width: 21px;
+  height: 21px;
+  border: 2px solid var(--rule);
+  border-radius: 50%;
+  background: inherit;
+}
+
+.stage-nav-face::before {
+  left: 7px;
+}
+
+.stage-nav-face::after {
+  right: 7px;
+}
+
+.stage-nav--back .stage-nav-face {
+  transform: rotate(-2deg);
+}
+
+.stage-nav--forward .stage-nav-face {
+  transform: rotate(2deg);
+}
+
+.stage-nav:hover .stage-nav-face,
+.stage-nav:focus-visible .stage-nav-face {
+  background: var(--nav-face-bg-hover, var(--accent));
+  box-shadow: var(--nav-face-shadow-hover, 3px 4px 0 var(--accent-soft));
+  color: var(--nav-arrow-hover, var(--surface-2));
+}
+
+.stage-nav--back:hover .stage-nav-face,
+.stage-nav--back:focus-visible .stage-nav-face {
+  transform: translateX(6px) rotate(0);
+}
+
+.stage-nav--forward:hover .stage-nav-face,
+.stage-nav--forward:focus-visible .stage-nav-face {
+  transform: translateX(-6px) rotate(0);
+}
+
+.stage-nav:focus-visible .stage-nav-face {
+  outline: 4px solid var(--text);
+  outline-offset: 6px;
+}
+
+.stage-nav:active .stage-nav-face {
+  background: var(--nav-face-bg-active, var(--nav-face-bg-hover, var(--accent)));
+  box-shadow: var(--nav-face-shadow-active, 1px 2px 0 var(--accent-soft));
+}
+
+.stage-nav--back:active .stage-nav-face {
+  transform: translateX(8px) scale(0.96) rotate(0);
+}
+
+.stage-nav--forward:active .stage-nav-face {
+  transform: translateX(-8px) scale(0.96) rotate(0);
+}
+
+.stage-nav-arrow {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stage-nav--forward .stage-nav-arrow {
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-nav,
+  .stage-nav-face {
+    transition: none;
+  }
+}

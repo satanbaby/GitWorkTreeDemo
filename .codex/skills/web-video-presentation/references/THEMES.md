@@ -197,6 +197,14 @@ cp -R <path-to-web-video-presentation>/themes/<id>/assets/. \
 | `--card-shadow`    | none                | `.card` 的 box-shadow                                 |
 | `--card-glass-bg`  | `rgba(255,255,255,0.06)` | `.card-glass` 的背景                            |
 | `--card-glass-border` | `rgba(255,255,255,0.12)` | `.card-glass` 的邊框                            |
+| `--nav-face-bg`    | `--surface-3`       | 左右 step 導覽按鈕的表面色                           |
+| `--nav-face-bg-hover` | `--accent`       | 導覽按鈕 hover / focus 的表面色                       |
+| `--nav-face-bg-active` | hover 表面色    | 導覽按鈕按下時的表面色                                |
+| `--nav-arrow`      | `--surface-2`       | 導覽箭頭顏色                                          |
+| `--nav-arrow-hover` | `--surface-2`      | 導覽箭頭 hover / focus 顏色                            |
+| `--nav-face-shadow` | accent soft 偏移影 | 導覽按鈕的一般陰影                                    |
+| `--nav-face-shadow-hover` | accent soft 偏移影 | 導覽按鈕 hover / focus 陰影                       |
+| `--nav-face-shadow-active` | accent soft 偏移影 | 導覽按鈕按下時陰影                                |
 | `--shadow-stage`   | dark drop           | 舞台的 box-shadow                                     |
 | `--stage-border`   | `none`              | 舞台的選擇性邊框（如粗黑畫框 `4px solid black`）       |
 
