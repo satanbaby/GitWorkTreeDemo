@@ -1,8 +1,8 @@
 {
   "name": "web-video-presentation",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "category": "Web Video / Presentation",
-  "description": "Turn scripts, articles, lessons, product demos, and talks into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos. Ships a Vite + React + TypeScript scaffold (pnpm-first, npm fallback), a (chapter, step) cursor model, a mandatory 00-cover chapter, hard collaboration checkpoints tracked in an outline.md progress board so work can resume across agents, optional AI-generated illustrations anchored to the theme's style reference, and a theme-token architecture.",
+  "description": "Turn scripts and articles into click-driven 16:9 web presentations with a fixed warm bear-storybook visual identity. The outline includes an Illustration Pass that classifies every step and proposes concrete zero-text scene illustrations before approval. Image generation uses separate layout, golden-scene, and character references; a deterministic validator checks outline, step, narration, asset, CSS, and image-size drift.",
   "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/web-video-presentation",
   "compat": [
     "claude-code",

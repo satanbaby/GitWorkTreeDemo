@@ -394,7 +394,7 @@ AI 寫中文時有強迫症式的整齊感。**旁白比文字更怕排比** —
 `script.md` 寫入檔案 + 自我檢查通過後，**不要立即停下來等使用者**——依
 [`OUTLINE-FORMAT.md`](OUTLINE-FORMAT.md) 在**同一次思考**裡繼續產出
 `outline.md`（章節切分 + 每步畫面內容 + 章節級資訊池），然後再進入
-Checkpoint Plan 讓使用者一次對齊 5 件事（稿子 / outline / 主題 / 素材
+Checkpoint Plan 讓使用者一次對齊 5 件事（稿子 / outline / 插圖建議 / 素材
 / 開發模式）。
 
 > **流程變化提醒**：舊流程把 script / outline 切成兩個 checkpoint，

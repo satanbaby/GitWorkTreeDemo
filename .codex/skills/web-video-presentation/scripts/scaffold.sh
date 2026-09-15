@@ -18,9 +18,7 @@
 # 跑完後，看 SKILL.md "Phase 2.4 實作單章" + references/CHAPTER-CRAFT.md
 # 了解每章怎麼寫。卡住時翻 references/EXAMPLES/ 找完整章節 anchor。
 #
-# 之後切換主題，覆蓋一個檔案即可：
-#   cp <path-to-web-video-presentation>/themes/<id>/tokens.css \
-#      <project>/src/styles/tokens.css
+# 此 Skill 固定使用 we-bare-bears 視覺系統。
 # ─────────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -43,7 +41,7 @@ list_themes() {
     desc=$(grep -E '"descriptionZh"' "$meta" | head -n1 | sed -E 's/.*"descriptionZh":[[:space:]]*"([^"]+)".*/\1/')
     printf "  • %-18s %s\n      %s\n\n" "$id" "$name" "$desc"
   done
-  echo "用 --theme=<id> 選定一個。預設：${DEFAULT_THEME}。"
+  echo "此 Skill 固定使用：${DEFAULT_THEME}。"
 }
 
 # ── 解析參數 ──
@@ -58,6 +56,10 @@ for arg in "$@"; do
       ;;
     --theme=*)
       THEME="${arg#--theme=}"
+      if [[ "$THEME" != "$DEFAULT_THEME" ]]; then
+        echo "✗ 此 Skill 固定使用 ${DEFAULT_THEME}，不支援切換為 '${THEME}'。" >&2
+        exit 1
+      fi
       ;;
     --pm=*)
       PM_FORCED="${arg#--pm=}"
@@ -242,6 +244,7 @@ cp "$TEMPLATES/src/chapters/01-example/narrations.ts"   src/chapters/01-example/
 # pluggable TTS providers under tts-providers/).
 cp "$TEMPLATES/scripts/extract-narrations.ts"  scripts/extract-narrations.ts
 cp "$TEMPLATES/scripts/synthesize-audio.sh"    scripts/synthesize-audio.sh
+cp "$SKILL_DIR/scripts/validate-project.mjs"   scripts/validate-project.mjs
 chmod +x scripts/synthesize-audio.sh
 
 mkdir -p scripts/tts-providers
@@ -257,6 +260,7 @@ const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
 p.scripts = Object.assign({}, p.scripts, {
   "extract-narrations": "tsx scripts/extract-narrations.ts",
   "synthesize-audio":   "bash scripts/synthesize-audio.sh",
+  "validate-presentation": "node scripts/validate-project.mjs ..",
 });
 fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
 '
@@ -291,7 +295,8 @@ cat <<EOF
 目前主題：${THEME}（見 .theme）
 目前套件管理器：${PM}（見 .pm —— 後續所有指令都用它）
 主題素材（若有）：public/theme-assets/（用途與 alt 見 theme.json 的 illustrations；
-                 若 theme.json 有 styleReference，那是封面版型 + 全片插圖畫風的基準）
+                 layoutReference 只供封面 HTML 版型參考；
+                 illustrationStyle 提供生圖 golden / character references）
 生成插圖落點：public/illustrations/<chapter-id>/<slug>.png（見 references/ILLUSTRATIONS.md）
 
 然後：
@@ -330,23 +335,24 @@ cat <<EOF
       Part 3 視覺工具箱 / Part 4 時長 / Part 5 反 AI 味反模式 /
       Part 6 程式碼硬規則 / Part 7 完工自我檢查 / Part 8 回饋速查
   • $SKILL_DIR/themes/$THEME/theme.json
-      看 descriptionZh / mood / bestFor —— 參考主題調性；若有 illustrations，
-      只在內容情境吻合時從 public/theme-assets/ 選圖穿插；若有 styleReference，
-      封面照它的 layoutNote 定版型、生成插圖照它的 styleNote 定畫風
-      （動畫 / 時長 / 字級 / emoji 由 chapter agent 在每章自由決定）
+      固定熊熊視覺契約；illustrations 依情境重用；layoutReference 只供封面
+      HTML 版型參考；illustrationStyle 的 golden / character references
+      專供零文字透明情境插圖
   • $SKILL_DIR/references/ILLUSTRATIONS.md
-      僅當 outline 該章寫了「插圖描述」時讀 —— 生圖 prompt 配方 + 輸出路徑 +
-      呼叫不到圖片生成工具時的 placeholder 降級
+      Phase 1 Illustration Pass 與有「插圖建議」的章節必讀 —— 生圖 prompt、
+      參考圖、QA / 重試、輸出路徑與 placeholder 降級
 
 卡住時可翻：
 
   • $SKILL_DIR/references/EXAMPLES/
       完整章節 anchor（鉤子型 / 列舉型）—— 看「形」，不要照搬
 
-要換一個主題，覆蓋 tokens.css；若新主題有 assets，也同步素材：
-  cp $SKILL_DIR/themes/<id>/tokens.css src/styles/tokens.css
-  cp -R $SKILL_DIR/themes/<id>/assets/. public/theme-assets/   # 選擇性
+機械驗證：
 
-想自建主題，看 $SKILL_DIR/references/THEMES.md。
+  $PM run validate-presentation
+      檢查 outline / step / narrations / 素材路徑 / lazy image / 硬編碼顏色 /
+      圖片大小。error 修完才能交付，warning 必須逐條確認。
+
+熊熊視覺契約見 $SKILL_DIR/references/THEMES.md；此 Skill 不切換主題。
 
 EOF
