@@ -20,7 +20,7 @@ It is designed for:
 - Creating “dynamic PPT, but not PPT” experiences with strong motion and pacing
 - Optionally synthesizing narration audio after the visual outline is approved
 
-The skill is primarily a **methodology and collaboration workflow**. The scaffold supplies reusable tokens, stage primitives, themes, and examples, but each project should still choose a visual language that fits the topic.
+The skill has a fixed **warm bear-storybook visual identity**. Content motion may fit the topic, but palette, typography, paper-card material, inked outlines, character proportions, and illustration style must remain consistent across chapters.
 
 ---
 
@@ -32,11 +32,13 @@ The skill is primarily a **methodology and collaboration workflow**. The scaffol
 - **Script beats drive structure** — narration rhythm maps directly to visual steps.
 - **Hidden chrome** — progress controls are hover-only, keeping recordings clean.
 - **Motion first** — each scene needs a moving visual anchor; static paragraphs are treated as a smell.
-- **Theme tokens** — visual decisions flow through semantic tokens so themes can change the whole feel.
+- **Fixed bear tokens** — semantic tokens keep every chapter inside the same visual identity.
 - **Pluggable TTS** — provider-agnostic audio runner ships **two built-in providers** (MiniMax `mmx-cli` and OpenAI TTS via curl); swap to ElevenLabs / edge-tts / Azure / Google Cloud / macOS `say` / any self-hosted TTS by dropping a single shell file into `tts-providers/`.
 - **Hard checkpoints, externalized** — the agent pauses at fixed gates, and every gate's status lives in a **progress board at the top of `outline.md`** so a new session, a resumed session, or a parallel subagent can all tell where things stand.
 - **Cover chapter is mandatory** — `00-cover` is built in the main thread together with chapter 1 and accepted as one batch; content chapters start at `01-`.
-- **Optional generated illustrations** — a chapter can declare an illustration description in the outline; before that chapter is built the agent calls its image-generation tool, anchored to the theme's `styleReference` so every image shares one visual language.
+- **Illustration Pass** — every outline step is classified as scene illustration, coded demo, real asset, or typographic composition; concrete image suggestions are approved at CP-1.
+- **Zero-text scene layers** — ImageGen produces transparent character/scene layers using a golden scene reference plus relevant character references. All information stays in HTML.
+- **Mechanical validation** — checks outline, step, narration, asset, CSS, and image-size drift.
 - **pnpm first, npm fallback** — the scaffold detects the package manager, records the choice in `<project>/.pm`, and `--pm=` forces either one.
 
 ---
@@ -49,7 +51,7 @@ Phase 1.2  Article -> narration script + outline.md (with progress board)
    |
 CP-0       Self-review of script.md / outline.md
    |
-CP-1       Checkpoint Plan: script / outline / theme / assets / dev mode
+CP-1       Checkpoint Plan: script / outline / illustration pass / assets / dev mode
    |
 Phase 2.1  Scaffold the Vite / React / TS project
 Phase 2.2  Cover (00-cover) + chapter 1, main thread
@@ -86,7 +88,8 @@ skills/web-video-presentation/
 │   ├── RECORDING.md
 │   └── EXAMPLES/
 ├── scripts/
-│   └── scaffold.sh
+│   ├── scaffold.sh
+│   └── validate-project.mjs
 ├── templates/
 │   ├── index.html
 │   ├── vite.config.ts
@@ -98,11 +101,11 @@ skills/web-video-presentation/
 │   │       ├── minimax.sh            # default — uses mmx-cli
 │   │       └── openai.sh             # built-in — uses OPENAI_API_KEY via curl
 │   └── src/
-└── themes/                    # 1 built-in theme (derive more from it)
+└── themes/                    # fixed bear visual system
     └── we-bare-bears/
-        ├── theme.json         # metadata + illustrations + styleReference
+        ├── theme.json         # layout / golden scene / character references
         ├── tokens.css
-        └── assets/            # 3 character images + 1 style reference
+        └── assets/            # characters + layout sample + scene golden reference
 ```
 
 ---
@@ -117,21 +120,19 @@ To scaffold manually from inside a project:
 bash skills/web-video-presentation/scripts/scaffold.sh ./presentation --theme=we-bare-bears
 ```
 
-List available themes:
+Run mechanical validation:
 
 ```bash
-bash skills/web-video-presentation/scripts/scaffold.sh --list-themes
+node skills/web-video-presentation/scripts/validate-project.mjs <project-root>
 ```
 
 The generated `presentation/` project is a normal Vite + React + TypeScript app. Run it like any other Vite project, then record the 16:9 stage with your screen recorder.
 
 ---
 
-## Theme Gallery
+## Fixed Visual System
 
-The skill ships **1 built-in theme**. Earlier versions shipped 24; the set was
-deliberately collapsed to a single well-maintained theme, because deriving a new
-one is cheap — copy the folder, edit `tokens.css` and `theme.json`, done.
+The skill always uses `we-bare-bears`; projects do not select or derive another theme.
 
 ### `we-bare-bears`
 
@@ -142,23 +143,23 @@ hand-inked outlines and an offset pale-blue shadow**.
 **Best for** team collaboration / Git tutorials · beginner-friendly technical
 talks · workflow and tooling explainers · approachable knowledge content.
 
-It also ships an `assets/` pack: three character illustrations plus a
-**style reference frame** that doubles as the cover layout blueprint and the
-art-direction anchor for generated illustrations.
+It ships three reusable character illustrations, a separate cover layout reference, and a
+Coding Agent conflict scene as the golden reference for generated illustrations. The cover
+layout image must never be passed to ImageGen.
 
 - Metadata: [`themes/we-bare-bears/theme.json`](themes/we-bare-bears/theme.json)
 - Tokens: [`themes/we-bare-bears/tokens.css`](themes/we-bare-bears/tokens.css)
-- Creating your own: [`references/THEMES.md`](references/THEMES.md)
+- Visual consistency contract: [`references/THEMES.md`](references/THEMES.md)
 
 ---
 
 ## Reference Map
 
 - [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md) — the single required read per chapter: cover spec, ten principles, visual-demo floor, anti-AI patterns, code red lines, completion checklist
-- [OUTLINE-FORMAT.md](./references/OUTLINE-FORMAT.md) — outline structure: progress board, `00-cover` numbering, info pool, optional illustration descriptions
+- [OUTLINE-FORMAT.md](./references/OUTLINE-FORMAT.md) — progress board, per-step visual type, Illustration Pass, and image suggestions
 - [SCRIPT-STYLE.md](./references/SCRIPT-STYLE.md) — article-to-narration rewrite guidance
-- [ILLUSTRATIONS.md](./references/ILLUSTRATIONS.md) — when to generate an illustration, prompt recipe anchored to the theme's `styleReference`, output paths, placeholder fallback
-- [THEMES.md](./references/THEMES.md) — full token contract and how to derive a new theme
+- [ILLUSTRATIONS.md](./references/ILLUSTRATIONS.md) — zero-text transparent scene layers, references, prompt recipe, QA, retry, and fallback
+- [THEMES.md](./references/THEMES.md) — fixed bear-style consistency and token contract
 - [EXAMPLES/](./references/EXAMPLES/) — optional chapter structure anchors (not copy-paste templates)
 - [AUDIO.md](./references/AUDIO.md) — optional narration synthesis workflow (provider-agnostic)
 - [tts-providers/README.md](./templates/scripts/tts-providers/README.md) — TTS provider contract + 2 built-ins (minimax / openai) + ready-to-paste snippets for ElevenLabs / edge-tts / Azure / Google Cloud / macOS say

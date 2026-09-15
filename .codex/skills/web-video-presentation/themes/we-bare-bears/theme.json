@@ -19,11 +19,33 @@
     "友善知識科普",
     "輕鬆文化 / 生活內容"
   ],
-  "illustrationGuidance": "角色插圖只在口播節拍確實描述人物行動、分工、情緒或協作情境時穿插；一個 scene 最多使用一張，保留大面積留白給核心資訊，不把角色當作每頁固定裝飾。",
-  "styleReference": {
+  "illustrationGuidance": "outline 必須先完成 Illustration Pass；只在口播節拍確實描述人物行動、分工、情緒、衝突或協作情境時建議情境插圖。一個 scene 最多一張，預設使用透明背景的角色／情境圖層，保留大面積留白給 HTML 核心資訊，不把角色當作每頁固定裝飾。",
+  "layoutReference": {
     "path": "/theme-assets/title-page-style-reference.png",
-    "layoutNote": "封面版式基準：左上大標題 + 副標 + 天空藍短橫線，左下淡紫圓角重點清單卡（編號圓點 + 條列），右側大面積角色場景插圖，底部整寬圓角虛線總結條。",
-    "styleNote": "全片插圖畫風基準：熊熊繪本風 —— 圓潤炭黑手繪輪廓、奶油紙底、天空藍與蜂蜜木色為主、淡紫／淡黃柔和幾何形狀點綴、平塗無寫實陰影、角色表情友善。"
+    "layoutNote": "封面版式基準：左上大標題 + 副標 + 天空藍短橫線，左下淡紫圓角重點清單卡（編號圓點 + 條列），右側大面積角色場景插圖，底部整寬圓角虛線總結條。這張圖只供 HTML 版型參考，禁止當成 ImageGen 畫風參考。"
+  },
+  "illustrationStyle": {
+    "styleNote": "全片固定熊熊繪本風：圓潤炭黑手繪輪廓、奶油與蜂蜜木色平塗、天空藍小面積點綴、無寫實光影、無 3D 質感、角色比例與表情保持一致。",
+    "defaultComposition": "transparent-scene-layer",
+    "goldenReference": "/theme-assets/scene-conflict-reference-clean.png",
+    "characterReferences": [
+      "/theme-assets/grizzly-presenting.png",
+      "/theme-assets/panda-reviewing.png",
+      "/theme-assets/ice-bear-coding.png"
+    ],
+    "negative": [
+      "任何文字、字母、數字或可讀的程式／UI 符號",
+      "浮水印、logo、招牌、UI、卡片或投影片版面",
+      "寫實照片、3D 算圖、紫粉漸層、複雜背景",
+      "多餘角色、多餘肢體、錯誤角色比例"
+    ],
+    "qa": [
+      "圖內零文字",
+      "角色輪廓、比例、配色與參考圖一致",
+      "一眼看懂人物動作與衝突焦點",
+      "留白位置符合 outline 建議",
+      "能作為 HTML 上方或下方的獨立圖層使用"
+    ]
   },
   "illustrations": [
     {

@@ -1,6 +1,6 @@
 ---
 name: web-video-presentation
-description: 把一篇文章或旁白稿，做成「看起來像影片」的點擊驅動 16:9 網頁簡報，可選擇合成旁白音檔。流程：原始文章 → **一次產出**旁白稿 + outline 開發計畫（含**跨 agent 進度看板**）→ 使用者**一次對齊** 5 件事（稿子 / outline / 主題 / 素材 / 開發模式）→ 網頁開發（**封面 00-cover + 第 1 章主執行緒強制驗收**，其餘逐章 / 循序 / 平行）→ 選擇性音檔合成（provider-agnostic：內建 MiniMax mmx-cli + OpenAI TTS，可換 ElevenLabs / edge-tts / Azure / 自備 TTS）。技術線 Vite + React + TS，套件管理器 pnpm 優先 npm 備援。**outline 只規劃節奏與資訊密度，不規劃動畫** —— 動畫由章節開發時依 PRINCIPLES + ANTI-AI 法則即時設計；outline 可選填**插圖描述**，寫了就在開發該章前呼叫圖片生成工具（ImageGen）依主題畫風產出插圖素材。每次點擊推進旁白稿的一個節拍，每一步獨佔整個畫面；進度控制平時隱藏、滑到畫面底邊時顯示橫向章節列，最左側清單 icon 可展開全部章節總覽。適用情境：用網頁做影片（動態簡報但不像簡報）、把旁白稿 / 文章變成可互動的解說、為 YouTube / Instagram Reels / TikTok 錄製教學、做有電影感的產品 / talk demo。本 Skill 沉澱的是設計方法論 + 協作流程 —— 不綁定任何特定樣式 / 字體 / 顏色 —— 因此能重用到任意主題與美學。
+description: 把文章或旁白稿做成固定「熊熊遇見你」溫暖繪本風的點擊驅動 16:9 網頁簡報，可選擇合成旁白。流程：一次產出 script.md + outline.md（含進度看板與 Illustration Pass）→ 使用者一次對齊稿子 / outline / 插圖建議 / 真實素材 / 開發模式 → 封面與第 1 章強制驗收 → 逐章、循序或平行完成 → 機械驗證 → 可選 TTS。技術線 Vite + React + TypeScript，pnpm 優先、npm 備援。outline 為每步標記情境插圖 / 程式演示 / 真實素材 / 文字構圖，但不預寫動畫；ImageGen 只產生零文字的透明熊熊情境圖層，使用 golden reference 與角色參考圖，所有標題、數字與說明保留在 HTML。適用於技術分享、教學、產品或工作流程解說，以及可錄影的互動影片簡報。
 ---
 
 # Web Video Presentation
@@ -16,9 +16,8 @@ description: 把一篇文章或旁白稿，做成「看起來像影片」的點�
 - 教學 / 產品展示 / keynote 想要電影感
 - YouTube / Instagram Reels / TikTok 影片內容
 
-本 Skill **以方法論 + 協作流程為核心**。scaffold 樣板提供 token 和原語，
-但每個美學決策（配色、字體、動態調性）都應該針對你的主題重新設計 ——
-不要照搬。
+本 Skill 的識別固定為**熊熊遇見你式溫暖繪本風**。內容、動畫與視覺演示可依
+題材設計，但調色盤、字體、紙卡材質、手繪輪廓、角色比例與插圖畫風必須一致。
 
 ---
 
@@ -33,10 +32,10 @@ Phase 1   內容撰寫
    [CP-0] 內容自我檢查（script / outline）
    ▼
 [Checkpoint Plan · CP-1]  ← 必須停。一次對齊 5 件事：
-                            稿子 / outline / 主題 / 素材 / 開發模式
+                            稿子 / outline / 插圖建議 / 素材 / 開發模式
    ▼
 Phase 2   網頁開發
-   2.1  scaffold（依確認的主題）
+   2.1  scaffold（固定 we-bare-bears）
    2.2  封面 00-cover + 第 1 章 = 主執行緒 + 完整版本（強制 anchor）
         ▼
         [硬節點 · CP-2] 使用者驗收封面 + 第 1 章 ← 不可跳過
@@ -62,7 +61,7 @@ my-video/
 ├── article.md          # 使用者給原文時必有 —— 不刪！開發階段畫面資訊來源
 ├── script.md           # 必有：保持原文語言的平台化旁白稿（決定節拍）
 ├── outline.md          # 必有：★ 進度看板 + 開發計畫
-│                       #   （章節切分 + 每步內容 + 資訊池 + 選填插圖描述）
+│                       #   （章節切分 + 每步視覺類型 + 資訊池 + 插圖建議）
 └── presentation/       # scaffold 產出的 Vite + React + TS 專案
     ├── .theme / .pm          # 起步用的主題 id / 套件管理器（pnpm 或 npm）
     ├── src/chapters/00-cover/    # ★ 封面固定為第一章，內容章節從 01- 起
@@ -132,6 +131,16 @@ pnpm exec tsc --noEmit    # 或 npx tsc --noEmit
 **鐵則**：拿到結論後**先照 fail 項把產出改完**，再向使用者回報「做完了
 + 自我檢查結論 + 改了什麼」。**直接拿原始結論回報但不修正 = 違規**。
 
+人工檢查之外，`outline.md` 完成後與每章實作完成後都必須執行：
+
+```bash
+node <path-to-web-video-presentation>/scripts/validate-project.mjs <project-root>
+```
+
+validator 的 error 必須修完才能推進 checkpoint；warning 必須逐條看過並在
+交付摘要說明。它檢查格式、step、narration、素材路徑、lazy image、硬編碼顏色
+與檔案大小；插圖語意和畫風仍由人工目視檢查。
+
 ---
 
 ## 進度看板協定（跨 agent 接續）
@@ -154,7 +163,7 @@ pnpm exec tsc --noEmit    # 或 npx tsc --noEmit
 | # | 含義 | 什麼時候變 ✅ |
 |---|---|---|
 | CP-0 | 內容自我檢查（script.md / outline.md） | 自我檢查結論的 fail 項全部改完 |
-| CP-1 | Checkpoint Plan（5 件事對齊） | 使用者確認稿子 / outline / 主題 / 素材 / 模式 |
+| CP-1 | Checkpoint Plan（5 件事對齊） | 使用者確認稿子 / outline / 插圖建議 / 素材 / 模式 |
 | CP-2 | 封面 + 第 1 章驗收 | 使用者明確說 OK / 繼續 |
 | CP-3 | 第 2~N 章驗收 | 所有內容章節都 ✅（逐章模式下每章單獨在章節表裡更新） |
 | CP-4 | Checkpoint Audio | 使用者選了合成或不合成（不合成記 ⏭️） |
@@ -170,13 +179,13 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
 | 階段 | 必讀（每次都看） | 一次性看完 / 依需求查 |
 |---|---|---|
 | **任何階段 · 接手時** | `outline.md` 頂部**進度看板**（判斷從哪一步開始） | —— |
-| Phase 1.1-1.2 內容撰寫 | `references/SCRIPT-STYLE.md` + `references/OUTLINE-FORMAT.md` + `article.md`（使用者原文，如有） | —— |
-| **Checkpoint Plan 確認主題** | —— | `themes/*/theme.json`（動態讀全部，列清單 + `bestFor` + `descriptionZh`）；`references/THEMES.md`（使用者想了解主題系統 / 想衍生新主題時） |
+| Phase 1.1-1.2 內容撰寫 | `references/SCRIPT-STYLE.md` + `references/OUTLINE-FORMAT.md` + `references/ILLUSTRATIONS.md` 的 Illustration Pass + `article.md`（使用者原文，如有） | —— |
+| **Checkpoint Plan 確認插圖建議** | `themes/we-bare-bears/theme.json` + outline 的視覺類型／插圖建議 | `references/THEMES.md` |
 | Phase 2.1 scaffold | —— | SKILL.md 本節看一次 |
-| **Phase 2.4 實作單章（×N 次，被 2.2 / 2.3 呼叫）** | **`references/CHAPTER-CRAFT.md`** 單一入口 —— Part 0 十條原則 / Part 1 開工 5 問 / Part 2 關係→動作決策樹 / Part 3 視覺工具箱 / Part 4 時長參考 / Part 5 反 AI 味反模式 / Part 6 程式碼硬規則（**含 narrations.ts 強制限制**）/ Part 7 完工自我檢查 / Part 8 回饋速查 + 封面章節規格（做 00-cover 時）+ 當前主題的 `themes/<id>/theme.json`（若有 `illustrations` 依情境挑選；若有 `styleReference` 依它決定封面版型 / 插圖畫風）+ 當前章節的 outline.md 段落 + **`article.md` 本章對應段落** + 素材清單 | **`references/ILLUSTRATIONS.md`（該章 outline 寫了「插圖描述」時**必讀**）**；`references/EXAMPLES/`（結構示意，不是抄襲樣板）；`references/THEMES.md` 完整 token 契約 |
+| **Phase 2.4 實作單章（×N 次，被 2.2 / 2.3 呼叫）** | **`references/CHAPTER-CRAFT.md`** + `themes/we-bare-bears/theme.json` + 當前章節 outline 段落 + **`article.md` 本章對應段落** + 素材清單；封面讀 `layoutReference`，插圖讀 `illustrationStyle` | **`references/ILLUSTRATIONS.md`（該章有 CP-1 保留的「插圖建議」時必讀）**；`references/EXAMPLES/`（結構示意，不是抄襲樣板）；`references/THEMES.md` |
 | Phase 3 音檔合成 | `references/AUDIO.md`（含 narrations.ts → segments.json → 任意 provider 流程，內建 minimax + openai） | `templates/scripts/tts-providers/README.md`（換 provider / 自備 TTS 時） |
 | Phase 4 螢幕錄影 + 後製 | `references/RECORDING.md`（含 `?auto=1` 自動錄影） | —— |
-| 選 / 做 / 換主題 | —— | `references/THEMES.md` |
+| 熊熊風格一致性驗收 | `references/THEMES.md` | —— |
 
 > **寫章節時只讀一份 `CHAPTER-CRAFT.md`**。十條原則 / 開工 self-prompting /
 > 決策樹 / 反 AI 味反模式 / 完工自我檢查全部併入這一份單一入口。`EXAMPLES/`
@@ -203,7 +212,8 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
    outline 寫資訊池和章節實作畫面時的細節來源（雙來源原則）。
 2. **產生 `outline.md`**：依 [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)
    規則建立**進度看板** + 切章節（**第一個固定 `00-cover` 封面**）+ 切 step
-   + 每章首段抽出**資訊池** + 需要具象圖的章節寫**插圖描述**。
+   + 每章首段抽出**資訊池** + 為每個 step 標記視覺類型 + 完成
+   **Illustration Pass**，對需要具象情境圖的 step 寫**插圖建議**。
 
 **outline 的邊界**（關鍵）：
 
@@ -213,7 +223,7 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
 | 章節切分（**含 `00-cover`**）/ 每章 step 數 / 估時 | CSS 實作手段（filter / SVG / clip-path） |
 | 每步畫面內容（hero / 數據 / 標語 / 列表項） | 時長數值（不寫 ~2.5s / 80~120ms） |
 | 章節級**資訊池**：從 article 抽的數字 / 引用 / 案例 / 標籤 | 持續微動 / 錯開時間量等微觀節奏 |
-| 章節級**插圖描述**（選填，只寫「畫什麼」） | 插圖畫風 / 生圖 prompt（畫風由主題 `styleReference` 決定） |
+| 每步**視覺類型** + 章節級**插圖建議**（角色／物件、可見動作、單一焦點、留白方向） | 動畫類型 / CSS 實作 / 完整生圖 prompt（畫風由固定熊熊 `illustrationStyle` 決定） |
 | 步級關係名前綴（「對比反差」/「遞進列表」/「金句」等可選 hint） | —— |
 
 > **outline 不寫動畫的理由**：寫死動畫 = chapter agent 退化成翻譯機；
@@ -236,11 +246,10 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
 
 ### agent 此時要做的準備工作
 
-1. 讀所有 `themes/*/theme.json` 拿 `nameZh` / `descriptionZh` / `bestFor`
-   / `mood` —— **不要寫死清單**（目前內建只有一套，但照樣動態讀，
-   將來加了主題不用改這裡）
-2. 對照 `script.md` 的內容類型 / 語氣，說明這套主題**為什麼合適**
-   （命中哪幾條 `bestFor`）；不合適就主動提議衍生新主題
+1. 讀 `themes/we-bare-bears/theme.json`，確認 layout reference、
+   illustration golden reference 與角色素材都可用。
+2. 掃過 outline 每個 step 的四種視覺類型，整理所有「插圖建議」讓使用者
+   接受、刪除或改描述。**CP-1 前不得先生成**。
 3. 掃一遍 `outline.md` 末尾「素材清單」部分，把 `⚠️`（待使用者提供）和
    `🎨`（待圖片生成工具產出）兩類分開列
 
@@ -267,18 +276,16 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
      - 章節切分 / step 數 / 估時是否合理（合理判斷：每章 30~60s）
      - 每步畫面內容是否清晰
      - 每章首段「資訊池」是否有足夠的 article 細節供畫面掛載
-     - 「插圖描述」寫得對不對（哪些步真的需要一張具象圖）
+     - 每步的視覺類型是否正確
      - 末尾素材清單是否完整
 
-  3. 主題確認：<nameZh> (<id>)
-     內建只有這一套。它命中你內容的 <bestFor 命中項>；<descriptionZh 摘要>。
-     沿用這套 / 還是要我依 references/THEMES.md 幫你衍生一套新的？
+  3. Illustration Pass：以下是建議，不會在你確認前生成
+     🎨 <章節 / step>：<透明情境層構圖 + 角色動作 + 留白方向>
+     逐條確認保留 / 刪除 / 改描述。全片視覺固定為 we-bare-bears。
 
   4. 真實素材怎麼準備？
      ⚠️ 需要你提供或我從現有素材挑：<列清單>
         a) 我從 <現有素材路徑> 幫你挑   b) 你自己提供   c) 全部 placeholder
-     🎨 我用圖片生成工具產出（照主題 styleReference 的畫風）：<列 outline 裡的插圖描述>
-        現在就可以改描述；開發到該章之前才會真的生成。
 
   5. 開發模式選哪個？
 
@@ -290,18 +297,17 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
      B) 第 1 章後循序開發（不平行）
         第 2~N 章主執行緒循序做完後統一驗收 → 速度中等 / 適合 agent 不支援平行
      C) 第 1 章後平行開發（subagent）
-        第 2~N 章用 subagent 平行 → 最快 / 使用者控制平行數（一次幾章）
-        ⚠️ 風格各章會有差異（這是預期，主題禁區保底）
+         第 2~N 章用 subagent 平行 → 最快 / 使用者控制平行數（一次幾章）
+         所有 agent 仍受同一份熊熊視覺契約與 golden reference 約束
 ```
 
 收到回饋後：
 - 稿子 / outline 要改：直接編輯檔案，編輯完 ping 一次（或口頭描述讓 agent 改）
-- **主題必須明確**才進入 Phase 2。使用者說「主題你決定」→ 用內建的
-  `we-bare-bears`，**告訴使用者你用了什麼、為什麼**，給反悔機會
+- 全片固定使用 `we-bare-bears`；CP-1 的視覺決策是插圖建議，不再詢問換主題
 - 模式選定 → 進 Phase 2
 
-▸ 回寫 `outline.md` 進度看板：**CP-1 → ✅**，備註欄記下「主題：<id> ／
-開發模式：<A/B/C>」
+▸ 回寫 `outline.md` 進度看板：**CP-1 → ✅**，備註欄記下
+「視覺：we-bare-bears ／ 插圖：<N> 張 ／ 開發模式：<A/B/C>」
 
 ---
 
@@ -311,18 +317,15 @@ Phase 2.4 的「實作單章」會重複 N 次 —— 每次都要回頭看核�
 
 ```bash
 bash <path-to-web-video-presentation>/scripts/scaffold.sh \
-  ./presentation \
-  --theme=<確認的主題 id>
-
-bash <path-to-web-video-presentation>/scripts/scaffold.sh --list-themes
+   ./presentation \
+  --theme=we-bare-bears
 ```
 
 套件管理器**自動偵測**（pnpm 優先，沒有才用 npm），結果寫進
 `presentation/.pm` —— 之後所有指令都讀它。要強制指定就加 `--pm=pnpm` 或
 `--pm=npm`。
 
-> 自訂主題 → 先依 [`references/THEMES.md`](references/THEMES.md)
-> 「建立新主題」流程做一個 `themes/<my-theme>/`，再 `--theme=<my-theme>`。
+> 此 Skill 不切換主題；`we-bare-bears` 是固定輸出契約。
 
 scaffold 附一個 `01-example` demo。在寫第一章真實內容前**刪掉**：
 
@@ -338,7 +341,7 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
 總覽（章節名稱、段落數、目前位置、已走過狀態），可直接跳章；右側工具列
 提供全螢幕切換與原始碼連結。它是框架
 控制項，但**顏色、字體、表面、邊框與陰影仍必須全部走當前主題 token**；
-選定或衍生主題後要把這個控制項一併納入視覺驗收，不能保留通用播放器風格。
+固定熊熊主題下也要把這個控制項一併納入視覺驗收，不能保留通用播放器風格。
 
 `Stage` 另提供左右全高度滑鼠感應帶：左側任一高度回到上一個 step，右側任一
 高度前進下一個 step；視覺箭頭固定在側邊中央，平時隱藏、hover / focus 才顯示。
@@ -367,8 +370,8 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
   主題 + 當前題材**下的第一次落地
 - 如果指引有盲點 / 主題顏色 / 字體 token 不夠用，這一批一定會暴露 ——
   這時候有人類回饋就能修指引 / 調主題，**早改成本最低**
-- 後續章節（無論循序 / 平行）都要參考第 1 章的程式碼模式，所以它 =
-  這次專案的「風格錨點（不強求章節間一致，但單章自身得有完整說服力）」
+- 後續章節（無論循序 / 平行）都要參考第 1 章，所以它是這次專案的
+  **版面密度、紙卡材質、輪廓與動態品質 anchor**；內容動作可變，美學不可漂移
 
 **做完後必須停下來**等使用者驗收：
 
@@ -377,11 +380,11 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
 
 驗收重點：
   □ 封面：主標題 / 副標 / 講者或出處齊全，第一個畫面就定調主題調性？
-  □ 視覺調性對不對？符合 <theme nameZh> 的預期嗎？
+  □ 視覺調性是否穩定符合 we-bare-bears 的熊熊契約？
   □ 節奏對不對？某些步太快 / 太慢 / 資訊太薄？
   □ 內容驅動動畫是否到位？還是有幾步是無腦進場動畫？
   □ 雙來源原則：畫面上有沒有「旁白沒唸但 article 能掛載」的細節？
-  □ 生成插圖（若有）：畫風跟主題對得上嗎？圖裡有沒有跑出文字？
+  □ 生成插圖（若有）：是否只是透明情境層？畫風一致且圖內完全零文字？
   □ 反 AI 味檢查：紫粉漸層 / 圓角彩色邊框 / 假插畫 / emoji 是否有？
 
 有問題告訴我，我針對性修改。OK 了告訴我「繼續」，我依選定模式做第 2 章及之後。
@@ -393,8 +396,8 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
 ### 2.3 第 2~N 章 —— 依選定模式
 
 **所有模式下的共同規則**：每章獨立依 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-開發。**風格不強求章節間完全一致** —— 主題顏色 / 字體 token 保底維持視覺
-統一，動畫 / 節奏 / 視覺演示由章節自由發揮是設計預期。
+開發。**熊熊視覺識別必須跨章一致**：調色盤、字體、紙卡材質、輪廓、
+角色比例與插圖畫風不可漂移；動畫 / 節奏 / 視覺演示依章節內容自由設計。
 
 #### 模式 A · 預設 · 逐章確認
 
@@ -414,25 +417,25 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
 #### 模式 C · 第 1 章後平行開發（subagent）
 
 用 subagent 把第 2~N 章平行做完，最大平行數由使用者控制（「一次 4 章」
-/「一次 2 章」）。**最快，但風格各章會有差異** —— 這是預期，因為：
+/「一次 2 章」）。平行只提高速度，**不放寬風格一致性**：
 
-1. 每個 subagent 看不到別的 subagent 產出，無法機械對齊
+1. 每個 subagent 都讀相同 `theme.json`、[`THEMES.md`](references/THEMES.md)
+   與第 1 章 anchor
 2. 章節程式碼物理分離（每章一個資料夾 / 自己的 CSS 前綴），不會互相
    破壞
-3. 主題 token 保底維持視覺統一（顏色 / 字體 / hero 數字 / 卡片 / 分隔線
-   個性 / 裝飾），調性不會跑偏
-4. **風格不一致 = 人手寫影片的呼吸感**（多 voice / 多視角）
+3. 顏色 / 字體 / hero 數字 / 卡片 / 分隔線 / 裝飾走固定 token
+4. 生圖使用同一 golden reference + 角色 reference，禁止各章自創畫風
 
 平行 subagent 的 prompt 必須包含：
 
-- 當前章節 outline 段落（含資訊池 + **本章插圖描述**，若有）
+- 當前章節 outline 段落（含資訊池 + 視覺類型 + **本章插圖建議**，若有）
 - `references/CHAPTER-CRAFT.md` 的路徑（**單一必讀** —— 視覺演示要求 +
   逐步揭示 + 雙來源原則 + 反 AI 味 + 程式碼紅線 + 完工自我檢查全部在這一份裡）
-- **本章有插圖描述時**：`references/ILLUSTRATIONS.md` 的路徑 + 主題
-  `styleReference` 的實際檔案路徑（subagent 自己生成自己那幾張圖）
-- 當前主題 `theme.json` 的 `descriptionZh` / `mood` / `bestFor`（參考調性
-  即可，動畫 / 時長 / 字級 / emoji 由 chapter agent 自由決定）
-- **第 1 章程式碼作為「程式碼風格」參考**（不是「視覺抄襲對象」）
+- **本章有插圖建議時**：`references/ILLUSTRATIONS.md` + `illustrationStyle`
+  的 golden / character reference 實際檔案路徑；禁止把 `layoutReference`
+  餵給 ImageGen
+- `themes/we-bare-bears/theme.json` + `references/THEMES.md` 的一致性契約
+- **第 1 章程式碼作為視覺與程式碼 anchor**；可換內容動作，不可換美學
 - **進度看板當前狀態**（讓 subagent 知道整體進行到哪）
 - 套件管理器：讀 `presentation/.pm`（本專案是 pnpm 還是 npm）
 - 硬規則：每章獨立 CSS 前綴（`.cd-` / `.mg-` / `.wg-` / ...）；
@@ -446,18 +449,20 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
 
 ### 2.4 實作單章（每章必走）
 
-#### 2.4.0 插圖素材準備（**只在本章 outline 寫了「插圖描述」時做**）
+#### 2.4.0 插圖素材準備（**只在本章有 CP-1 保留的「插圖建議」時做**）
 
 **動手寫章節程式碼之前**先把圖備齊：
 
 1. 讀 [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md)
 2. 先查主題 `theme.json` 的 `illustrations` 有沒有現成的能命中，能用就用
-3. 要生成的：以主題 `styleReference` 為畫風錨點，呼叫當前 agent 的圖片生成工具
-   （Claude Code 用 ImageGen），產出到
+3. 要生成的：以 `illustrationStyle.goldenReference` + 本次角色 reference
+   為畫風錨點，呼叫當前 agent 的圖片生成工具；**只產零文字透明情境層**，
+   不使用 `layoutReference`，產出到
    `presentation/public/illustrations/<chapter-id>/<slug>.png`
-4. 呼叫不到工具 / 生成失敗 → 降級為 placeholder 佔位卡，**並在交付時明確
+4. 在透明背景與實際 1920×1080 step 中逐項 QA；具體失敗最多重試 2 次
+5. 呼叫不到工具 / 3 次仍失敗 → 降級為 placeholder 佔位卡，**並在交付時明確
    告訴使用者哪張沒生成出來**
-5. 回寫 `outline.md` 素材清單：`🎨` → `✓`（或降級後的 `⚠️`）
+6. 回寫 `outline.md` 素材清單：`🎨` → `✓`（或降級後的 `⚠️`）
 
 #### 2.4.1 章節實作
 
@@ -477,6 +482,7 @@ scaffold 的 `ProgressBar` 預設採「試算表 sheet 導覽」：畫面底邊 
   服務敘事而不是充當固定角標或背景裝飾
 - **完工自我檢查逐項過**，不達標回去改 —— 依上文「強制自我檢查協定」執行
   （優先 Agent Teams → subAgent → 自我檢查），**改完再向使用者回報本章交付**
+- 跑 `validate-project.mjs`；error 修完才能交付，warning 逐條確認
 
 ### 2.5 大改後 bump STORAGE_KEY
 
@@ -561,7 +567,7 @@ Part 0 —— **寫章節時回那裡查**，下面只是索引。
 | 6 | 舞台無 chrome | 沒有 header / footer / 頁碼 / 品牌條 |
 | 7 | **內容驅動動畫** | 先找內在動作，找不到才用進場動畫保底；持續微動慎用 |
 | 8 | 多點逐個揭示 | 1 項 = 1 step，禁止同步 stagger 上 N 項 |
-| 9 | 整片同一主題 | 章節間不換表面色；**顏色 / 字體走 token**，其它尺度章節自由 |
+| 9 | 固定熊熊視覺識別 | 顏色 / 字體 / 紙卡 / 輪廓 / 角色與插圖畫風跨章一致；內容動作自由 |
 | 10 | 雙來源原則 | script 定節拍，**article 定畫面密度**（落到資訊池） |
 
 ---
@@ -581,13 +587,14 @@ Part 8「常見回饋速查」。**關鍵**：先定位是哪一層（節奏 / �
 | 檔案 | 何時讀 | 內容 |
 |---|---|---|
 | [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) | Phase 1.2 必讀 | 文章 → 旁白稿規則、平台變體 |
-| [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) | Phase 1.2 必讀 · **接手時查進度看板** | outline.md 欄位 spec、**進度看板**、`00-cover` 編號慣例、命名慣例、章節切分、資訊池、**插圖描述** |
+| [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) | Phase 1.2 必讀 · **接手時查進度看板** | outline.md 欄位 spec、進度看板、每步視覺類型、Illustration Pass、插圖建議 |
 | [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) | **Phase 2.4 每章單一必讀入口** | Part 0 十條原則 / Part 1 開工 5 問 / Part 2 關係→動作決策樹 / Part 3 視覺工具箱 / Part 4 時長 / Part 5 反 AI 味反模式 / Part 6 程式碼硬規則 / Part 7 完工自我檢查 / Part 8 回饋速查 / **封面章節（00-cover）規格** |
-| [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md) | **該章 outline 寫了「插圖描述」時必讀** | 該生成什麼 / 不該生成什麼、以主題 `styleReference` 為畫風錨點的 prompt 配方、輸出路徑、呼叫不到圖片生成工具時的 placeholder 降級 |
+| [`references/ILLUSTRATIONS.md`](references/ILLUSTRATIONS.md) | Phase 1 Illustration Pass + 有插圖建議的章節必讀 | 零文字透明情境層、golden / character references、穩定 prompt、Coding Agent 衝突範例、QA / 重試 / 降級 |
 | [`references/EXAMPLES/`](references/EXAMPLES/) | **選擇性** —— 看結構 | 章節結構示意（hook / list-reveal / case-tech-review）；**不是抄襲樣板** |
-| [`references/THEMES.md`](references/THEMES.md) | 選 / 做 / 換主題時 | 完整 token 契約 + 內建主題清單 + 建立流程 |
+| [`references/THEMES.md`](references/THEMES.md) | Phase 1 / 每章驗收 | 固定熊熊視覺一致性契約、token 與參考圖分工 |
 | [`references/AUDIO.md`](references/AUDIO.md) | Phase 3 才讀 | provider-agnostic 音檔合成流程、內建 minimax 用法、換 provider 路徑、疑難排解 |
 | [`templates/scripts/tts-providers/README.md`](templates/scripts/tts-providers/README.md) | 換 / 加 TTS provider 時 | 三函式契約 + 內建 2 個 (minimax / openai) + 5 種現成程式碼片段（ElevenLabs / edge-tts / macOS say / Azure / Google） |
 | [`references/RECORDING.md`](references/RECORDING.md) | Phase 4 才讀 | 螢幕錄影工具 + 後製合成 |
-| [`themes/`](themes) | Checkpoint Plan / Phase 1.2 時翻 | 內建主題（含 `theme.json` + `tokens.css` + 選擇性 `assets/`）。目前只有 `we-bare-bears`，要別的調性照 THEMES.md 衍生 |
+| [`themes/we-bare-bears/`](themes/we-bare-bears) | Checkpoint Plan / Phase 1.2 / 生圖時 | 固定主題：tokens、封面 layout reference、插圖 golden reference、角色 references |
 | [`scripts/scaffold.sh`](scripts/scaffold.sh) | Phase 2.1 跑一次 | 一鍵專案 scaffold（pnpm 優先 / npm 備援，`--pm=` 可強制指定） |
+| [`scripts/validate-project.mjs`](scripts/validate-project.mjs) | outline 完成後 + 每章完成後 | 機械檢查 step、narration、素材、硬編碼顏色、lazy image 與圖片大小 |
