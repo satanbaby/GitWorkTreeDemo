@@ -22,7 +22,7 @@
 | 章節 | 狀態 | 備註 |
 |---|---|---|
 | 00-cover | 🔵 | 講者：莊詠翔 ／ 日期：2026.09.12 ／ 三角色討論群像已改為真正透明 PNG，待驗收 |
-| 01-scenes | 🔵 | 5 steps；原 2-6 已移除，原 2-1 群像頁移至章末，待驗收 |
+| 01-scenes | 🔵 | 4 steps；原 2-1（hotfix 插隊）與 2-2（未 commit 修改）已合併為同一頁，原 2-6 已移除，群像頁移至章末，待驗收 |
 | 02-switch-cost | 🔵 | 1 step 完成；feature / hotfix 循環切換已驗收 |
 | 03-old-ways | 🔵 | 8 steps 完成；重複 repo 容量插圖與 git log 頁已驗收 |
 | 04-concept | ✅ | 4 steps；5-5「修正誤解」依用戶指示移除 |
@@ -31,7 +31,7 @@
 | 08-cmd-manage | 🔵 | 3 steps；8-4~8-7（move / repair / prune / lock）依用戶指示移除，本章只留移除相關 |
 | 10-vscode | 🔵 | 8 steps 完成；10-1、10-5 的 VS Code icon 已逐畫面驗收 |
 | 11-agent-risk | 🔵 | 3 steps 完成；品牌 icon、workitem 對應與衝突插圖已驗收 |
-| 12-agent-isolation | 🔵 | 4 steps 完成；資料夾 / branch 區別動畫與 Git icon 已驗收 |
+| 12-agent-isolation | 🔵 | 6 steps 完成；資料夾 / branch 區別動畫與 Git icon 已驗收 |
 | 13-closing | 🔵 | Agent icon 與獨立 worktree 收尾頁已驗收 |
 
 ### 版型自檢紀錄（全片 76 步）
@@ -167,7 +167,7 @@
 | 章節 | 狀態 | 備註 |
 |---|---|---|
 | 00-cover | 🔵 | 講者：莊詠翔 ／ 日期：2026.09.12 ／ 三角色討論群像已改為真正透明 PNG，待驗收 |
-| 01-scenes | 🔵 | 5 steps；原 2-6 已移除，原 2-1 群像頁移至章末，待驗收 |
+| 01-scenes | 🔵 | 4 steps；原 2-1（hotfix 插隊）與 2-2（未 commit 修改）已合併為同一頁，原 2-6 已移除，群像頁移至章末，待驗收 |
 | 02-switch-cost | 🔵 | 1 step 完成；feature / hotfix 循環切換已驗收 |
 | 03-old-ways | 🔵 | 8 steps 完成；重複 repo 容量插圖與 git log 頁已驗收 |
 | 04-concept | ✅ | 4 steps；5-5「修正誤解」依用戶指示移除 |
@@ -176,7 +176,7 @@
 | 08-cmd-manage | 🔵 | 3 steps；8-4~8-7（move / repair / prune / lock）依用戶指示移除，本章只留移除相關 |
 | 10-vscode | 🔵 | 8 steps 完成；10-1、10-5 的 VS Code icon 已逐畫面驗收 |
 | 11-agent-risk | 🔵 | 3 steps 完成；品牌 icon、workitem 對應與衝突插圖已驗收 |
-| 12-agent-isolation | 🔵 | 4 steps 完成；資料夾 / branch 區別動畫與 Git icon 已驗收 |
+| 12-agent-isolation | 🔵 | 6 steps 完成；資料夾 / branch 區別動畫與 Git icon 已驗收 |
 | 13-closing | 🔵 | Agent icon 與獨立 worktree 收尾頁已驗收 |
 
 ### 版型自檢紀錄（全片 76 步）
@@ -348,7 +348,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ---
 
-## 1. 01-scenes — 日常就有這麼多切換現場（5 steps · ~44s）
+## 1. 01-scenes — 日常就有這麼多切換現場（4 steps · ~38s）
 
 **信息池**：
 - 情境一（hotfix 插隊）現場細節：feature 尚有一批未提交修改，工作現場還沒收完 —— 來源 article §典型困境 / L9
@@ -358,16 +358,19 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 - 收束論點：這些不是偶發例外，而是同一位開發者同時背著多個工作現場 —— 來源 article §典型困境 / L13
 
 **插圖描述**（寫了就必須在開發本章前生成素材）:
-- [step 2] 主角正在桌前處理 feature，本地資料夾裡堆著大量未提交變更，production hotfix 突然從旁插入；主角與工作桌偏右，左側保留標題空間 → `illustrations/scenes/uncommitted-interruption.png`
-- [step 5] 主角坐在自己的工作桌前，被 stash、commit、switch branch 與多條帶 commit 節點的 Git branch 包圍；完整 16:9 場景置於畫面右側，左半保留標題留白，不再另外疊加自畫 SVG 線條 → `illustrations/scenes/overloaded-dev-git-scene.png`
+- [step 1] 主角正在桌前處理 feature，本地資料夾裡堆著大量未提交變更，production hotfix 突然從旁插入；主角與工作桌偏右，左側保留標題空間 → `illustrations/scenes/uncommitted-interruption.png`
+- [step 4] 主角坐在自己的工作桌前，被 stash、commit、switch branch 與多條帶 commit 節點的 Git branch 包圍；完整 16:9 場景置於畫面右側，左半保留標題留白，不再另外疊加自畫 SVG 線條 → `illustrations/scenes/overloaded-dev-git-scene.png`
 
 **開發計劃**：
 
-- step 1 (~10s) — 情境一登場：feature 分支寫到一半，production 出事，hotfix 插隊
-- step 2 (~8s) — 切走前只聚焦一個原因：本地堆著大量未 commit 修改，現場還沒收完
-- step 3 (~10s) — 情境二：PR 送審中，review 未結束，人不能停在原地
-- step 4 (~9s) — 情境三：同一專案衍生多個 branch 節點，第一階段維護與第二階段開發長期並存
-- step 5 (~7s) — 原章節群像頁移至最後：用一個人同時壓著好幾個工作，收束前述切換情境
+> 原 step 1（hotfix 插隊）與 step 2（未 commit 修改）已合併：這兩步是同一個
+> 節拍的前後半句，而且 `uncommitted-interruption.png` 這張插圖本身就同時畫了
+> 「沒歸位的一整疊紙」與「砸下來的火警通知」，拆成兩頁等於同一張圖講兩輪。
+
+- step 1 (~12s) — 情境一：feature 寫到一半 production 出事、hotfix 插隊，而本地還堆著一整批未 commit 修改，現場還沒收完
+- step 2 (~10s) — 情境二：PR 送審中，review 未結束，人不能停在原地
+- step 3 (~9s) — 情境三：同一專案衍生多個 branch 節點，第一階段維護與第二階段開發長期並存
+- step 4 (~7s) — 原章節群像頁移至最後：用一個人同時壓著好幾個工作，收束前述切換情境
 
 口播節選：
 > 你一定遇過這些狀況。一個人手上，同時壓著好幾個工作。
@@ -594,7 +597,7 @@ timeline（`playState` 是 running 但 `currentTime` 永遠 0），等再久動�
 
 ---
 
-## 12. 12-agent-isolation — Coding Agent：一個 task 一棵 worktree（4 steps · ~33s）
+## 12. 12-agent-isolation — Coding Agent：一個 task 一棵 worktree（6 steps · ~48s）
 
 **信息池**：
 - 解法：給每個 task 一棵 worktree，隔離檔案系統與 checkout 狀態，同時保留同一份 Git 歷史 —— 來源 article §Coding Agent / L84

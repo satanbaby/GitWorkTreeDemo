@@ -2,11 +2,7 @@ feature 寫到一半，production 出事。這時候你會怎麼做？
 
 ---
 
-你在 feature 分支寫到一半。production 出事，hotfix 插隊進來。
-
----
-
-但你手上還有一堆未 commit 的修改。這個現場根本還沒收完。
+你在 feature 分支寫到一半，production 出事、hotfix 插隊進來。但你手上還有一堆未 commit 的修改，這個現場根本還沒收完。
 
 ---
 

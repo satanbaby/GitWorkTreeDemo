@@ -12,11 +12,7 @@
   color: var(--accent);
 }
 
-.sc-accent-text {
-  color: var(--accent);
-}
-
-/* step 0 · overloaded opening */
+/* step 4 · overloaded opening —— 群像頁已移至章末 */
 .sc-opening {
   padding: 108px 96px 76px;
   display: flex;
@@ -79,168 +75,7 @@
   color: var(--text-2);
 }
 
-/* step 1 · hotfix interrupts */
-.sc-hotfix {
-  padding: 96px 100px;
-  display: grid;
-  grid-template-columns: 41% 59%;
-  gap: 68px;
-  align-items: center;
-}
-
-.sc-hotfix-copy {
-  position: relative;
-  z-index: 3;
-}
-
-.sc-hotfix-copy h1 {
-  margin: 0;
-  font-size: 78px;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
-  animation: sc-rise 720ms var(--ease-quart) both;
-}
-
-.sc-hotfix-copy h1:nth-of-type(2) {
-  margin-top: 12px;
-  animation-delay: 130ms;
-}
-
-.sc-hotfix-copy > p:last-child {
-  max-width: 650px;
-  margin: 38px 0 0;
-  font-family: var(--font-body);
-  font-size: 32px;
-  font-weight: 650;
-  line-height: 1.45;
-  color: var(--text-2);
-  animation: sc-rise 700ms 260ms var(--ease-quart) both;
-}
-
-.sc-lane {
-  position: relative;
-  height: 700px;
-  padding: 52px;
-  overflow: hidden;
-  background: var(--surface-2);
-  animation: sc-panel-in 780ms var(--ease-quart) both;
-}
-
-.sc-lane::after {
-  content: "";
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  right: -160px;
-  bottom: -180px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-}
-
-.sc-lane-label {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.sc-lane-label span {
-  font-family: var(--font-display-en);
-  font-size: 64px;
-  font-weight: 900;
-}
-
-.sc-lane-label strong {
-  font-size: 27px;
-  color: var(--text-2);
-}
-
-.sc-code-sheet {
-  position: absolute;
-  left: 54px;
-  top: 160px;
-  width: 360px;
-  display: grid;
-  gap: 20px;
-}
-
-.sc-code-sheet i {
-  display: block;
-  height: 16px;
-  border-radius: 8px;
-  background: var(--rule);
-  opacity: 0.22;
-}
-
-.sc-code-sheet i:nth-child(2) { width: 78%; }
-.sc-code-sheet i:nth-child(3) { width: 92%; }
-.sc-code-sheet i:nth-child(4) { width: 62%; }
-
-.sc-lane svg {
-  position: absolute;
-  left: 48px;
-  right: 48px;
-  bottom: 70px;
-  width: calc(100% - 96px);
-  height: 270px;
-  color: var(--rule);
-}
-
-.sc-lane svg path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 9;
-  stroke-linecap: round;
-}
-
-.sc-lane svg .sc-lane-detour {
-  stroke: var(--accent);
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: sc-line-draw 900ms 470ms var(--ease-quart) forwards;
-}
-
-.sc-lane svg circle {
-  fill: var(--surface);
-  stroke: currentColor;
-  stroke-width: 6;
-}
-
-.sc-hotfix-ticket {
-  position: absolute;
-  z-index: 5;
-  right: 58px;
-  top: 182px;
-  width: 300px;
-  min-height: 190px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-  border: 4px solid var(--rule);
-  border-radius: 26px;
-  background: var(--surface-3);
-  box-shadow: 16px 18px 0 var(--accent-soft);
-  transform-origin: center;
-  animation: sc-ticket-slam 760ms 360ms var(--ease-overshoot) both;
-}
-
-.sc-hotfix-ticket span {
-  font-family: var(--font-mono);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.sc-hotfix-ticket strong {
-  font-family: var(--font-display-en);
-  font-size: 72px;
-  line-height: 1;
-}
-
-/* step 2 · state snapshot */
+/* 已移除的 state snapshot 頁（保留樣式以備後用） */
 .sc-snapshot {
   padding: 78px 104px;
 }
@@ -431,7 +266,7 @@
   background: var(--accent-soft);
 }
 
-/* step 3 · PR review + next task */
+/* step 2 · PR review + next task */
 .sc-review {
   padding: 86px 106px;
 }
@@ -602,7 +437,7 @@
   animation: sc-rise 620ms 760ms var(--ease-quart) both;
 }
 
-/* step 4 · two versions */
+/* step 3 · two versions */
 .sc-versions {
   padding: 82px 104px;
 }
@@ -1051,7 +886,7 @@
   to { opacity: 1; transform: scale(1) rotate(0); }
 }
 
-/* revised step 2 · one unfinished cause, illustrated */
+/* step 1 · hotfix 插隊 + 未 commit 的修改（原 2-1 / 2-2 合併） */
 .sc-uncommitted {
   padding: 88px 104px;
   display: grid;
@@ -1076,15 +911,35 @@
   color: var(--accent);
 }
 
+/* 合併後這一頁有兩個節拍：標題講「插隊發生了」，這一段講「但現場還沒收完」。
+   第二行用 strong 加重，讓「未 commit 的修改」仍然是整頁的落點。 */
+.sc-uncommitted-lead {
+  max-width: 700px;
+  margin: 34px 0 0;
+  font-family: var(--font-body);
+  font-size: 38px;
+  font-weight: 650;
+  line-height: 1.45;
+  color: var(--text-2);
+  animation: sc-rise 700ms 200ms var(--ease-quart) both;
+}
+
+.sc-uncommitted-lead strong {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 800;
+  color: var(--text);
+}
+
 .sc-status-strip {
   width: 560px;
-  margin-top: 44px;
+  margin-top: 36px;
   padding: 28px 32px;
   display: grid;
   grid-template-columns: 150px 1fr;
   gap: 12px 24px;
   background: var(--surface-2);
-  animation: sc-panel-in 720ms 180ms var(--ease-quart) both;
+  animation: sc-panel-in 720ms 340ms var(--ease-quart) both;
 }
 
 .sc-status-strip span,
@@ -1146,7 +1001,7 @@
 .sc-hotfix-badge span { font-size: 18px; color: var(--accent); }
 .sc-hotfix-badge strong { margin-top: 8px; font-size: 36px; }
 
-/* revised step 4 · actual branch graph instead of one spine */
+/* step 3 · actual branch graph instead of one spine */
 .sc-branch-version-stage {
   position: relative;
   width: 1540px;
@@ -1226,4 +1081,4 @@
    這一頁把 display 覆寫成 grid，在 grid 裡 justify-content 管的是「欄的水平
    分佈」，會把整個版面往中間擠。這裡明確還原成 normal，垂直置中交給各自
    既有的 align-items。 */
-.sc-opening,.sc-hotfix,.sc-uncommitted{justify-content:normal}
+.sc-opening,.sc-uncommitted{justify-content:normal}
